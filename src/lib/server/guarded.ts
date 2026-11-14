@@ -52,20 +52,22 @@ export type GuardContext = {
   /** Aborts at the 45 s operation deadline; pass to every upstream fetch. */
   signal: AbortSignal;
   visitorId: string | null;
+  /** Test seam only: injected by runGuarded deps, never by a request. */
+  fetchImpl?: typeof fetch;
 };
 
 export type GuardSpec<T> = {
   schema: ZodType<T>;
   maxBytes: number;
   /** Cheap, network-free checks (source policy, fixture gating). Throw ApiError to reject. */
-  prepare?: (body: T, ctx: { config: ServerConfig; url: URL }) => T;
+  prepare?: (body: T, ctx: { config: ServerConfig; url: URL; secrets: ReturnType<typeof secrets> }) => T;
   /** Paid work spends quota unless this returns false (only localhost fixture transport). */
   billable?: (body: T) => boolean;
   /** Undefined = endpoint not implemented yet: validated, then 501 without reserving quota. */
   execute?: (body: T, ctx: GuardContext) => Promise<{ status: 200 | 201; body: unknown }>;
 };
 
-export type GuardDeps = { env?: Record<string, string | undefined>; quota?: QuotaStore; now?: () => number };
+export type GuardDeps = { env?: Record<string, string | undefined>; quota?: QuotaStore; now?: () => number; fetchImpl?: typeof fetch };
 
 async function readBounded(req: Request, maxBytes: number): Promise<string | null> {
   const declared = Number(req.headers.get('content-length'));
@@ -140,10 +142,10 @@ export async function runGuarded<T>(req: Request, spec: GuardSpec<T>, deps: Guar
   let body = parsed.data;
   const headers: Record<string, string> = { 'Cache-Control': 'no-store' };
   try {
-    if (spec.prepare) body = spec.prepare(body, { config, url });
+    const s = secrets(env);
+    if (spec.prepare) body = spec.prepare(body, { config, url, secrets: s });
     if (!spec.execute) return errorResponse('NOT_IMPLEMENTED', 'This operation is not implemented yet.', requestId);
 
-    const s = secrets(env);
     let visitorId: string | null = null;
     if (spec.billable?.(body) !== false) {
       if (!config.publicBetaEnabled) throw new ApiError('PUBLIC_ACCESS_DISABLED', 'Live research is temporarily disabled by the operator.');
@@ -167,7 +169,7 @@ export async function runGuarded<T>(req: Request, spec: GuardSpec<T>, deps: Guar
 
     const budget = new RunBudget({ maxCalls: PUBLIC_LIMITS.model_calls, timeoutMs: PUBLIC_LIMITS.timeout_ms }, deps.now);
     const signal = AbortSignal.timeout(PUBLIC_LIMITS.timeout_ms);
-    const result = await spec.execute(body, { requestId, url, config, secrets: s, budget, signal, visitorId });
+    const result = await spec.execute(body, { requestId, url, config, secrets: s, budget, signal, visitorId, fetchImpl: deps.fetchImpl });
     return Response.json(result.body, { status: result.status, headers });
   } catch (e) {
     if (e instanceof ApiError) {
