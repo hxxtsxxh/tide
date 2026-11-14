@@ -88,7 +88,8 @@ button:active:not(:disabled) { transform: scale(0.97); box-shadow: none; }
 }
 .secondary:hover:not(:disabled) { background: #fff; box-shadow: var(--shadow-1); }
 .text-button, .text-button:hover:not(:disabled) { box-shadow: none; transform: none; }
-:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.35) !important; }
+/* Outline (not box-shadow) so component shadows can never hide the keyboard focus ring. */
+:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.6) !important; outline-offset: 2px; }
 
 /* Fields */
 input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
