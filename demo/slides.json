@@ -8,7 +8,7 @@
         "A technical integration plan depends on changing documentation.",
         "Create a board from your own question, requirements and public URLs."
       ],
-      "notes": "Compact web application. Deployment URL not recorded in this document; the controller performs deployment."
+      "notes": "Compact web application, deployed at https://searchhack-ripple-08a1a865.vercel.app (controller deployment of commit 3eb7c5c)."
     },
     {
       "title": "Sources → facts → decisions",
@@ -23,11 +23,11 @@
     {
       "title": "A requirement edit has a visible boundary",
       "bullets": [
-        "Earlier browser record (before direct Tavily): 2 pages, 8 quoted facts, 4 answers.",
-        "Requirement text three → eight: 0 source reads, 1 answer recomputed, 3 reused.",
-        "Unchanged source refresh: 2 pages read, 0 recomputed, 4 reused."
+        "HTTPS browser recheck: 2 pages, 9 quoted facts, 5 answers.",
+        "Requirement text three → eight: 0 source reads, 1 answer recomputed, 4 reused.",
+        "Unchanged source refresh: 2 pages checked, 0 recomputed, 5 reused."
       ],
-      "notes": "From demo/L01-resume-verification.json. The recording will show its own observed counts. Model output can vary between runs."
+      "notes": "Observed through the supplied Playwright MCP on deployment 3eb7c5c during R01 (demo/R01-release-verification.json). This is a browser recheck, not the final recording. Model output can vary; provider cache age and refresh savings are not measured."
     },
     {
       "title": "Measure work, preserve uncertainty",
@@ -45,7 +45,7 @@
         "Local stdio agent kit: same service and quotas, separate local vault.",
         "No background monitoring, cloud sync or proven complete dependency discovery."
       ],
-      "notes": "public_ready=false until the controller's HTTPS browser gate passes. Native Claude Code and Codex invocation is not verified. Final video and presentation render are controller-owned."
+      "notes": "The independent public-beta HTTPS gate passed against deployment 3eb7c5c. The first MCP gate failed QUOTA_EXCEEDED; the targeted R01 rerun of the unchanged supplied gate passed 12/12 on that same deployment (demo/R01-mcp-gate.json). Final controller release gates and HTTPS media remain pending. The failed HTTPS capture has no completed video/screenshots; draft slides have no unresolved text. Earlier localhost media is complete. public_ready=false; native Claude/Codex invocation is unverified."
     },
     {
       "title": "Both providers, observed locally",

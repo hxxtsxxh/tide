@@ -2,7 +2,7 @@
 
 Ripple tracks which research answers go stale. You build a board from an original question, your requirements and up to five allowlisted public pages. Telem discovers and qualifies the selected pages; direct Tavily Extract supplies their page text on the server. Ripple extracts typed facts (each backed by a literal quote from that text) and links them to short decision answers. When you edit a requirement or refresh evidence, Ripple recomputes only the answers whose facts changed and reuses the rest. Failed or partial reads stay **unknown**; they are never shown as fresh.
 
-Scope: **compact** (see `IMPLEMENTED-SCOPE.json`). `public_ready=false`: the independent browser gate has not been run against an HTTPS deployment, so this is a prototype with real live integrations, not a public release (see `PUBLIC-READINESS.md`).
+Scope: **compact** (see `IMPLEMENTED-SCOPE.json`). `public_ready=false`: the public-beta browser gate passed on https://searchhack-ripple-08a1a865.vercel.app (commit 3eb7c5c), and a targeted deployed MCP recheck passed 12/12 against that same deployment (`demo/R01-mcp-gate.json`). Final controller release gates and HTTPS media remain pending, so this is a prototype with real live integrations, not a public release (see `PUBLIC-READINESS.md`).
 
 ## Run
 
