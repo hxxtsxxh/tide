@@ -1,0 +1,829 @@
+{
+  "schemaVersion": 1,
+  "project": "ripple",
+  "mode": "live",
+  "executedAt": "2026-11-14T20:49:42.791Z",
+  "baseUrl": "http://127.0.0.1:4792",
+  "caseCount": 3,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "id": "LIVE01",
+      "passed": true,
+      "observations": [
+        {
+          "case_id": "LIVE01",
+          "strategy": "baseline",
+          "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 13456,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 13273,
+            "cache_mode": "cold",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE01",
+          "strategy": "treatment",
+          "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 9168,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 9048,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "LIVE02",
+      "passed": true,
+      "observations": [
+        {
+          "case_id": "LIVE02",
+          "strategy": "treatment",
+          "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 9911,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 9603,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE02",
+          "strategy": "baseline",
+          "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 7354,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 7255,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "LIVE03",
+      "passed": true,
+      "observations": [
+        {
+          "case_id": "LIVE03",
+          "strategy": "baseline",
+          "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 8404,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 8322,
+            "cache_mode": "cold",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE03",
+          "strategy": "treatment",
+          "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 5505,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 5191,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "baselineStatus": "measured",
+    "baselineQualityFailed": 0,
+    "baseline": {
+      "executions": 3,
+      "model_calls": 3,
+      "query_count": 3,
+      "source_pages": 3,
+      "wall_ms": 29214,
+      "reported_cache_modes": [
+        "cold",
+        "warm",
+        "cold"
+      ]
+    },
+    "treatment": {
+      "executions": 3,
+      "model_calls": 3,
+      "query_count": 3,
+      "source_pages": 3,
+      "wall_ms": 24584,
+      "reported_cache_modes": [
+        "warm",
+        "warm",
+        "warm"
+      ]
+    },
+    "paired_provider_http_totals": "not_measured",
+    "total_work_savings": "not_measured",
+    "matching_telem_cache_cases": [
+      "LIVE02"
+    ]
+  },
+  "limitations": [
+    "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
+    "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
+    "Do not compare latency/cost across unequal cache modes; both strategies must include source checking and planning overhead.",
+    "No automatic monetary cost or percent-savings claim is inferred from call counts.",
+    "Compact scope retains custom user boards, signed history, real Telem + direct Tavily acquisition and durable browser storage; it does not imply public readiness.",
+    "LIVE01 and LIVE03 baseline reported cold Telem cache while treatment reported warm; no latency or monetary saving is inferred. Direct Tavily cache freshness is unknown.",
+    "All six prepared live executions are initial builds, not paired selective custom-board refreshes. Each strategy used three model calls, three queries and three source-page fetches in aggregate.",
+    "The immutable evaluator retains page/query counts but not legacy provider-attempt notes. Paired total Telem/Tavily HTTP attempts and credits are not measured in this report; no total-work savings claim is supported.",
+    "Supplemental real custom-board creation observed one Telem batch HTTP attempt, one direct Tavily HTTP attempt, one model call, and zero reported Tavily credits. This is separate from the paired run and not a billing audit.",
+    "The missing source returned 422 SOURCE_UNAVAILABLE. Failure responses omit provider-attempt ledgers; work/cost on that failed operation is unknown, never zero.",
+    "The fixture baseline has six expected oracle mismatches for refresh-all recomputation sets (R01,R02,R03,R05,R08,R09); treatment passed all ten. These are synthetic regression cases, not live savings.",
+    "The independent browser gate passed only localhost in this task. HTTPS browser/sponsor/MCP release gates and native-client invocation remain controller-owned and unverified."
+  ],
+  "scope": {
+    "project": "ripple",
+    "scope": "compact",
+    "implemented": [
+      "Custom New board (title, question, 1-5 allowlisted URLs, requirements) and editable example inputs; optional bounded Telem source discovery",
+      "Real server-side Telem search/fetch with host allowlist, URL safety checks, per-result status and canonical-URL recheck",
+      "Model fact extraction requiring literal source quotes; unverifiable facts stay unknown, cross-source same-key different values become conflicting",
+      "Source -> fact -> answer DAG with typed semantic hashes, cycle/dangling/duplicate/40-node checks, reverse-closure invalidation and model-proposed (reviewable) dependencies",
+      "Requirement edit recomputes only affected answers without source acquisition and is labeled requirements_edit, not an external change",
+      "Refresh re-reads sources with no_cache; unchanged facts reuse answers; failed/partial reads keep last values and mark dependents unknown",
+      "HMAC-signed board snapshots with expiry, verified before quota",
+      "Browser IndexedDB library with immutable revisions, expected-revision writes, export/import (imports unverified) and delete",
+      "Same-origin guard, body caps, strict schemas, signed visitor cookie, Upstash atomic quotas, kill switch",
+      "Legacy /api/refresh evaluation adapter with paired baseline (refresh-all) and treatment (affected closure) strategies; fixture mode localhost-only behind ALLOW_FIXTURE_MODE",
+      "Client-only Simulation Lab labeled SYNTHETIC FIXTURE / mode=fixture",
+      "/privacy and /integrations pages; /api/health readiness",
+      "Local Node stdio MCP kit with nine tools, two portable skills, project-scoped setup helper, private per-origin vault and real downloadable source archive/checksum; same public API and quota boundary",
+      "Direct Tavily basic extraction supplies evidence text and refresh observations in create/refresh/legacy routes; additive extractor/request/status and per-batch usage/attempt trace with labeled degraded Telem fallback"
+    ],
+    "evaluation_case_ids": [
+      "LIVE01",
+      "LIVE02",
+      "LIVE03"
+    ],
+    "limitations": [
+      "Dependencies are model-proposed; there is no endpoint to edit dependency edges, so corrections are local notes plus a requirements rebuild",
+      "Pages are cut to 12,000 characters and truncated reads are reported partial, which keeps their dependents unknown",
+      "Custom-board refresh-all counts in revision summaries are planned counts; measured paired baseline exists only through the legacy evaluation adapter",
+      "No background monitoring or scheduling; refresh is user-triggered",
+      "Native Claude Code/Codex invocation and deployed MCP/API gate are not verified by local protocol tests",
+      "public_ready=false until the independent browser gate passes on the HTTPS deployment",
+      "Tavily cache freshness and upstream redirect chains not independently established; no post-integration deployed sponsor gate or total-work savings measurement by TV01"
+    ]
+  },
+  "public_ready": false,
+  "supplemental_checks": {
+    "live_custom_success_negative_missing": {
+      "schemaVersion": 1,
+      "project": "ripple",
+      "mode": "live",
+      "local_test": true,
+      "executedAt": "2026-11-14T20:50:01.217Z",
+      "public_ready": false,
+      "baselineStatus": "not_measured",
+      "cases": [
+        {
+          "id": "L02-SUCCESS",
+          "category": "success",
+          "passed": true,
+          "http_status": 201,
+          "error_code": null,
+          "mode": "live",
+          "provider_work": [
+            {
+              "kind": "fetch",
+              "provider": "tavily",
+              "service": "telem",
+              "transport": "telem",
+              "endpoint": "fetch",
+              "mode": "live",
+              "status": "succeeded",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "requestId": null,
+              "cached": true,
+              "http_attempts": 1
+            },
+            {
+              "kind": "fetch",
+              "provider": "tavily",
+              "service": "telem",
+              "transport": "telem",
+              "endpoint": "fetch",
+              "mode": "live",
+              "status": "succeeded",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "requestId": null,
+              "cached": true
+            },
+            {
+              "kind": "fetch",
+              "provider": "tavily",
+              "service": "tavily",
+              "transport": "direct",
+              "endpoint": "extract",
+              "mode": "live",
+              "status": "succeeded",
+              "requestId": "1c544ca1-746e-495b-93f6-3eb1662fb4c5",
+              "callId": "453a30c1-f8dd-4c0d-8b68-9d2ac8670314",
+              "usage": {
+                "credits": 0
+              },
+              "cache_state": "unknown",
+              "elapsed_ms": 250,
+              "http_attempts": 1,
+              "urls": [
+                "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static"
+              ],
+              "error": null
+            }
+          ],
+          "model_calls": 1,
+          "citation_chains": [
+            {
+              "fact_id": "f_69aab1a7",
+              "source_id": "s_4357b292",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            },
+            {
+              "fact_id": "f_0a5430f2",
+              "source_id": "s_4357b292",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            },
+            {
+              "fact_id": "f_107bdc08",
+              "source_id": "s_6a4908a3",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            },
+            {
+              "fact_id": "f_ddcf9c50",
+              "source_id": "s_6a4908a3",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            },
+            {
+              "fact_id": "f_5ddc6b07",
+              "source_id": "s_6a4908a3",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            },
+            {
+              "fact_id": "f_9b5bcd21",
+              "source_id": "s_6a4908a3",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            },
+            {
+              "fact_id": "f_7ad779cf",
+              "source_id": "s_6a4908a3",
+              "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "extractor": "tavily",
+              "quote_in_excerpt": true,
+              "source_succeeded": true,
+              "depended_on": true
+            }
+          ]
+        },
+        {
+          "id": "L02-NEGATIVE",
+          "category": "negative",
+          "passed": true,
+          "http_status": 422,
+          "error_code": "SOURCE_NOT_ALLOWED",
+          "mode": null,
+          "provider_work": null,
+          "model_calls": null
+        },
+        {
+          "id": "L02-MISSING",
+          "category": "missing_evidence",
+          "passed": true,
+          "http_status": 422,
+          "error_code": "SOURCE_UNAVAILABLE",
+          "mode": null,
+          "provider_work": null,
+          "model_calls": null
+        }
+      ],
+      "limitations": [
+        "Custom-board checks are not paired baseline measurements.",
+        "Unavailable mandatory services fail checks; no retry or fixture fallback.",
+        "Missing error traces mean unknown provider work, never zero work."
+      ],
+      "passed": 3,
+      "failed": 0
+    },
+    "fixture_oracle": {
+      "report": "artifacts/L02/fixture-evaluation.json",
+      "caseCount": 10,
+      "passed": 10,
+      "failed": 0,
+      "baselineStatus": "measured",
+      "baselineQualityFailed": 6,
+      "cases": [
+        {
+          "id": "R01",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R01",
+              "strategy": "baseline",
+              "input_sha256": "8a7576ea28c9c9fde4b4f61b1a3fb9f735ac78c44dd72645cc1ed45c42837bb6",
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq ['a-workshop', 'a-keynote'], got ['a-workshop', 'a-keynote', 'a-doors']",
+                "result.reused_answer_ids: expected set_eq ['a-doors'], got []"
+              ],
+              "http_status": 200,
+              "wall_ms": 41,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 2,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": false
+            },
+            {
+              "case_id": "R01",
+              "strategy": "treatment",
+              "input_sha256": "8a7576ea28c9c9fde4b4f61b1a3fb9f735ac78c44dd72645cc1ed45c42837bb6",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 4,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R02",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R02",
+              "strategy": "treatment",
+              "input_sha256": "a1f19e26041c40e02b013b167c4ea3fe00c107b523e7c0151a8a51bba2b2c7a6",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 1,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            },
+            {
+              "case_id": "R02",
+              "strategy": "baseline",
+              "input_sha256": "a1f19e26041c40e02b013b167c4ea3fe00c107b523e7c0151a8a51bba2b2c7a6",
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']",
+                "result.reused_answer_ids: expected set_eq ['a-workshop', 'a-keynote', 'a-doors'], got []"
+              ],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": false
+            }
+          ]
+        },
+        {
+          "id": "R03",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R03",
+              "strategy": "baseline",
+              "input_sha256": "ca55a3a301cdf25457ce8a4a1c169227514599f29b41ff0f8ca8a0aadf12c3dc",
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']"
+              ],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": false
+            },
+            {
+              "case_id": "R03",
+              "strategy": "treatment",
+              "input_sha256": "ca55a3a301cdf25457ce8a4a1c169227514599f29b41ff0f8ca8a0aadf12c3dc",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R04",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R04",
+              "strategy": "treatment",
+              "input_sha256": "1403aaa07249044f4e7de102c59dd288146ffd72749c1474486ff34ad1d2b795",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            },
+            {
+              "case_id": "R04",
+              "strategy": "baseline",
+              "input_sha256": "1403aaa07249044f4e7de102c59dd288146ffd72749c1474486ff34ad1d2b795",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R05",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R05",
+              "strategy": "baseline",
+              "input_sha256": "4e355f69eb63d98921c71abdaa603326a3e18550be40fffb1becf1289f2bd6ac",
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']"
+              ],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "passed": false
+            },
+            {
+              "case_id": "R05",
+              "strategy": "treatment",
+              "input_sha256": "4e355f69eb63d98921c71abdaa603326a3e18550be40fffb1becf1289f2bd6ac",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R06",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R06",
+              "strategy": "treatment",
+              "input_sha256": "729853206fa49cd3e3f822e53bcf99fb7f7f1110d4c1c478cda67a50c81e9301",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 1,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            },
+            {
+              "case_id": "R06",
+              "strategy": "baseline",
+              "input_sha256": "729853206fa49cd3e3f822e53bcf99fb7f7f1110d4c1c478cda67a50c81e9301",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 1,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R07",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R07",
+              "strategy": "baseline",
+              "input_sha256": "38443cf2400b653ebb5561cc1542a19d12749220926fbbb41756dd5d6774e5e8",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 400,
+              "wall_ms": 4,
+              "passed": true
+            },
+            {
+              "case_id": "R07",
+              "strategy": "treatment",
+              "input_sha256": "38443cf2400b653ebb5561cc1542a19d12749220926fbbb41756dd5d6774e5e8",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 400,
+              "wall_ms": 2,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R08",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R08",
+              "strategy": "treatment",
+              "input_sha256": "9ff758fa3129e6a6f222d9e987eef07bf9705cbb93de73568f4899c7a50d841b",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 4,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 2,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "passed": true
+            },
+            {
+              "case_id": "R08",
+              "strategy": "baseline",
+              "input_sha256": "9ff758fa3129e6a6f222d9e987eef07bf9705cbb93de73568f4899c7a50d841b",
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']"
+              ],
+              "http_status": 200,
+              "wall_ms": 3,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "passed": false
+            }
+          ]
+        },
+        {
+          "id": "R09",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R09",
+              "strategy": "baseline",
+              "input_sha256": "6e92484f94e09e905648136f0177efeec4782a8e52b2039816f736b21ee9e66e",
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq ['a-workshop'], got ['a-workshop', 'a-keynote', 'a-doors']",
+                "result.reused_answer_ids: expected set_eq ['a-keynote', 'a-doors'], got []"
+              ],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": false
+            },
+            {
+              "case_id": "R09",
+              "strategy": "treatment",
+              "input_sha256": "6e92484f94e09e905648136f0177efeec4782a8e52b2039816f736b21ee9e66e",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "id": "R10",
+          "passed": true,
+          "observations": [
+            {
+              "case_id": "R10",
+              "strategy": "treatment",
+              "input_sha256": "3e084a2066533a9b1cd1ca02eebb673fc0b06e62b28b4b7d679295195c1ff307",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            },
+            {
+              "case_id": "R10",
+              "strategy": "baseline",
+              "input_sha256": "3e084a2066533a9b1cd1ca02eebb673fc0b06e62b28b4b7d679295195c1ff307",
+              "integrity_errors": [],
+              "quality_errors": [],
+              "http_status": 200,
+              "wall_ms": 2,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "passed": true
+            }
+          ]
+        }
+      ]
+    },
+    "independent_browser_gate": {
+      "passed": true,
+      "checks": 15,
+      "local_test": true,
+      "deployed_https": false,
+      "report": "artifacts/L02/browser-gate.json"
+    },
+    "redis": {
+      "schemaVersion": 1,
+      "project": "ripple",
+      "executedAt": "2026-11-14T20:47:56.726Z",
+      "passed": true,
+      "realRedis": true,
+      "isolatedNamespace": true,
+      "attempts": 8,
+      "allowed": 3,
+      "denied": 5,
+      "maximumCounter": 3,
+      "cleanup": true
+    },
+    "fatal_error_accounting": {
+      "mode": "synthetic-transport",
+      "status": 502,
+      "error": "UPSTREAM_UNAVAILABLE",
+      "observed_attempts": {
+        "telem": 1,
+        "tavily": 1
+      },
+      "public_error_has_retrieval_ledger": false,
+      "limitation": "When mandatory Telem acquisition fails at operation level, the public error omits the already-attempted parallel Tavily work and any reported credits. Do not infer zero work from missing trace or claim complete failure-cost measurement."
+    },
+    "playwright_mcp": {
+      "privacy_telem": true,
+      "privacy_tavily": true,
+      "browser_storage_disclosed": true,
+      "limits_disclosed": true,
+      "mobile_390px_no_overflow": true,
+      "simulation_labeled": true,
+      "simulation_post_requests": 0
+    }
+  }
+}
