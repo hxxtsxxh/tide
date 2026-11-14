@@ -2,7 +2,7 @@ import 'server-only';
 import { normalizeSourceUrl } from '../server/guards.ts';
 import { normalizeWs } from './text.ts';
 
-export const TELEM_BASE = 'https://router.telem.ai';
+export const TELEM_BASE = 'https://hack.telem.ai/api'; // hackathon Telem server
 const MAX_RESPONSE_BYTES = 3_000_000;
 const RETRY_MIN_REMAINING_MS = 5_000;
 

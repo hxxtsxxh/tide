@@ -39,7 +39,7 @@ test('telem search: authenticated, bounded providers/domains, provider errors pr
   const w = newWorld({ search: [{ provider: 'brave', results: [{ url: URL_A, title: ' Fetch\n best ' }] }, { provider: 'tavily', status: 'failed', error: { type: 'RateLimited', message: 'secret detail' } }] });
   const out = await client(w).search('abort fetch', HOSTS, 8);
   const call = w.calls[0]!;
-  assert.equal(call.host, 'router.telem.ai');
+  assert.equal(call.host, 'hack.telem.ai');
   assert.equal(call.headers.Authorization, 'Bearer k');
   assert.deepEqual(call.body.search.providers.include, ['brave', 'tavily']);
   assert.equal(call.body.search.auto_routing, 'accuracy');
@@ -276,7 +276,7 @@ test('refresh: requirement edit recomputes only requirement-dependent answers, n
   const { w, env } = await baseline();
   w.calls.length = 0;
   const r = await refreshBoard({ request_id: 'r6', snapshot: env.snapshot, requirements: 'batch of 3', force: false }, open(env.snapshot), deps(w));
-  assert.equal(w.calls.filter((c) => c.host === 'router.telem.ai').length, 0);
+  assert.equal(w.calls.filter((c) => c.host === 'hack.telem.ai').length, 0);
   assert.equal(r.board.requirements, 'batch of 3');
   assert.deepEqual(r.update.recomputed.sort(), ['a1', 'a4']);
   assert.deepEqual(r.update.reused, ['a2']);

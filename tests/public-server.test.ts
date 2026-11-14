@@ -34,7 +34,7 @@ test('POST /api/boards: one atomic admission, only Telem+model hosts contacted, 
   assert.equal(r.status, 201);
   const env = BoardEnvelope.parse(await r.json());
   assert.equal(q.calls.length, 1);
-  assert.deepEqual([...new Set(w.calls.map((c) => c.host))].sort(), ['api.anthropic.com', 'router.telem.ai']);
+  assert.deepEqual([...new Set(w.calls.map((c) => c.host))].sort(), ['api.anthropic.com', 'hack.telem.ai']);
   assert.equal(env.board.title, 'Unique board');
   assert.ok(env.board.facts.some((f) => f.status === 'supported'));
   assert.ok(env.trace.retrieval.every((t) => t.mode === 'live'));
@@ -221,8 +221,8 @@ test('legacy live: same Telem+model pipeline under the declared (lower) limits; 
   assert.ok(j.evidence.length > 0 && j.evidence.every((e) => e.origin === 'telem_live' && w.pages[URL_A]!.text!.replace(/\s+/g, ' ').includes(e.passage)));
   assert.ok(j.trace.model_calls <= 2);
   assert.equal(j.trace.fetches.length, 1);
-  assert.equal(w.calls.find((c) => c.path === '/v1/search')!.body.search.include_domains[0], 'docs.telem.ai');
-  assert.equal(w.calls.filter((c) => c.path === '/v1/search').length, 1);
+  assert.equal(w.calls.find((c) => c.path === '/api/v1/search')!.body.search.include_domains[0], 'docs.telem.ai');
+  assert.equal(w.calls.filter((c) => c.path === '/api/v1/search').length, 1);
 
   // max_model_calls=0 -> the model is never contacted and nothing is fabricated
   const w0 = newWorld();

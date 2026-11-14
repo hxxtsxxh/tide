@@ -66,10 +66,10 @@ export function fakeFetch(w: World): typeof fetch {
     const body = init?.body ? JSON.parse(String(init.body)) : null;
     w.calls.push({ host: u.host, path: u.pathname, body, headers: Object.fromEntries(Object.entries((init?.headers ?? {}) as Record<string, string>)) });
     if (init?.signal?.aborted) throw new DOMException('aborted', 'AbortError');
-    if (u.host === 'router.telem.ai') {
+    if (u.host === 'hack.telem.ai') {
       const st = w.telemStatus.shift();
       if (st) return json(st, { error: 'x' });
-      if (u.pathname === '/v1/search')
+      if (u.pathname === '/api/v1/search')
         return json(200, { session_id: 'sess-1', interaction_id: 'int-1', preprocessor_runs: w.search.map((p) => ({ preprocessor_name: p.provider, status: p.status ?? 'succeeded', error: p.error ?? null, output_payload: { results: p.results ?? [] }, request_payload: { headers: { 'X-Subscription-Token': 'PROVIDER-SECRET' } } })) });
       const results = (body.urls as string[]).map((url) => {
         const p = w.pages[url];
