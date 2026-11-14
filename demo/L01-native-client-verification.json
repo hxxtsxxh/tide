@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "claude": {
+    "status": "not_run",
+    "version": null,
+    "evidence": null
+  },
+  "codex": {
+    "status": "not_run",
+    "version": null,
+    "evidence": null
+  },
+  "notes": "No connector installed into building agents. Protocol and local API tests do not establish native invocation."
+}

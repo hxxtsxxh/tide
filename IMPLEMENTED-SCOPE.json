@@ -1,0 +1,28 @@
+{
+  "project": "ripple",
+  "scope": "compact",
+  "implemented": [
+    "Custom New board (title, question, 1-5 allowlisted URLs, requirements) and editable example inputs; optional bounded Telem source discovery",
+    "Real server-side Telem search/fetch with host allowlist, URL safety checks, per-result status and canonical-URL recheck",
+    "Model fact extraction requiring literal source quotes; unverifiable facts stay unknown, cross-source same-key different values become conflicting",
+    "Source -> fact -> answer DAG with typed semantic hashes, cycle/dangling/duplicate/40-node checks, reverse-closure invalidation and model-proposed (reviewable) dependencies",
+    "Requirement edit recomputes only affected answers without source acquisition and is labeled requirements_edit, not an external change",
+    "Refresh re-reads sources with no_cache; unchanged facts reuse answers; failed/partial reads keep last values and mark dependents unknown",
+    "HMAC-signed board snapshots with expiry, verified before quota",
+    "Browser IndexedDB library with immutable revisions, expected-revision writes, export/import (imports unverified) and delete",
+    "Same-origin guard, body caps, strict schemas, signed visitor cookie, Upstash atomic quotas, kill switch",
+    "Legacy /api/refresh evaluation adapter with paired baseline (refresh-all) and treatment (affected closure) strategies; fixture mode localhost-only behind ALLOW_FIXTURE_MODE",
+    "Client-only Simulation Lab labeled SYNTHETIC FIXTURE / mode=fixture",
+    "/privacy and /integrations pages; /api/health readiness",
+    "Local Node stdio MCP kit with nine tools, two portable skills, project-scoped setup helper, private per-origin vault and real downloadable source archive/checksum; same public API and quota boundary"
+  ],
+  "evaluation_case_ids": ["LIVE01", "LIVE02", "LIVE03"],
+  "limitations": [
+    "Dependencies are model-proposed; there is no endpoint to edit dependency edges, so corrections are local notes plus a requirements rebuild",
+    "Pages are cut to 12,000 characters and truncated reads are reported partial, which keeps their dependents unknown",
+    "Custom-board refresh-all counts in revision summaries are planned counts; measured paired baseline exists only through the legacy evaluation adapter",
+    "No background monitoring or scheduling; refresh is user-triggered",
+    "Native Claude Code/Codex invocation and deployed MCP/API gate are not verified by local protocol tests",
+    "public_ready=false until the independent browser gate passes on the HTTPS deployment"
+  ]
+}

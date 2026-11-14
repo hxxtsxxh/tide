@@ -1,0 +1,564 @@
+{
+  "schemaVersion": 1,
+  "project": "ripple",
+  "task": "L01",
+  "executedAt": "2026-11-14T20:16:28.754689+00:00",
+  "local_test": true,
+  "public_ready": false,
+  "mcp_deployed_ready": false,
+  "app_tests": 95,
+  "mcp_tests": 23,
+  "typecheck": "passed",
+  "build": "passed",
+  "evaluation": {
+    "fixture": {
+      "executedAt": "2026-11-14T20:14:09.225Z",
+      "caseCount": 10,
+      "passed": 10,
+      "failed": 0,
+      "metrics": {
+        "baselineStatus": "measured",
+        "baselineQualityFailed": 6
+      },
+      "limitations": [
+        "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
+        "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
+        "Do not compare latency/cost across unequal cache modes; both strategies must include source checking and planning overhead.",
+        "No automatic monetary cost or percent-savings claim is inferred from call counts."
+      ],
+      "cases": [
+        {
+          "id": "R01",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": false,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 1,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq ['a-workshop', 'a-keynote'], got ['a-workshop', 'a-keynote', 'a-doors']",
+                "result.reused_answer_ids: expected set_eq ['a-doors'], got []"
+              ]
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 1,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R02",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": false,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']",
+                "result.reused_answer_ids: expected set_eq ['a-workshop', 'a-keynote', 'a-doors'], got []"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R03",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": false,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']"
+              ]
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R04",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R05",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": false,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']"
+              ]
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R06",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R07",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 400,
+              "passed": true,
+              "metrics": null,
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 400,
+              "passed": true,
+              "metrics": null,
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R08",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": false,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 3
+              },
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq [], got ['a-workshop', 'a-keynote', 'a-doors']"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R09",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": false,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": [
+                "result.recomputed_answer_ids: expected set_eq ['a-workshop'], got ['a-workshop', 'a-keynote', 'a-doors']",
+                "result.reused_answer_ids: expected set_eq ['a-keynote', 'a-doors'], got []"
+              ]
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "R10",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 0,
+                "elapsed_ms": 0,
+                "cache_mode": "fixture",
+                "query_count": 0,
+                "fetch_count": 2
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        }
+      ]
+    },
+    "live": {
+      "executedAt": "2026-11-14T20:13:49.767Z",
+      "caseCount": 3,
+      "passed": 3,
+      "failed": 0,
+      "metrics": {
+        "baselineStatus": "measured",
+        "baselineQualityFailed": 0
+      },
+      "limitations": [
+        "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
+        "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
+        "Do not compare latency/cost across unequal cache modes; both strategies must include source checking and planning overhead.",
+        "No automatic monetary cost or percent-savings claim is inferred from call counts."
+      ],
+      "cases": [
+        {
+          "id": "LIVE01",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 1,
+                "elapsed_ms": 6354,
+                "cache_mode": "warm",
+                "query_count": 1,
+                "fetch_count": 1
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 1,
+                "elapsed_ms": 6299,
+                "cache_mode": "warm",
+                "query_count": 1,
+                "fetch_count": 1
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "LIVE02",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 1,
+                "elapsed_ms": 5026,
+                "cache_mode": "warm",
+                "query_count": 1,
+                "fetch_count": 1
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 1,
+                "elapsed_ms": 4508,
+                "cache_mode": "warm",
+                "query_count": 1,
+                "fetch_count": 1
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        },
+        {
+          "id": "LIVE03",
+          "passed": true,
+          "observations": [
+            {
+              "strategy": "baseline",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 1,
+                "elapsed_ms": 4009,
+                "cache_mode": "warm",
+                "query_count": 1,
+                "fetch_count": 1
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            },
+            {
+              "strategy": "treatment",
+              "http_status": 200,
+              "passed": true,
+              "metrics": {
+                "model_calls": 1,
+                "elapsed_ms": 3655,
+                "cache_mode": "warm",
+                "query_count": 1,
+                "fetch_count": 1
+              },
+              "integrity_errors": [],
+              "quality_errors": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "independent_local_gates": {
+    "browser": {
+      "local_test": true,
+      "base_url": "http://127.0.0.1:4612",
+      "passed": true,
+      "checks": 15,
+      "errors": [],
+      "release_commit_verified": false
+    },
+    "mcp": {
+      "local_test": true,
+      "base_url": "http://127.0.0.1:4612",
+      "passed": true,
+      "checks": 12,
+      "errors": [],
+      "release_commit_verified": false
+    }
+  },
+  "browser_flow": {
+    "real_services": true,
+    "api_interception": false,
+    "create": {
+      "sources": 2,
+      "supported_facts": 8,
+      "fresh_answers": 4,
+      "model_calls": 1
+    },
+    "requirements_edit": {
+      "source_reads": 0,
+      "recomputed": 1,
+      "reused": 3,
+      "model_calls": 1
+    },
+    "reload": "restored title and requirements",
+    "source_refresh": {
+      "source_reads": 2,
+      "recomputed": 0,
+      "reused": 4,
+      "model_calls": 0,
+      "revisions": 3
+    },
+    "simulation": {
+      "synthetic_label": true,
+      "mode": "fixture",
+      "post_requests": 0
+    },
+    "mobile_overflow": false
+  },
+  "kit": {
+    "archive_bytes": 22422,
+    "sha256": "4f0ba76e488d37fe24cbade613ffc4d232f9a5f4c1aecd4f98176ef57b84d798",
+    "manifest_entries_verified": 12,
+    "http_status": 200,
+    "checksum_http_status": 200,
+    "next_trace_includes_assets": true
+  },
+  "secret_scan": {
+    "files": 14,
+    "configured_values_checked": 5,
+    "matching_files": 0
+  },
+  "limitations": [
+    "LOCAL gates cannot establish deployed readiness; final commit/nonce HTTPS checks are controller-owned.",
+    "Native Claude/Codex tool invocation not_run.",
+    "No release video or rendered presentation produced.",
+    "Custom-board baseline counts remain planned; no live refresh savings claim.",
+    "Fixture HTTP run first refused when explicit local enable flag was absent; separate enabled localhost server rerun passed."
+  ]
+}
