@@ -30,10 +30,13 @@ const RETRYABLE = new Set<ErrorCode>(['QUOTA_EXCEEDED', 'QUOTA_UNAVAILABLE', 'UP
 export class ApiError extends Error {
   readonly code: ErrorCode;
   readonly retryAfter?: number;
-  constructor(code: ErrorCode, message: string, retryAfter?: number) {
+  /** Safe upstream attempt counts for a failed paid operation (error.schema.json forbids body fields). */
+  readonly attempts?: string;
+  constructor(code: ErrorCode, message: string, retryAfter?: number, attempts?: string) {
     super(message);
     this.code = code;
     this.retryAfter = retryAfter;
+    this.attempts = attempts;
   }
 }
 
@@ -174,6 +177,10 @@ export async function runGuarded<T>(req: Request, spec: GuardSpec<T>, deps: Guar
   } catch (e) {
     if (e instanceof ApiError) {
       if (e.retryAfter) headers['Retry-After'] = String(e.retryAfter);
+      if (e.attempts) {
+        headers['X-Ripple-Upstream-Attempts'] = e.attempts;
+        console.error(JSON.stringify({ request_id: requestId, code: e.code, attempts: e.attempts }));
+      }
       return errorResponse(e.code, e.message, requestId, headers);
     }
     const code: ErrorCode = e instanceof Error && e.message === 'RUN_TIMEOUT' ? 'TIMEOUT' : 'INTERNAL';

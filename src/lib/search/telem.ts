@@ -9,6 +9,8 @@ const RETRY_MIN_REMAINING_MS = 5_000;
 export type TelemFailureKind = 'auth' | 'transient' | 'timeout' | 'bad_response' | 'limit';
 export class TelemFailure extends Error {
   readonly kind: TelemFailureKind;
+  /** Safe attempt counts already spent by this operation (set by acquirePages), surfaced on the public error. */
+  attempts?: string;
   constructor(kind: TelemFailureKind, message: string) {
     super(message);
     this.kind = kind;

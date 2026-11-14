@@ -3,7 +3,7 @@ import type { RetrievalTrace } from '../contracts/board.ts';
 import { PUBLIC_LIMITS } from '../contracts/board.ts';
 import type { RunDeps } from '../server/research.ts';
 import { extractTavily, type TavilySource } from './tavily-extract.mjs';
-import type { FetchedPage, TelemClient } from './telem.ts';
+import { TelemFailure, type FetchedPage, type TelemClient } from './telem.ts';
 import { normalizeWs } from './text.ts';
 
 /**
@@ -28,7 +28,14 @@ export async function acquirePages(telem: TelemClient, urls: string[], d: RunDep
     telem.fetchPages(urls, d.config.sourceHosts, { noCache: opts.noCache, perPageChars: perPage }).then((pages) => ({ pages }), (error: unknown) => ({ error })),
     key ? extractTavily(urls, { apiKey: key, allowedHosts: d.config.sourceHosts, fetchImpl: d.fetchImpl, signal: d.signal }).catch((e: unknown) => ({ error: e instanceof Error ? e.message : 'TAVILY_UNAVAILABLE' })) : null,
   ]);
-  if ('error' in tel) throw tel.error; // Telem stays mandatory; callers map TelemFailure to the public error.
+  if ('error' in tel) {
+    // Telem stays mandatory; keep the parallel Tavily work visible instead of implying zero cost.
+    if (tel.error instanceof TelemFailure) {
+      const t = tav && 'trace' in tav ? tav.trace : null;
+      tel.error.attempts = `telem_http=${telem.http - telemHttpBefore}; tavily_http=${!key ? 0 : t ? t.http_attempts : 'unknown'}; tavily_credits=${!key ? 0 : t?.usage ? t.usage.credits : 'unknown'}`;
+    }
+    throw tel.error; // callers map TelemFailure to the public error.
+  }
   const retrieval: RetrievalTrace[] = tel.pages.map(telemFetchTrace);
   if (retrieval[0]) retrieval[0].http_attempts = telem.http - telemHttpBefore;
   const limitations: string[] = [];
