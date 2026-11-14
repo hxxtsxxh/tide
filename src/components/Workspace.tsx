@@ -114,9 +114,8 @@ export default function Workspace({
       .loadLibrary()
       .then(async (stored) => {
         if (!alive) return;
+        // Always land on New board; saved boards stay one click away in the library.
         setLibrary(stored.boards);
-        const active = stored.boards.find((b) => b.id === stored.activeId);
-        if (active) await openBoard(active, false);
       })
       .catch((e) => {
         if (alive) setStorageError(storage.storageMessage(e));
