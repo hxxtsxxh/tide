@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "project": "ripple",
   "mode": "live",
-  "executedAt": "2026-11-14T21:58:02.404Z",
+  "executedAt": "2026-11-14T22:04:11.396Z",
   "baseUrl": "https://searchhack-ripple-08a1a865.vercel.app",
   "caseCount": 3,
   "passed": 3,
@@ -20,10 +20,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 13825,
+          "wall_ms": 9631,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 13274,
+            "elapsed_ms": 9037,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -37,10 +37,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 9474,
+          "wall_ms": 8675,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 9156,
+            "elapsed_ms": 8359,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -60,10 +60,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 9120,
+          "wall_ms": 6379,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 8087,
+            "elapsed_ms": 5934,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -77,10 +77,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 5085,
+          "wall_ms": 5809,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 4826,
+            "elapsed_ms": 5417,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -100,10 +100,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 6354,
+          "wall_ms": 5742,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 6121,
+            "elapsed_ms": 5479,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -117,10 +117,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 4752,
+          "wall_ms": 4777,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 4515,
+            "elapsed_ms": 4545,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
