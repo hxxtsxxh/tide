@@ -27,7 +27,9 @@ export default function Privacy() {
             Boards, evidence, immutable revisions and local review notes use
             IndexedDB. There is no account, cloud backup or cross-device sync. A
             fresh browser or device has an empty library. Browser storage is not
-            encrypted by Ripple.
+            encrypted by Ripple. A small localStorage journal stores only board
+            IDs and expected revisions so a confirmed deletion can finish after
+            an interrupted page reload.
           </p>
         </section>
         <section className="panel">

@@ -165,3 +165,53 @@ test('requirement edit with unmapped dependency use is recomputed conservatively
   bad.board.answers[0]!.depends_on = [bad.board.answers[0]!.id];
   assert.throws(() => openState(signSnapshot(bad, SECRET), SECRET, HOSTS), /REVALIDATION|unverified|could not|invalid/i);
 });
+
+
+test('partial source stays unknown across create, unchanged refresh, and changed refresh', async () => {
+  const w = newWorld();
+  w.pages[URL_A] = { text: TEXT_A, truncated: true };
+  const { env: made } = await run(createBoardSpec, '/api/boards', create, w);
+  const source = made!.board.sources.find(s => s.url === URL_A)!;
+  const answer = answerOf(made!.board, 'Send at most 5');
+  assert.equal(source.status, 'partial');
+  assert.equal(answer.status, 'unknown');
+  assert.equal(byQuote(made!.board, 'at most 5').status, 'unknown');
+  const { env: unchanged } = await refresh(made!.snapshot, w);
+  assert.equal(unchanged!.board.sources.find(s => s.id === source.id)!.status, 'partial');
+  assert.equal(unchanged!.board.answers.find(a => a.id === answer.id)!.status, 'unknown');
+  assert.ok(!unchanged!.update.reused.includes(answer.id));
+  w.pages[URL_A] = { text: TEXT_A.replace('at most 5', 'at most 8'), truncated: true };
+  w.refreshFacts = factsFor(made!.board, URL_A, [FACT_A(8), FACT_A2]);
+  const { env: changed } = await refresh(unchanged!.snapshot, w);
+  assert.equal(changed!.board.sources.find(s => s.id === source.id)!.status, 'partial');
+  assert.equal(changed!.board.answers.find(a => a.id === answer.id)!.status, 'unknown');
+  assert.ok(!changed!.update.recomputed.includes(answer.id));
+});
+
+test('changed page with extraction failure preserves old hash but invalidates old claims until retry', async () => {
+  const { env, w } = await created();
+  const source = env.board.sources.find(s => s.url === URL_A)!;
+  w.pages[URL_A] = { text: TEXT_A.replace('at most 5', 'at most 8') };
+  w.modelStatus = [401];
+  const { env: failed } = await refresh(env.snapshot, w);
+  assert.equal(failed!.board.sources.find(s => s.id === source.id)!.contentHash, source.contentHash);
+  assert.equal(answerOf(failed!.board, 'Send at most 5').status, 'unknown');
+  assert.ok(!failed!.update.reused.includes(answerOf(env.board, 'Send at most 5').id));
+  w.refreshFacts = factsFor(env.board, URL_A, [FACT_A(8), FACT_A2]);
+  const { env: recovered } = await refresh(failed!.snapshot, w);
+  assert.notEqual(recovered!.board.sources.find(s => s.id === source.id)!.contentHash, source.contentHash);
+  assert.equal(recovered!.trace.model_calls, 2);
+  assert.ok(recovered!.update.recomputed.includes(answerOf(env.board, 'Send at most 5').id));
+});
+
+test('model omission of requirement-use mapping is conservative through the actual create/refresh routes', async () => {
+  const w = newWorld();
+  w.extraction = structuredClone(w.extraction);
+  delete (w.extraction as { answers: { uses_requirements?: boolean }[] }).answers[0]!.uses_requirements;
+  const { env } = await run(createBoardSpec, '/api/boards', create, w);
+  const answer = answerOf(env!.board, 'Send at most 5');
+  assert.equal(openState(env!.snapshot, SECRET, HOSTS).meta.domain.answers[answer.id]!.usesReq, null);
+  const { env: edited } = await refresh(env!.snapshot, w, { force: false, requirements: 'batch of 19' });
+  assert.ok(edited!.update.recomputed.includes(answer.id));
+  assert.equal(edited!.trace.retrieval.length, 0);
+});

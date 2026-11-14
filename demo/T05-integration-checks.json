@@ -1,0 +1,673 @@
+{
+  "schemaVersion": 1,
+  "project": "ripple",
+  "task": "T05",
+  "local_test": true,
+  "public_ready": false,
+  "native_api": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "local_test": true,
+    "base_url": "http://127.0.0.1:4506",
+    "executedAt": "2026-11-14T19:49:24.700Z",
+    "passed": true,
+    "checks": {
+      "configured": true,
+      "signed_visitor_session": true,
+      "two_domain_source_backed_create": true,
+      "meaningful_requirement_change_no_source_fetch": true,
+      "refresh_trace_and_disjoint_sets": true
+    },
+    "operations": [
+      {
+        "stage": "create",
+        "request_id": "f7feed7f-27ab-449a-b62c-5a97329c48da",
+        "board_id": "b_cOBW8dnzofYe",
+        "requirements_sha256": "cf21d6681b8a0219239eb9f0e3d1a6af1d04a9f8e76c55174d696e1e9dea577e",
+        "answers_sha256": "50fff4297b47669f264257a9aa75d3d44894e96cb138d28fa790b2153576a67b",
+        "sources": [
+          {
+            "id": "s_4357b292",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+            "status": "succeeded",
+            "contentHash": "058ac479fa2343aa171dde115564bb15e4e3b97f1d81df83b7a72934e74f0868",
+            "observedAt": "2026-11-14T19:49:26.045Z",
+            "cache_state": "live"
+          },
+          {
+            "id": "s_39381ce3",
+            "url": "https://docs.python.org/3/library/urllib.error.html",
+            "status": "succeeded",
+            "contentHash": "1174cb2b0358e0172cbfc7efbb32e96b72c9579595ac12aa9bdf5fa6659948e5",
+            "observedAt": "2026-11-14T19:49:26.071Z",
+            "cache_state": "live"
+          }
+        ],
+        "citations": [
+          {
+            "fact_id": "f_dfb88fd4",
+            "source_id": "s_4357b292",
+            "status": "supported",
+            "quote": "The `ok` read-only property of the `Response` interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_35bcd689",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The base exception class is `URLError`.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_01222433",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "Though being an exception (a subclass of `URLError`), an `HTTPError` can also function as a non-exceptional file-like return value (the same thing that `urlopen()` returns).",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_0d6fdefd",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "An HTTP status code as defined in RFC 2616.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_96097f1f",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_b61b139d",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The reason for this error. It can be a message string or another exception instance.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_c27a6851",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "This exception is raised when the `urlretrieve()` function detects that the amount of the downloaded data is less than the expected amount (given by the Content-Length header).",
+            "in_preserved_excerpt": true
+          }
+        ],
+        "answers": [
+          {
+            "id": "a_f38a7849",
+            "status": "fresh",
+            "depends_on": [
+              "f_dfb88fd4"
+            ],
+            "observedAt": "2026-11-14T19:49:25.157Z"
+          },
+          {
+            "id": "a_88ec8baf",
+            "status": "fresh",
+            "depends_on": [
+              "f_35bcd689",
+              "f_01222433",
+              "f_0d6fdefd",
+              "f_96097f1f",
+              "f_b61b139d"
+            ],
+            "observedAt": "2026-11-14T19:49:25.157Z"
+          },
+          {
+            "id": "a_660d0be7",
+            "status": "fresh",
+            "depends_on": [
+              "f_01222433",
+              "f_0d6fdefd",
+              "f_b61b139d"
+            ],
+            "observedAt": "2026-11-14T19:49:25.157Z"
+          },
+          {
+            "id": "a_a0f21056",
+            "status": "fresh",
+            "depends_on": [
+              "f_c27a6851"
+            ],
+            "observedAt": "2026-11-14T19:49:25.157Z"
+          }
+        ],
+        "update": {
+          "affected": [
+            "a_f38a7849",
+            "a_88ec8baf",
+            "a_660d0be7",
+            "a_a0f21056"
+          ],
+          "recomputed": [
+            "a_f38a7849",
+            "a_88ec8baf",
+            "a_660d0be7",
+            "a_a0f21056"
+          ],
+          "reused": [],
+          "unknown": []
+        },
+        "trace": {
+          "retrieval": [
+            {
+              "kind": "fetch",
+              "provider": "exa",
+              "mode": "live",
+              "status": "succeeded",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "requestId": "372be3b27aa651e9e8d5c14ae84664f4",
+              "cached": false
+            },
+            {
+              "kind": "fetch",
+              "provider": "exa",
+              "mode": "live",
+              "status": "succeeded",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "requestId": "ea78ca525128269ffc1cd28e56c237f7",
+              "cached": false
+            }
+          ],
+          "model_calls": 1,
+          "elapsed_ms": 13700,
+          "limitations": [
+            "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+            "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+            "Freshness covers only the sources checked here, not the rest of the web."
+          ]
+        },
+        "revision": {
+          "id": "r1",
+          "parent_id": null,
+          "createdAt": "2026-11-14T19:49:38.856Z",
+          "kind": "created",
+          "summary": "Created from 2/2 readable source(s): 7 fact(s), 4 proposed answer(s)."
+        }
+      },
+      {
+        "stage": "requirements_edit",
+        "request_id": "4f11ff8c-0f0f-4216-a42e-0dd81ccaaaad",
+        "board_id": "b_cOBW8dnzofYe",
+        "requirements_sha256": "e665d160309e4566b3b51b0eb8662919e872f57094d28701527727f0c7480bd0",
+        "answers_sha256": "a68660f581e23d2324f4ac4e806267c1dfc24c70a73153407059e8341b979f39",
+        "sources": [
+          {
+            "id": "s_4357b292",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+            "status": "succeeded",
+            "contentHash": "058ac479fa2343aa171dde115564bb15e4e3b97f1d81df83b7a72934e74f0868",
+            "observedAt": "2026-11-14T19:49:26.045Z",
+            "cache_state": "live"
+          },
+          {
+            "id": "s_39381ce3",
+            "url": "https://docs.python.org/3/library/urllib.error.html",
+            "status": "succeeded",
+            "contentHash": "1174cb2b0358e0172cbfc7efbb32e96b72c9579595ac12aa9bdf5fa6659948e5",
+            "observedAt": "2026-11-14T19:49:26.071Z",
+            "cache_state": "live"
+          }
+        ],
+        "citations": [
+          {
+            "fact_id": "f_dfb88fd4",
+            "source_id": "s_4357b292",
+            "status": "supported",
+            "quote": "The `ok` read-only property of the `Response` interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_35bcd689",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The base exception class is `URLError`.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_01222433",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "Though being an exception (a subclass of `URLError`), an `HTTPError` can also function as a non-exceptional file-like return value (the same thing that `urlopen()` returns).",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_0d6fdefd",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "An HTTP status code as defined in RFC 2616.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_96097f1f",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_b61b139d",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The reason for this error. It can be a message string or another exception instance.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_c27a6851",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "This exception is raised when the `urlretrieve()` function detects that the amount of the downloaded data is less than the expected amount (given by the Content-Length header).",
+            "in_preserved_excerpt": true
+          }
+        ],
+        "answers": [
+          {
+            "id": "a_f38a7849",
+            "status": "fresh",
+            "depends_on": [
+              "f_dfb88fd4"
+            ],
+            "observedAt": "2026-11-14T19:49:38.980Z"
+          },
+          {
+            "id": "a_88ec8baf",
+            "status": "fresh",
+            "depends_on": [
+              "f_35bcd689",
+              "f_01222433",
+              "f_0d6fdefd",
+              "f_96097f1f",
+              "f_b61b139d"
+            ],
+            "observedAt": "2026-11-14T19:49:38.980Z"
+          },
+          {
+            "id": "a_660d0be7",
+            "status": "fresh",
+            "depends_on": [
+              "f_01222433",
+              "f_0d6fdefd",
+              "f_b61b139d"
+            ],
+            "observedAt": "2026-11-14T19:49:38.980Z"
+          },
+          {
+            "id": "a_a0f21056",
+            "status": "fresh",
+            "depends_on": [
+              "f_c27a6851"
+            ],
+            "observedAt": "2026-11-14T19:49:25.157Z"
+          }
+        ],
+        "update": {
+          "affected": [
+            "a_f38a7849",
+            "a_88ec8baf",
+            "a_660d0be7"
+          ],
+          "recomputed": [
+            "a_f38a7849",
+            "a_88ec8baf",
+            "a_660d0be7"
+          ],
+          "reused": [
+            "a_a0f21056"
+          ],
+          "unknown": []
+        },
+        "trace": {
+          "retrieval": [],
+          "model_calls": 1,
+          "elapsed_ms": 8198,
+          "limitations": [
+            "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+            "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+            "Freshness covers only the sources checked here, not the rest of the web.",
+            "Requirement edits do not re-check sources; evidence timestamps are unchanged."
+          ]
+        },
+        "revision": {
+          "id": "r2",
+          "parent_id": "r1",
+          "createdAt": "2026-11-14T19:49:38.980Z",
+          "kind": "requirements_edit",
+          "summary": "Requirements edited by the user; sources were not re-checked and no external change was observed. 0 verified fact value(s) changed; 3 answer(s) recomputed, 1 reused, 0 unknown. Cost: 0 source check(s), 0 extraction call(s), 3 recomputation(s); refresh-all over the same observations would attempt 4."
+        }
+      },
+      {
+        "stage": "source_refresh",
+        "request_id": "d2597c27-40d5-46f9-b26c-3a05c6eb3386",
+        "board_id": "b_cOBW8dnzofYe",
+        "requirements_sha256": "e665d160309e4566b3b51b0eb8662919e872f57094d28701527727f0c7480bd0",
+        "answers_sha256": "a68660f581e23d2324f4ac4e806267c1dfc24c70a73153407059e8341b979f39",
+        "sources": [
+          {
+            "id": "s_4357b292",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+            "status": "succeeded",
+            "contentHash": "058ac479fa2343aa171dde115564bb15e4e3b97f1d81df83b7a72934e74f0868",
+            "observedAt": "2026-11-14T19:49:47.944Z",
+            "cache_state": "live"
+          },
+          {
+            "id": "s_39381ce3",
+            "url": "https://docs.python.org/3/library/urllib.error.html",
+            "status": "succeeded",
+            "contentHash": "1174cb2b0358e0172cbfc7efbb32e96b72c9579595ac12aa9bdf5fa6659948e5",
+            "observedAt": "2026-11-14T19:49:47.955Z",
+            "cache_state": "live"
+          }
+        ],
+        "citations": [
+          {
+            "fact_id": "f_dfb88fd4",
+            "source_id": "s_4357b292",
+            "status": "supported",
+            "quote": "The `ok` read-only property of the `Response` interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_35bcd689",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The base exception class is `URLError`.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_01222433",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "Though being an exception (a subclass of `URLError`), an `HTTPError` can also function as a non-exceptional file-like return value (the same thing that `urlopen()` returns).",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_0d6fdefd",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "An HTTP status code as defined in RFC 2616.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_96097f1f",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_b61b139d",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "The reason for this error. It can be a message string or another exception instance.",
+            "in_preserved_excerpt": true
+          },
+          {
+            "fact_id": "f_c27a6851",
+            "source_id": "s_39381ce3",
+            "status": "supported",
+            "quote": "This exception is raised when the `urlretrieve()` function detects that the amount of the downloaded data is less than the expected amount (given by the Content-Length header).",
+            "in_preserved_excerpt": true
+          }
+        ],
+        "answers": [
+          {
+            "id": "a_f38a7849",
+            "status": "fresh",
+            "depends_on": [
+              "f_dfb88fd4"
+            ],
+            "observedAt": "2026-11-14T19:49:38.980Z"
+          },
+          {
+            "id": "a_88ec8baf",
+            "status": "fresh",
+            "depends_on": [
+              "f_35bcd689",
+              "f_01222433",
+              "f_0d6fdefd",
+              "f_96097f1f",
+              "f_b61b139d"
+            ],
+            "observedAt": "2026-11-14T19:49:38.980Z"
+          },
+          {
+            "id": "a_660d0be7",
+            "status": "fresh",
+            "depends_on": [
+              "f_01222433",
+              "f_0d6fdefd",
+              "f_b61b139d"
+            ],
+            "observedAt": "2026-11-14T19:49:38.980Z"
+          },
+          {
+            "id": "a_a0f21056",
+            "status": "fresh",
+            "depends_on": [
+              "f_c27a6851"
+            ],
+            "observedAt": "2026-11-14T19:49:25.157Z"
+          }
+        ],
+        "update": {
+          "affected": [],
+          "recomputed": [],
+          "reused": [
+            "a_f38a7849",
+            "a_88ec8baf",
+            "a_660d0be7",
+            "a_a0f21056"
+          ],
+          "unknown": []
+        },
+        "trace": {
+          "retrieval": [
+            {
+              "kind": "fetch",
+              "provider": "exa",
+              "mode": "live",
+              "status": "succeeded",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "requestId": "7b61c087dbabfb6c072e634fd5510813",
+              "cached": false
+            },
+            {
+              "kind": "fetch",
+              "provider": "exa",
+              "mode": "live",
+              "status": "succeeded",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "requestId": "0c8f37524ba4c9aa3a9310fb77f90c0d",
+              "cached": false
+            }
+          ],
+          "model_calls": 0,
+          "elapsed_ms": 706,
+          "limitations": [
+            "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+            "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+            "Freshness covers only the sources checked here, not the rest of the web.",
+            "Provider cache state is reported per source; an equal content hash is not proof that unread parts of a page are unchanged."
+          ]
+        },
+        "revision": {
+          "id": "r3",
+          "parent_id": "r2",
+          "createdAt": "2026-11-14T19:49:47.287Z",
+          "kind": "source_refresh",
+          "summary": "Checked 2 source(s): 2 unchanged, 0 changed, 0 unreadable. 0 verified fact value(s) changed; 0 answer(s) recomputed, 4 reused, 0 unknown. Cost: 2 source check(s), 0 extraction call(s), 0 recomputation(s); refresh-all over the same observations would attempt 4."
+        }
+      }
+    ],
+    "limitations": [
+      "Native HTTP check only; independent deployed browser gate still required.",
+      "No paired refresh-all execution in this probe; baselineStatus=not_measured."
+    ]
+  },
+  "independent_browser_gate": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "gate": "public-beta-v1",
+    "base_url": "http://127.0.0.1:4508",
+    "commit": "e090b64fb086e92ff298692495f1565dc4dc4599",
+    "nonce": "T05-final-9f65e57c25174719a5dec7cd74e6b00b",
+    "live": true,
+    "executed": true,
+    "passed": true,
+    "checks": {
+      "public_home": {
+        "passed": true
+      },
+      "server_safety_contract": {
+        "passed": true,
+        "note": "Configuration assertions; actual behavior is separately tested. Not a security audit."
+      },
+      "source_rejection": {
+        "passed": true
+      },
+      "cross_origin_rejection": {
+        "passed": true
+      },
+      "real_custom_board": {
+        "passed": true
+      },
+      "observed_provenance": {
+        "passed": true
+      },
+      "persistent_reload": {
+        "passed": true
+      },
+      "independent_browser": {
+        "passed": true
+      },
+      "requirement_edit": {
+        "passed": true
+      },
+      "live_refresh": {
+        "passed": true
+      },
+      "tamper_rejection": {
+        "passed": true
+      },
+      "export_import_delete": {
+        "passed": true
+      },
+      "search_discovery": {
+        "passed": true
+      },
+      "privacy_and_limits": {
+        "passed": true
+      },
+      "mobile_layout": {
+        "passed": true
+      }
+    },
+    "errors": [],
+    "startedAt": "2026-11-14T19:59:00.421Z",
+    "completedAt": "2026-11-14T19:59:20.172Z"
+  },
+  "redis_quota": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "executedAt": "2026-11-14T19:50:03.298Z",
+    "passed": true,
+    "realRedis": true,
+    "isolatedNamespace": true,
+    "attempts": 8,
+    "allowed": 3,
+    "denied": 5,
+    "maximumCounter": 3,
+    "cleanup": true
+  },
+  "request_identity": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "base_url": "http://127.0.0.1:4507",
+    "local_test": true,
+    "executedAt": "2026-11-14T19:56:24.672Z",
+    "passed": true,
+    "input_sha256": "99d95426c56978ef556f3b4b44b1fd834b48970d3d9a18df03215158ac35adeb",
+    "evidenceCount": 2,
+    "trace": {
+      "queries": [],
+      "fetches": [
+        {
+          "source_id": "s1",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+          "status": "succeeded",
+          "origin": "telem_live",
+          "request_id": null
+        }
+      ],
+      "model_calls": 1,
+      "elapsed_ms": 3347,
+      "cache_mode": "warm",
+      "notes": [
+        "From-scratch build: treatment and baseline perform identical source acquisition and extraction."
+      ]
+    },
+    "decisionCount": 2
+  },
+  "playwright_mcp": {
+    "real_service_flow": {
+      "passed": true,
+      "title": "T05 Browser downloader policy",
+      "source_domains": [
+        "developer.mozilla.org",
+        "docs.python.org"
+      ],
+      "create_http": 201,
+      "supported_facts": 6,
+      "fresh_answers": 4,
+      "requirement_edit": {
+        "recomputed": 3,
+        "reused": 1,
+        "source_fetches": 0,
+        "model_calls": 1
+      },
+      "refresh": {
+        "checked_sources": 2,
+        "recomputed": 0,
+        "reused": 4,
+        "model_calls": 0
+      },
+      "save_reload": true,
+      "export_full_revisions": 3,
+      "delete_reload": true,
+      "import_unverified": true
+    },
+    "delete_immediate_reload": {
+      "passed": true,
+      "repetitions": 10,
+      "assertion": "actual boards and revisions stores empty after each reload",
+      "paid_calls": 0
+    },
+    "storage_failure_and_conflict": {
+      "passed": true,
+      "write_failure_visible": true,
+      "recovery_export": true,
+      "retry_save_reload": true,
+      "newer_revision_preserved": true,
+      "journal_failure_preserves_board": true,
+      "paid_calls": 0
+    },
+    "regression_base_url": "http://127.0.0.1:4508"
+  },
+  "bundle_scan": {
+    "files": 13,
+    "configured_secret_values": 5,
+    "matching_files": 0
+  },
+  "limitations": [
+    "All endpoints tested here are localhost, not a deployed HTTPS release.",
+    "Independent gate uses its supported URLs/question configuration with short official MDN subpages; gate implementation and assertions unchanged.",
+    "Main two-domain browser flow used real services. Storage failure/reload regression cases are explicitly historical test archives and injected browser failures, not live evidence.",
+    "Baseline counts in custom-board revision summaries are planned counts, not paired live measurements.",
+    "No release media or native MCP-client readiness claim."
+  ],
+  "working_tree_changes": true,
+  "source_commit_note": "Local gate commit identifies parent HEAD; T05 changes are uncommitted for controller integration. HTTPS release gate must be rerun on integrated commit."
+}
