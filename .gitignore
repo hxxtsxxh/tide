@@ -18,3 +18,5 @@ artifacts/
 *.tsbuildinfo
 
 .playwright-mcp/
+.vercel
+.env*
