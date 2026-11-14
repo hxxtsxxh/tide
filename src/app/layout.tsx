@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import './apple.css';
 
 export const metadata: Metadata = {
   title: 'Ripple — know which answers became stale',
