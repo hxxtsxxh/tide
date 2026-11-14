@@ -27,8 +27,11 @@
     "Pages are cut to 12,000 characters and truncated reads are reported partial, which keeps their dependents unknown",
     "Custom-board refresh-all counts in revision summaries are planned counts; measured paired baseline exists only through the legacy evaluation adapter",
     "No background monitoring or scheduling; refresh is user-triggered",
-    "Native Claude Code/Codex invocation and deployed MCP/API gate are not verified by local protocol tests",
     "public_ready=false until the independent browser gate passes on the HTTPS deployment",
-    "Tavily cache freshness and upstream redirect chains not independently established; no post-integration deployed sponsor gate or total-work savings measurement by TV01"
+    "Tavily provider cache freshness and upstream redirect chains are not independently established; final post-integration HTTPS sponsor verification remains controller-owned.",
+    "T06 native verification is local: Claude status/list/create passed; Codex status/list passed but its host approval policy refused create, so native Codex source-backed use remains unverified.",
+    "Prepared live paired cases are from-scratch builds: both strategies used identical acquisition/model counts; no live selective-refresh efficiency gain or semantic accuracy claim is established.",
+    "Fatal mandatory-Telem errors can omit already-attempted parallel Tavily work from public error accounting; missing counts are unknown, not zero.",
+    "Direct stateless duplicate refresh requests are separately quota-admitted, not deduplicated; the browser prevents duplicate submission and detects local revision conflicts."
   ]
 }

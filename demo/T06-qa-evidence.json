@@ -1,0 +1,300 @@
+{
+  "comparison": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "executedAt": "2026-11-14T21:30:38.831697+00:00",
+    "commit": "1adeaa9dc8db16f6b565dd0969e8edc8acd90a68",
+    "local_test": true,
+    "base_url": "http://127.0.0.1:4816",
+    "conditions": {
+      "model_provider": "anthropic",
+      "model": "claude-sonnet-5-5",
+      "legacy_declared_limits": {
+        "max_model_calls": 3,
+        "max_pages": 5,
+        "max_queries": 3,
+        "timeout_ms": 20000
+      },
+      "public_caps": {
+        "sources": 5,
+        "model_calls": 6,
+        "search_queries": 2,
+        "timeout_ms": 45000
+      },
+      "local_shared_quota_caps": {
+        "globalDaily": 300,
+        "visitorDaily": 40,
+        "visitorMinute": 12
+      },
+      "quota_bypass": false,
+      "quota_counters_reset": false,
+      "cache_policy": "Same application path and model/budget for each strategy. Legacy create allows Telem caching; observed warm on every paired response. Direct Tavily cache freshness unknown; no causal cost/latency claim."
+    },
+    "fixtures": {
+      "cases": 10,
+      "treatment_passed": 10,
+      "failed": 0,
+      "baseline_quality_failed": 6,
+      "baseline_quality_succeeded": 4,
+      "operational_errors": 0,
+      "treatment_affected_false_positives": 0,
+      "treatment_affected_false_negatives": 0,
+      "affected_set_cases_with_exact_oracle": 6,
+      "paired_decision_states_equal": true,
+      "sparse_change_R01": {
+        "baseline_recomputed": 3,
+        "treatment_recomputed": 2,
+        "source_checks_each": 2,
+        "model_calls_each": 0,
+        "evidence_class": "authored fixture only"
+      },
+      "baseline_quality_note": "Six mismatches concern recomputed/reused sets for a refresh-all baseline. Preserve them as reported; decision states agree. Four baseline cases pass, including the expected cycle rejection."
+    },
+    "live": {
+      "case_ids": [
+        "LIVE01",
+        "LIVE02",
+        "LIVE03"
+      ],
+      "passed": 3,
+      "failed": 0,
+      "baseline_successes": 3,
+      "operational_errors": 0,
+      "baselineStatus": "measured",
+      "independent_paired_passed": 3,
+      "independent_paired_source_hash_sets_equal": true,
+      "independent_run_accounting_only": {
+        "baseline": {
+          "observations": 3,
+          "telem_http_attempts": 6,
+          "direct_tavily_http_attempts": 3,
+          "model_calls": 3,
+          "reported_tavily_credits": 1.0,
+          "telem_cache_modes": [
+            "warm"
+          ],
+          "tavily_cache_state": "unknown"
+        },
+        "treatment": {
+          "observations": 3,
+          "telem_http_attempts": 6,
+          "direct_tavily_http_attempts": 3,
+          "model_calls": 3,
+          "reported_tavily_credits": 0,
+          "telem_cache_modes": [
+            "warm"
+          ],
+          "tavily_cache_state": "unknown"
+        }
+      },
+      "semantic_accuracy": "not_measured",
+      "real_world_false_positives": "not_measured",
+      "claim": "From-scratch live probes perform equal acquisition/model work; no selective-refresh saving was observed or inferred. Reported Tavily credits vary and do not establish an algorithmic cost reduction."
+    },
+    "test_suites": {
+      "application": {
+        "passed": 132,
+        "failed": 0,
+        "skipped": 0
+      },
+      "mcp": {
+        "passed": 23,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "local_gates": {
+      "public_browser": {
+        "passed": true,
+        "checks": 15,
+        "errors": [],
+        "config_local_test": true,
+        "raw_live_field": true,
+        "deployed_success": false
+      },
+      "mcp": {
+        "passed": true,
+        "checks": 12,
+        "errors": [],
+        "config_local_test": true,
+        "raw_live_field": false,
+        "deployed_success": false
+      }
+    },
+    "native": {
+      "claude": {
+        "status": "passed",
+        "version": "2.1.311 (Claude Code)",
+        "source_backed_operation": true,
+        "reason": null
+      },
+      "codex": {
+        "status": "read_tools_verified_source_unverified",
+        "version": "codex-cli 0.169.0",
+        "source_backed_operation": false,
+        "reason": "native_host_approval_refused_source_operation"
+      }
+    },
+    "limitations": [
+      "Local gates are not a final deployed HTTPS release gate; public_ready=false for this task.",
+      "Immutable browser gate emits live:true even for its local_test configuration; raw report is unchanged and must be read with its saved config.",
+      "Fatal-operation errors omit some attempted parallel retrieval work; fatal accounting reproduction remains unresolved in application code.",
+      "Custom-board revision baseline summaries are planned, not actually executed paired baselines.",
+      "Codex native host approval refused source creation; status/list invocation is verified, source-backed native Codex remains unverified.",
+      "Model-proposed dependencies and finite authored tests do not establish dependency completeness or factual accuracy.",
+      "Observer first fixture attempt failed due to Python exception-variable lifetime; corrected and reran full immutable fixture runner; initial partial observation retained."
+    ]
+  },
+  "public_beta_qa": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "executedAt": "2026-11-14T21:30:38.831697+00:00",
+    "commit": "1adeaa9dc8db16f6b565dd0969e8edc8acd90a68",
+    "local_test": true,
+    "public_ready": false,
+    "mcp_ready": false,
+    "local_browser_gate_passed": true,
+    "local_mcp_gate_passed": true,
+    "checks": {
+      "quota_concurrency": {
+        "passed": true,
+        "evidence": "artifacts/evaluation/redis-quota.json"
+      },
+      "all_paid_routes_fail_closed": {
+        "passed": true,
+        "evidence": "tests/t06-safety.test.ts"
+      },
+      "forged_expired_foreign_snapshot": {
+        "passed": true,
+        "evidence": "tests/t06-safety.test.ts"
+      },
+      "unsupported_hosts_and_returned_destinations": {
+        "passed": true,
+        "evidence": "tests/t06-safety.test.ts"
+      },
+      "cross_origin_and_streamed_body_caps_all_paid_routes": {
+        "passed": true,
+        "evidence": "tests/t06-safety.test.ts"
+      },
+      "imported_xss": {
+        "passed": true,
+        "evidence": "artifacts/evaluation/browser-import.json"
+      },
+      "duplicate_and_concurrent_refresh": {
+        "passed": true,
+        "evidence": "artifacts/evaluation/browser-concurrent.json",
+        "note": "UI prevents duplicate submit; local optimistic revision conflict is visible. Separate direct stateless API calls are separately metered, not deduplicated."
+      },
+      "storage_failures": {
+        "passed": true,
+        "evidence": "artifacts/evaluation/browser-storage-recovery.json"
+      },
+      "client_secret_scan": {
+        "passed": true,
+        "evidence": "artifacts/evaluation/client-secret-scan.log",
+        "files": 14,
+        "configured_secret_values": 6,
+        "matching_files": 0
+      }
+    },
+    "native_evidence": "artifacts/native-client-verification.json",
+    "comparison_evidence": "artifacts/evaluation/comparison.json",
+    "immutable_inputs_sha256": {
+      ".searchhack/context/evaluation/run.py": "f798a639f88ad23ceed1ddc19eddb774ae2ea57f5dbe6e704e85a4fc20ecbe6b",
+      ".searchhack/context/evaluation/oracle.json": "bd57d2ffa340e20ff7036ed4a0a6cda557da2421854b44ca92ec1d18df790db3",
+      ".searchhack/context/public-beta/evaluation/browser-gate.mjs": "6bab9052445d94d8c9289e3b6bcaa7842e3b35997795dccbadb82f775a1d04a6",
+      ".searchhack/context/agents/evaluation/mcp-gate.mjs": "ab4619b12de5343ee4eeab1df7d7f5724de8881af8513f2424472c6e6673311c"
+    },
+    "unresolved": [
+      "Local gates are not a final deployed HTTPS release gate; public_ready=false for this task.",
+      "Immutable browser gate emits live:true even for its local_test configuration; raw report is unchanged and must be read with its saved config.",
+      "Fatal-operation errors omit some attempted parallel retrieval work; fatal accounting reproduction remains unresolved in application code.",
+      "Custom-board revision baseline summaries are planned, not actually executed paired baselines.",
+      "Codex native host approval refused source creation; status/list invocation is verified, source-backed native Codex remains unverified.",
+      "Model-proposed dependencies and finite authored tests do not establish dependency completeness or factual accuracy.",
+      "Observer first fixture attempt failed due to Python exception-variable lifetime; corrected and reran full immutable fixture runner; initial partial observation retained."
+    ]
+  },
+  "native_clients": {
+    "schemaVersion": 1,
+    "project": "ripple",
+    "executedAt": "2026-11-14T21:23:54.928477+00:00",
+    "local_test": true,
+    "base_url": "http://127.0.0.1:4816",
+    "global_settings_changed": false,
+    "notes": "Native clients use their existing authenticated sessions. The connection helper was applied to separate disposable projects, then only those generated configs were pointed explicitly at the local test API. No deployment/native-HTTPS claim. Codex read-only native host approval refused create; this is not a protocol failure. Initial attempts are retained in artifacts/evaluation/native-initial.json. The initial Claude CLI prompt was consumed by a variadic allowedTools option; corrected argument placement produced the recorded successful invocation.",
+    "claude": {
+      "status": "passed",
+      "version": "2.1.311 (Claude Code)",
+      "tools": [
+        {
+          "name": "ripple_status",
+          "status": "completed"
+        },
+        {
+          "name": "ripple_list_boards",
+          "status": "completed"
+        },
+        {
+          "name": "ripple_create_board",
+          "status": "completed",
+          "source_count": 1,
+          "supported_facts": 3,
+          "tavily_sources": 1,
+          "telem_fetch_observed": true
+        }
+      ],
+      "source_backed_operation": true,
+      "exit_code": 0,
+      "event_types": [
+        "assistant",
+        "rate_limit_event",
+        "result",
+        "system",
+        "user"
+      ]
+    },
+    "codex": {
+      "status": "read_tools_verified_source_unverified",
+      "version": "codex-cli 0.169.0",
+      "tools": [
+        {
+          "name": "ripple_status",
+          "status": "completed",
+          "error": false
+        },
+        {
+          "name": "ripple_list_boards",
+          "status": "completed",
+          "error": false
+        },
+        {
+          "name": "ripple_create_board",
+          "status": "failed",
+          "error": true,
+          "error_categories": [
+            "approval"
+          ],
+          "coded_errors": []
+        }
+      ],
+      "source_backed_operation": false,
+      "exit_code": 0,
+      "event_types": [
+        "item.completed",
+        "item.started",
+        "thread.started",
+        "turn.completed",
+        "turn.started"
+      ],
+      "reason": "native_host_approval_refused_source_operation",
+      "diagnostic_categories": [
+        "configuration",
+        "error",
+        "argument"
+      ]
+    },
+    "disposable_projects_removed": true,
+    "commit": "1adeaa9dc8db16f6b565dd0969e8edc8acd90a68"
+  }
+}
