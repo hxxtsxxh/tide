@@ -31,7 +31,7 @@
     "Tavily provider cache freshness and upstream redirect chains are not independently established; final post-integration HTTPS sponsor verification remains controller-owned.",
     "T06 native verification is local: Claude status/list/create passed; Codex status/list passed but its host approval policy refused create, so native Codex source-backed use remains unverified.",
     "Prepared live paired cases are from-scratch builds: both strategies used identical acquisition/model counts; no live selective-refresh efficiency gain or semantic accuracy claim is established.",
-    "Fatal mandatory-Telem errors can omit already-attempted parallel Tavily work from public error accounting; missing counts are unknown, not zero.",
+    "Fatal mandatory-Telem errors keep the JSON error schema; observed Telem/Tavily HTTP attempts and provider-reported Tavily credits for that operation are returned in the X-Ripple-Upstream-Attempts header and the redacted server log ('unknown' when not observed), not in a body trace.",
     "Direct stateless duplicate refresh requests are separately quota-admitted, not deduplicated; the browser prevents duplicate submission and detects local revision conflicts."
   ]
 }

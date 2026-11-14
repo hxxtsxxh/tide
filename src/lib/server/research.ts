@@ -50,8 +50,8 @@ function modelDeps(d: RunDeps): ModelDeps {
 
 export function mapTelem(e: unknown): never {
   if (e instanceof TelemFailure) {
-    if (e.kind === 'timeout') throw new ApiError('TIMEOUT', 'The operation deadline was reached while acquiring sources.');
-    throw new ApiError('UPSTREAM_UNAVAILABLE', e.kind === 'auth' ? 'The source acquisition service rejected this deployment’s credentials.' : 'The source acquisition service is unavailable.');
+    if (e.kind === 'timeout') throw new ApiError('TIMEOUT', 'The operation deadline was reached while acquiring sources.', undefined, e.attempts);
+    throw new ApiError('UPSTREAM_UNAVAILABLE', e.kind === 'auth' ? 'The source acquisition service rejected this deployment’s credentials.' : 'The source acquisition service is unavailable.', undefined, e.attempts);
   }
   throw e;
 }
