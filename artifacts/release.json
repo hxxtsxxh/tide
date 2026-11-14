@@ -1,23 +1,23 @@
 {
   "project": "ripple",
-  "started_at": "2026-11-14T21:36:05.148752+00:00",
+  "started_at": "2026-11-14T21:45:35.705429+00:00",
   "status": "complete",
   "checks": {
     "build": [
       {
         "command": "npm run check",
         "passed": true,
-        "seconds": 0.95
+        "seconds": 1.04
       },
       {
         "command": "npm run test",
         "passed": true,
-        "seconds": 1.26
+        "seconds": 0.95
       },
       {
         "command": "npm run build",
         "passed": true,
-        "seconds": 2.51
+        "seconds": 4.06
       }
     ],
     "deployment": {
@@ -28,11 +28,11 @@
       "vercel_project_id": "prj_Uu5OFuwxf8FB6bHkD20DRfcPqDRE",
       "vercel_org_id": "team_iAUJBnryL4G6c8iEAA61VM2y",
       "url": "https://searchhack-ripple-08a1a865.vercel.app",
-      "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
-      "deployed_at": "2026-11-14T21:36:46.286136+00:00",
+      "commit": "08af7ea3268d89cd3ce5197c650ef7f03872f724",
+      "deployed_at": "2026-11-14T21:46:29.542474+00:00",
       "verification": {
         "url": "https://searchhack-ripple-08a1a865.vercel.app",
-        "checked_at": "2026-11-14T21:36:44.712231+00:00",
+        "checked_at": "2026-11-14T21:46:28.338947+00:00",
         "public_home": true,
         "health": true,
         "live_mode": true,
@@ -46,7 +46,7 @@
         "schemaVersion": 1,
         "project": "ripple",
         "mode": "live",
-        "executedAt": "2026-11-14T21:37:29.496Z",
+        "executedAt": "2026-11-14T21:47:12.188Z",
         "baseUrl": "https://searchhack-ripple-08a1a865.vercel.app",
         "caseCount": 3,
         "passed": 3,
@@ -64,10 +64,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 9542,
+                "wall_ms": 9885,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 9087,
+                  "elapsed_ms": 9295,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -81,10 +81,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 9578,
+                "wall_ms": 9262,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 9326,
+                  "elapsed_ms": 9040,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -104,10 +104,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 6032,
+                "wall_ms": 6353,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 5803,
+                  "elapsed_ms": 5859,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -121,10 +121,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 7159,
+                "wall_ms": 7475,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 6250,
+                  "elapsed_ms": 6974,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -144,10 +144,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 5655,
+                "wall_ms": 4292,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 5383,
+                  "elapsed_ms": 4032,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -161,10 +161,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 4925,
+                "wall_ms": 5050,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 4586,
+                  "elapsed_ms": 4802,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -202,10 +202,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 10130,
+          "wall_ms": 8983,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 9835,
+            "elapsed_ms": 8704,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -219,10 +219,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 9365,
+          "wall_ms": 9955,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 9066,
+            "elapsed_ms": 8893,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -236,10 +236,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 7603,
+          "wall_ms": 5501,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 7365,
+            "elapsed_ms": 5147,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -253,10 +253,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 6448,
+          "wall_ms": 7298,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 6188,
+            "elapsed_ms": 6942,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -270,10 +270,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 4561,
+          "wall_ms": 4553,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 4225,
+            "elapsed_ms": 4199,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -287,10 +287,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 4516,
+          "wall_ms": 4217,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 4208,
+            "elapsed_ms": 3907,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -298,7 +298,7 @@
           "passed": true
         }
       ],
-      "generated_at": "2026-11-14T21:38:12.272028+00:00",
+      "generated_at": "2026-11-14T21:47:52.886506+00:00",
       "limitations": [
         "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
         "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
@@ -309,7 +309,7 @@
     "public_beta": {
       "passed": true,
       "path": "artifacts/public-beta-gate.json",
-      "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
+      "commit": "08af7ea3268d89cd3ce5197c650ef7f03872f724",
       "checks": {
         "public_home": {
           "passed": true
@@ -363,7 +363,7 @@
     "agent_integration": {
       "passed": true,
       "path": "artifacts/agent-integration-gate.json",
-      "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
+      "commit": "08af7ea3268d89cd3ce5197c650ef7f03872f724",
       "checks": {
         "protocol": {
           "passed": true,
@@ -423,98 +423,98 @@
     "media": {
       "schema_version": 1,
       "project_id": "ripple",
-      "created_at": "20261114T213837.105009Z",
+      "created_at": "20261114T214817.865254Z",
       "base_url": "https://searchhack-ripple-08a1a865.vercel.app",
-      "outdir": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z",
-      "manifest": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/manifest.json",
+      "outdir": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z",
+      "manifest": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/manifest.json",
       "status": "complete",
       "success": true,
       "errors": [],
       "warnings": [],
       "files": [
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/action-timestamps.json",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/action-timestamps.json",
           "relative_path": "action-timestamps.json",
-          "bytes": 3905,
-          "sha256": "629b296434286b04f7f5e03c1567bde86732d39b73dfa56af6e4166d09453d47"
+          "bytes": 3924,
+          "sha256": "720a3f0085eb8873f21347d44f5dcc9ebaa04c747a01f0e9569f93f1a6d8f2cb"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/captions.srt",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/captions.srt",
           "relative_path": "captions.srt",
           "bytes": 1187,
-          "sha256": "d3690005d8605c4b790200af45ff514ed6a09c7c20db28bd8c23adba1f99be1e"
+          "sha256": "38a60233d7335b9fd05f8ce61dd9007ab0a14be2600abac070e35cfa76ef2aae"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/demo.mp4",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/demo.mp4",
           "relative_path": "demo.mp4",
-          "bytes": 3246863,
-          "sha256": "c662ac5622224e4929ff26178663251c31b092de9d63abf81f13d4abcb589243"
+          "bytes": 3409974,
+          "sha256": "6929755aa9beae1926fa6b6cefecf9f7540454cb84f35bca8aeb84aac863f48d"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/desktop.png",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/desktop.png",
           "relative_path": "desktop.png",
-          "bytes": 543947,
-          "sha256": "40c9cf76c96bdcb77c40f0cd028bc597231791818bee3fc2ba858a3cbbe9a25a"
+          "bytes": 537483,
+          "sha256": "81938b5a9330d569ed8b6650c53742a674ba5b79e2f845281401c28f5b323bc4"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/mobile.png",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/mobile.png",
           "relative_path": "mobile.png",
-          "bytes": 133872,
-          "sha256": "02708f98072ff1c524e1cf86a0bf57a1ba7b6ddfe9a5c80cec8869ff8abc4c5b"
+          "bytes": 189649,
+          "sha256": "21c094ea4b08170c6e175e79fe9bd745340a7f32ea72b055ddcc17cfd48b5647"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/narration.aiff",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/narration.aiff",
           "relative_path": "narration.aiff",
           "bytes": 4238872,
           "sha256": "f244c4aa1dd4ddbc476110f5d22600b3b9202d65bdc49580e59b28e24b6ee7c5"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/narration.txt",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/narration.txt",
           "relative_path": "narration.txt",
           "bytes": 1499,
           "sha256": "75934f43cad68905c5e9d7b47c639f38d8e5e73aee52d75f229756b3842166fe"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-08.png",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-08.png",
           "relative_path": "shot-08.png",
-          "bytes": 304528,
-          "sha256": "9344bef06afbebbb3c0787269b1c28abf8600e4466e003a35a7755be4b78dc95"
+          "bytes": 317136,
+          "sha256": "d4246fe63f85ea427958ed2647b8f7414e59f93d38d4ce09120ed9fb811abc3c"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-10.png",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-10.png",
           "relative_path": "shot-10.png",
-          "bytes": 544695,
-          "sha256": "c86b46f43d7d3c47ceb535ff4afb751166321a43bf4a929e66aa40da3add9285"
+          "bytes": 532173,
+          "sha256": "4693be62b8f3a11d6d5633dcefb7129ef4241af3a8dd4edab652434ce9279375"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-14.png",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-14.png",
           "relative_path": "shot-14.png",
-          "bytes": 516388,
-          "sha256": "04d3ea15f3764098a269195be14128f738db274bbd9e1ff5d0fd5eb127e4f5aa"
+          "bytes": 503494,
+          "sha256": "57afa8044389a5d2f08674d2fbf1021da075ab35d67bca3fcf2eaf9e3c772afa"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-17.png",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-17.png",
           "relative_path": "shot-17.png",
-          "bytes": 543947,
-          "sha256": "40c9cf76c96bdcb77c40f0cd028bc597231791818bee3fc2ba858a3cbbe9a25a"
+          "bytes": 537483,
+          "sha256": "81938b5a9330d569ed8b6650c53742a674ba5b79e2f845281401c28f5b323bc4"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.html",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/slides.html",
           "relative_path": "slides.html",
-          "bytes": 1458864,
-          "sha256": "f4dacfa50e1c6f83a77034ef99880e99582cab0727bac18beba3d09a4afca01a"
+          "bytes": 1441624,
+          "sha256": "3ad5e6f1a29c69e52459a36685f7a8c92961062a6c011db257da69c211768136"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.pdf",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/slides.pdf",
           "relative_path": "slides.pdf",
-          "bytes": 612930,
-          "sha256": "bc2d1d1f4e9306c9fa3c48757c8278123a88cc3aea0e383416d4fb38d4c51c7f"
+          "bytes": 646349,
+          "sha256": "d802259619ad7c7852e296d3d4f3c4d520fa3527f57b90aeac93839b161f9a05"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/walkthrough.webm",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/walkthrough.webm",
           "relative_path": "walkthrough.webm",
-          "bytes": 10149595,
-          "sha256": "0aafd30ba92038a1a2489089b5720b83d2bc904f1320c2cae07ddc77e6aeef14"
+          "bytes": 10157418,
+          "sha256": "f3663b1fb6b70180f0de31627219d4c6238437ca1c62b9dccb58a0c0d535f40a"
         }
       ],
       "checks": {
@@ -534,7 +534,7 @@
         "narration.txt": "/Users/heetshah/SearchHack/ripple/demo/narration.txt"
       },
       "narration": {
-        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/narration.aiff",
+        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/narration.aiff",
         "engine": "macOS say",
         "synthetic": true,
         "duration_s": 96.026667
@@ -548,171 +548,171 @@
             "index": 0,
             "action": "goto",
             "caption": "Open the live demo",
-            "start_s": 0.05583195799999999,
-            "end_s": 0.789820125,
+            "start_s": 0.12425854100000004,
+            "end_s": 1.1191687499999998,
             "status": "complete"
           },
           {
             "index": 1,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 5.705479040999999,
-            "end_s": 5.732014333,
+            "start_s": 5.773145166,
+            "end_s": 5.811678625,
             "status": "complete"
           },
           {
             "index": 2,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 11.354532125,
-            "end_s": 11.365930291,
+            "start_s": 11.42247425,
+            "end_s": 11.434103416,
             "status": "complete"
           },
           {
             "index": 3,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 17.004008708,
-            "end_s": 17.016047458,
+            "start_s": 17.071716915999996,
+            "end_s": 17.081608708,
             "status": "complete"
           },
           {
             "index": 4,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 22.652761791,
-            "end_s": 22.668593708,
+            "start_s": 22.720361791,
+            "end_s": 22.735836415999998,
             "status": "complete"
           },
           {
             "index": 5,
             "action": "click",
             "caption": "Run the next product action",
-            "start_s": 28.301946708000003,
-            "end_s": 28.394617166,
+            "start_s": 28.370323957999997,
+            "end_s": 28.426911833,
             "status": "complete"
           },
           {
             "index": 6,
             "action": "wait",
             "caption": "Wait for the product result",
-            "start_s": 33.95094387500001,
-            "end_s": 37.247081291,
+            "start_s": 34.02022100000001,
+            "end_s": 37.328608,
             "status": "complete"
           },
           {
             "index": 7,
             "action": "screenshot",
             "caption": "A custom board: Telem source qualification + direct Tavily evidence text",
-            "start_s": 39.600322875,
-            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-08.png",
-            "end_s": 39.792050166,
+            "start_s": 39.66998425,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-08.png",
+            "end_s": 39.9029255,
             "status": "complete"
           },
           {
             "index": 8,
             "action": "click",
             "caption": "Run the next product action",
-            "start_s": 45.249621416000004,
-            "end_s": 45.296794125,
+            "start_s": 45.31914275,
+            "end_s": 45.36982325,
             "status": "complete"
           },
           {
             "index": 9,
             "action": "screenshot",
             "caption": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness",
-            "start_s": 50.899443,
-            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-10.png",
-            "end_s": 51.168509958,
+            "start_s": 50.969049208,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-10.png",
+            "end_s": 51.498317083,
             "status": "complete"
           },
           {
             "index": 10,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 56.549052875,
-            "end_s": 56.567292,
+            "start_s": 56.618060541000006,
+            "end_s": 56.64201787500001,
             "status": "complete"
           },
           {
             "index": 11,
             "action": "click",
             "caption": "Run the next product action",
-            "start_s": 62.19776387500001,
-            "end_s": 62.212542583,
+            "start_s": 62.267739041,
+            "end_s": 62.281597000000005,
             "status": "complete"
           },
           {
             "index": 12,
             "action": "wait",
             "caption": "Wait for the product result",
-            "start_s": 67.84730975,
-            "end_s": 69.362028875,
+            "start_s": 67.916509916,
+            "end_s": 69.43137466599998,
             "status": "complete"
           },
           {
             "index": 13,
             "action": "screenshot",
             "caption": "Requirement changes are different from external source changes",
-            "start_s": 73.49602349999999,
-            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-14.png",
-            "end_s": 73.71558275,
+            "start_s": 73.565053666,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-14.png",
+            "end_s": 74.07195362499999,
             "status": "complete"
           },
           {
             "index": 14,
             "action": "click",
             "caption": "Run the next product action",
-            "start_s": 79.14949604099999,
-            "end_s": 79.193662541,
+            "start_s": 79.214339875,
+            "end_s": 79.26094304099999,
             "status": "complete"
           },
           {
             "index": 15,
             "action": "wait",
             "caption": "Wait for the product result",
-            "start_s": 84.799051666,
-            "end_s": 86.30931158299998,
+            "start_s": 84.864863375,
+            "end_s": 86.382613541,
             "status": "complete"
           },
           {
             "index": 16,
             "action": "screenshot",
             "caption": "Actual source recheck; unchanged pages may legitimately preserve answers",
-            "start_s": 90.447462583,
-            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-17.png",
-            "end_s": 90.690621166,
+            "start_s": 90.513171125,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-17.png",
+            "end_s": 91.020688833,
             "status": "complete"
           }
         ],
         "screenshots": [
           {
             "kind": "desktop",
-            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/desktop.png"
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/desktop.png"
           },
           {
             "kind": "shot",
-            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-08.png",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-08.png",
             "caption": "A custom board: Telem source qualification + direct Tavily evidence text"
           },
           {
             "kind": "shot",
-            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-10.png",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-10.png",
             "caption": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness"
           },
           {
             "kind": "shot",
-            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-14.png",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-14.png",
             "caption": "Requirement changes are different from external source changes"
           },
           {
             "kind": "shot",
-            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-17.png",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/shot-17.png",
             "caption": "Actual source recheck; unchanged pages may legitimately preserve answers"
           },
           {
             "kind": "mobile",
-            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/mobile.png"
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/mobile.png"
           }
         ],
         "warnings": [],
@@ -726,110 +726,110 @@
           "height": 844
         },
         "mobile_scope": "Actual homepage in a fresh mobile browser context; desktop shotlist is recorded.",
-        "raw_video": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/walkthrough.webm",
-        "duration_s": 97.32824925
+        "raw_video": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/walkthrough.webm",
+        "duration_s": 97.688661083
       },
       "caption_cues": [
         {
-          "start_s": 0.79,
-          "end_s": 5.732,
+          "start_s": 1.119,
+          "end_s": 5.812,
           "text": "Open the live demo"
         },
         {
-          "start_s": 5.732,
-          "end_s": 11.366,
+          "start_s": 5.812,
+          "end_s": 11.434,
           "text": "Enter the demo input"
         },
         {
-          "start_s": 11.366,
-          "end_s": 17.016,
+          "start_s": 11.434,
+          "end_s": 17.082,
           "text": "Enter the demo input"
         },
         {
-          "start_s": 17.016,
-          "end_s": 22.669,
+          "start_s": 17.082,
+          "end_s": 22.736,
           "text": "Enter the demo input"
         },
         {
-          "start_s": 22.669,
-          "end_s": 28.395,
+          "start_s": 22.736,
+          "end_s": 28.427,
           "text": "Enter the demo input"
         },
         {
-          "start_s": 28.395,
-          "end_s": 37.247,
+          "start_s": 28.427,
+          "end_s": 37.329,
           "text": "Run the next product action"
         },
         {
-          "start_s": 37.247,
-          "end_s": 39.792,
+          "start_s": 37.329,
+          "end_s": 39.903,
           "text": "Wait for the product result"
         },
         {
-          "start_s": 39.792,
-          "end_s": 45.297,
+          "start_s": 39.903,
+          "end_s": 45.37,
           "text": "A custom board: Telem source qualification + direct Tavily evidence text"
         },
         {
-          "start_s": 45.297,
-          "end_s": 51.169,
+          "start_s": 45.37,
+          "end_s": 51.498,
           "text": "Run the next product action"
         },
         {
-          "start_s": 51.169,
-          "end_s": 56.567,
+          "start_s": 51.498,
+          "end_s": 56.642,
           "text": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness"
         },
         {
-          "start_s": 56.567,
-          "end_s": 62.213,
+          "start_s": 56.642,
+          "end_s": 62.282,
           "text": "Enter the demo input"
         },
         {
-          "start_s": 62.213,
-          "end_s": 69.362,
+          "start_s": 62.282,
+          "end_s": 69.431,
           "text": "Run the next product action"
         },
         {
-          "start_s": 69.362,
-          "end_s": 73.716,
+          "start_s": 69.431,
+          "end_s": 74.072,
           "text": "Wait for the product result"
         },
         {
-          "start_s": 73.716,
-          "end_s": 79.194,
+          "start_s": 74.072,
+          "end_s": 79.261,
           "text": "Requirement changes are different from external source changes"
         },
         {
-          "start_s": 79.194,
-          "end_s": 86.309,
+          "start_s": 79.261,
+          "end_s": 86.383,
           "text": "Run the next product action"
         },
         {
-          "start_s": 86.309,
-          "end_s": 90.691,
+          "start_s": 86.383,
+          "end_s": 91.021,
           "text": "Wait for the product result"
         },
         {
-          "start_s": 90.691,
-          "end_s": 98.24,
+          "start_s": 91.021,
+          "end_s": 98.0,
           "text": "Actual source recheck; unchanged pages may legitimately preserve answers"
         }
       ],
       "video": {
-        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/demo.mp4",
+        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/demo.mp4",
         "width": 1920,
         "height": 1080,
-        "duration_s": 98.24,
+        "duration_s": 98.0,
         "has_narration": true,
         "caption_mode": "embedded selectable subtitle track and companion SRT",
         "source": "Actual Playwright recording of the supplied running app"
       },
       "slides": {
-        "html": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.html",
+        "html": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/slides.html",
         "draft": false,
         "unresolved": [],
-        "pdf": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.pdf",
+        "pdf": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T214817.865254Z/slides.pdf",
         "pages": 7
       },
       "review_note": "Watch the actual video and review the deck before submission. Action captions use recorded timestamps; synthesized narration is not word-aligned."
@@ -876,8 +876,8 @@
     ]
   },
   "mcp_ready": true,
-  "completed_at": "2026-11-14T21:40:53.217850+00:00",
-  "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
+  "completed_at": "2026-11-14T21:50:24.744350+00:00",
+  "commit": "08af7ea3268d89cd3ce5197c650ef7f03872f724",
   "submission_status": "Requires user's final Devpost entry/upload and confirmation; no submission was made.",
   "native_client_verification": {
     "claude": "not-verified-by-this-gate",
