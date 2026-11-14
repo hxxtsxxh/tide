@@ -62,7 +62,9 @@ export function constructBoard(input: Board, meta: LegacyMeta, remap: boolean): 
     const value = claim?.value ?? members[0]!.value;
     const hash = semanticHash(key, value);
     domain.facts[id] = { key, type: valueType(value), semanticHash: hash, verifiedHash: res.state === 'supported' ? hash : null, semanticVersion: res.state === 'supported' ? 1 : 0, state: res.state, supportSets, claims };
-    facts.push({ id, value: value as never, status: boardFactStatus(res.state), source_id: res.set?.[0] ?? first?.[0] ?? supportSets[0]![0]!, quote: claim?.quote ?? '', support_sets: supportSets });
+    const sourceId = res.set?.[0] ?? first?.[0] ?? supportSets[0]![0]!;
+    const stance = (members.find((m) => sid.get(m.source_id) === sourceId) ?? members[0]!).stance; // stance of the quote shown
+    facts.push({ id, value: value as never, status: boardFactStatus(res.state), source_id: sourceId, quote: claim?.quote ?? '', support_sets: supportSets, ...(stance ? { stance } : {}) });
   }
 
   const aid = new Map<string, string>();

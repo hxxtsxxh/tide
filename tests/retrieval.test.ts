@@ -155,6 +155,8 @@ test('create: only quote-verified facts support answers; hallucinated quote -> u
   assert.match(board.sources[0]!.contentHash, /^[0-9a-f]{64}$/);
   const byId = Object.fromEntries(board.facts.map((f) => [f.id, f]));
   assert.equal(byId.f1!.status, 'supported');
+  assert.equal(byId.f1!.stance, 'supports', 'stance comes from the same extraction call');
+  assert.equal(byId.f2!.stance, undefined, 'missing stance stays absent (neutral)');
   assert.ok(board.sources[0]!.excerpt.includes(byId.f1!.quote), 'quote is literal inside preserved excerpt');
   assert.equal(byId.f4!.status, 'unknown');
   assert.equal(byId.f4!.quote, '');

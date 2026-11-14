@@ -117,6 +117,8 @@ export const FactRecord = z.object({
   status: z.enum(['supported', 'conflicting', 'unknown']),
   source_id: z.string(),
   quote: z.string(),
+  /** Additive (tide-perspective-v1): stance of the quote toward the board question. Missing = neutral. */
+  stance: z.enum(['supports', 'opposes', 'neutral']).optional(),
   /** DNF: OR over sets, AND within a set of source IDs. */
   support_sets: z.array(z.array(z.string().min(1))).optional(),
 });

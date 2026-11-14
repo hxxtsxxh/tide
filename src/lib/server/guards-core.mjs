@@ -67,7 +67,7 @@ export async function reserveBudget({url,token,secret,visitor,globalDaily=100,vi
  for(const n of [globalDaily,visitorDaily,visitorMinute])if(!Number.isInteger(n)||n<1||n>100000)throw new Error('INVALID_QUOTA');
  const day=Math.floor(now/86400000),minute=Math.floor(now/60000);
  const id=createHmac('sha256',key(secret)).update('ripple-visitor\0'+visitor).digest('hex').slice(0,32);
- const keys=[`ripple:v1:global:${day}`,`ripple:v1:visitor:${id}:${day}`,`ripple:v1:minute:${id}:${minute}`];
+ const keys=[`tide:v1:global:${day}`,`tide:v1:visitor:${id}:${day}`,`tide:v1:minute:${id}:${minute}`];
  let response,data;
  try{
   response=await fetchImpl(u.href,{method:'POST',redirect:'error',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify(['EVAL',QUOTA_LUA,3,...keys,globalDaily,visitorDaily,visitorMinute,172800,172800,120]),signal:AbortSignal.timeout(5000)});

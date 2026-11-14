@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type {
   Board,
   AnswerRecord,
@@ -11,6 +11,7 @@ import type { ReviewNote, ReviewNotes } from "@/lib/client/storage";
 import { safeSourceLink } from "@/lib/client/archive";
 import { TEST_IDS } from "@/lib/contracts/testids";
 import { Icon, Modal, Status, time } from "./ui";
+import Perspectives, { StanceChip } from "./Perspectives";
 
 function SourceLink({ source }: { source: SourceRecord }) {
   const href = safeSourceLink(source.url);
@@ -66,6 +67,7 @@ export default function BoardInspector({
   } | null>(null);
   const [past, setPast] = useState<RevisionRecord | null>(null);
   const board = record.board;
+  const historyBoards = useMemo(() => revisions.map((r) => r.board), [revisions]);
   const historical = record.trust !== "observed";
   const latest = board.revisions.at(-1)?.id ?? "unknown";
   const update = record.lastUpdate,
@@ -226,12 +228,13 @@ export default function BoardInspector({
         {[
           ["map", "Dependency map"],
           ["evidence", "Evidence"],
+          ["perspectives", "Perspectives"],
           ["history", "History"],
           ["trace", "Execution trace"],
         ].map(([id, label]) => (
           <button
             key={id}
-            data-testid={id === "evidence" ? TEST_IDS.evidenceTab : undefined}
+            data-testid={id === "evidence" ? TEST_IDS.evidenceTab : id === "perspectives" ? "perspectives-tab" : undefined}
             aria-pressed={tab === id}
             onClick={() => setTab(id)}
           >
@@ -302,6 +305,7 @@ export default function BoardInspector({
                   <div className="node-footer">
                     <span>
                       <Icon name="link" size={12} /> {f.source_id}
+                      {f.stance && <> <StanceChip stance={f.stance} /></>}
                     </span>
                     <Icon size={15} />
                   </div>
@@ -377,6 +381,9 @@ export default function BoardInspector({
             </div>
           ))}
         </section>
+      )}
+      {tab === "perspectives" && (
+        <Perspectives board={board} history={historyBoards} historical={historical} />
       )}
       {tab === "history" && (
         <section className="panel">

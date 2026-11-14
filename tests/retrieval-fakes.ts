@@ -33,7 +33,7 @@ export type World = {
 
 export const EXTRACTION = {
   facts: [
-    { ref: 'F1', source: 's1', key: 'max_urls_per_fetch', value: 5, quote: 'Telem fetch accepts at most 5 URLs per request.' },
+    { ref: 'F1', source: 's1', key: 'max_urls_per_fetch', value: 5, quote: 'Telem fetch accepts at most 5 URLs per request.', stance: 'supports' },
     { ref: 'F2', source: 's1', key: 'per_page_errors', value: true, quote: 'Failed pages return a per-page error even when HTTP status is 200.' },
     { ref: 'F3', source: 's2', key: 'abort_cancels_fetch', value: true, quote: 'AbortController aborts fetch requests.' },
     { ref: 'F4', source: 's2', key: 'invented', value: 1, quote: 'This sentence was invented by the model.' },

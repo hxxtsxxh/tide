@@ -103,7 +103,7 @@ export async function discover(req: DiscoverRequest, d: RunDeps): Promise<Discov
 
 // ---- Shared core: fetch -> extract -> verify -> propose dependencies ------------------------------
 
-type AcceptedFact = { ref: string; source: string; key: string; value: string | number | boolean; quote: string };
+type AcceptedFact = { ref: string; source: string; key: string; value: string | number | boolean; quote: string; stance?: 'supports' | 'opposes' | 'neutral' };
 
 /** Keep only facts whose quote occurs literally in the cited source's fetched text. */
 function acceptFacts(raw: Extraction['facts'], texts: Map<string, string>, existingKeys: Set<string> = new Set()): { accepted: AcceptedFact[]; unverified: AcceptedFact[] } {
@@ -211,7 +211,7 @@ export async function buildBoard(input: { title: string; question: string; requi
   for (const f of [...accepted, ...unverified].slice(0, PUBLIC_LIMITS.facts)) {
     const ok = f.quote !== '' && keptQuotes.get(f.source)?.has(f.quote) === true;
     const id = `f${facts.length + 1}`;
-    facts.push({ id, value: f.value, status: ok ? 'supported' : 'unknown', source_id: f.source, quote: ok ? f.quote : '', support_sets: [[f.source]] });
+    facts.push({ id, value: f.value, status: ok ? 'supported' : 'unknown', source_id: f.source, quote: ok ? f.quote : '', support_sets: [[f.source]], ...(f.stance ? { stance: f.stance } : {}) });
     keys[id] = f.key;
     refToId.set(f.ref, id);
   }
@@ -370,6 +370,7 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
               if (canonicalJson(n.value) !== canonicalJson(f.value)) valueChanged.add(f.id);
               f.value = n.value;
               f.quote = n.quote;
+              if (n.stance) f.stance = n.stance;
               f.status = 'supported';
             }
           }
@@ -379,7 +380,7 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
               break;
             }
             const id = `f${Math.max(0, ...board.facts.map((f) => Number(f.id.slice(1)) || 0)) + 1}`;
-            board.facts.push({ id, value: n.value, status: 'supported', source_id: src.id, quote: n.quote, support_sets: [[src.id]] });
+            board.facts.push({ id, value: n.value, status: 'supported', source_id: src.id, quote: n.quote, support_sets: [[src.id]], ...(n.stance ? { stance: n.stance } : {}) });
             meta.factKeys[id] = n.key;
           }
           const quotes = board.facts.filter((f) => f.source_id === src.id && f.status === 'supported' && f.quote).map((f) => f.quote);

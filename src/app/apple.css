@@ -210,7 +210,52 @@ textarea:focus {
   .create-panel { padding: 22px 18px; }
   .execution-strip strong { font-size: 26px; }
 }
+
+/* Perspectives (Tide): lens sliders, verdict pill, ranked evidence, stance chips */
+.perspective-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; margin: 18px 0 26px; }
+.lens-controls, .verdict-card { background: #fff; border: 1px solid rgba(0, 0, 0, 0.07); border-radius: var(--radius-card); box-shadow: var(--shadow-1); padding: 18px 20px; min-width: 0; }
+.lens-slider + .lens-slider { margin-top: 16px; }
+.lens-slider label { font-size: 14px; font-weight: 600; margin: 0; }
+.lens-slider output { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--blue); min-width: 3ch; text-align: right; }
+.lens-slider input[type="range"] { width: 100%; margin: 8px 0 4px; accent-color: var(--blue); }
+.lens-slider small { display: block; font-size: 12px; }
+.lens-reset { margin-top: 16px; font-size: 13px; background: #fff; color: var(--blue); border: 1px solid rgba(0, 113, 227, 0.35); }
+.lens-reset:hover:not(:disabled) { background: var(--blue-soft); }
+.verdict-card { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.verdict-card p { margin: 0; }
+.verdict-pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 7px 16px; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; transition: background-color 0.3s var(--ease), color 0.3s var(--ease); }
+.verdict-yes { background: var(--blue-soft); color: var(--blue); }
+.verdict-no { background: #fdecea; color: var(--danger); }
+.verdict-split { background: var(--amber-soft); color: var(--amber); }
+.verdict-none { background: var(--subtle); color: var(--muted); }
+.ranked-evidence { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 12px; }
+.ranked-item { background: #fff; border: 1px solid rgba(0, 0, 0, 0.07); border-radius: 16px; box-shadow: var(--shadow-1); padding: 14px 16px; min-width: 0; animation: rise 0.45s var(--ease) both; }
+.ranked-item blockquote { margin: 8px 0; overflow-wrap: anywhere; }
+.ranked-value { font-weight: 600; margin: 6px 0 0; overflow-wrap: anywhere; }
+.ranked-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.ranked-rank { font-size: 12px; font-weight: 600; color: var(--fg); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ranked-rank .muted { font-weight: 400; margin-left: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+.ranked-meta { display: flex; gap: 10px; align-items: center; }
+.ranked-score { font-size: 18px; font-variant-numeric: tabular-nums; }
+.ranked-item .small { overflow-wrap: anywhere; }
+.metric-bars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.metric-bar { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); min-width: 0; }
+.bar-track { flex: 1; height: 4px; border-radius: 4px; background: var(--subtle); overflow: hidden; min-width: 20px; }
+.bar-fill { display: block; height: 100%; background: var(--blue); border-radius: 4px; transition: width 0.35s var(--ease); }
+.bar-value { font-variant-numeric: tabular-nums; min-width: 3ch; text-align: right; }
+.stance-chip { display: inline-block; border-radius: 999px; padding: 2px 8px; font-size: 10px; font-weight: 600; text-transform: lowercase; letter-spacing: 0; vertical-align: middle; }
+.stance-supports { background: var(--blue-soft); color: var(--blue); }
+.stance-opposes { background: #fdecea; color: var(--danger); }
+.stance-neutral { background: var(--subtle); color: var(--muted); }
+.tab-list { overflow-x: auto; scrollbar-width: none; }
+.tab-list button { flex: none; }
+@media (max-width: 650px) {
+  .perspective-layout { grid-template-columns: 1fr; }
+  .tab-list { gap: 18px; }
+}
 @media (prefers-reduced-motion: reduce) {
+  .ranked-item { animation: none !important; }
+  .bar-fill, .verdict-pill { transition: none; }
   .ambient-layer { display: none; }
   .panel, .node, .alert, .execution-strip, .execution-strip strong, .page-heading p, .new-board-layout > :nth-child(2),
   .tab-list button[aria-pressed="true"]:after, .workspace-mode:before { animation: none !important; }

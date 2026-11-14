@@ -28,7 +28,7 @@ const blank: Draft = { title: "", question: "", urls: "", requirements: "" };
 const sample: Draft = {
   title: "My page-ingestion research",
   question:
-    "How should I batch public page fetches and handle individual page failures?",
+    "Can I safely fetch public pages in batches of three and recover from individual page failures?",
   urls: "https://docs.telem.ai/api/\nhttps://docs.telem.ai/resources/fetch-best-practices/",
   requirements: "I need to process three source URLs at a time.",
 };
@@ -408,16 +408,16 @@ export default function Workspace({
         Skip to workspace
       </a>
       <header className="app-header">
-        <Link className="brand" href="/" aria-label="Ripple home">
+        <Link className="brand" href="/" aria-label="Tide home">
           <span className="ripple-mark" aria-hidden="true">
             <i />
             <i />
             <i />
           </span>
-          ripple<span className="beta-label">BETA</span>
+          tide<span className="beta-label">BETA</span>
         </Link>
         <div className="header-note">
-          Memory that knows when to recheck itself.
+          Decisions that know how well they hold up.
         </div>
         <nav aria-label="Resources">
           <Link href="/integrations">
@@ -616,14 +616,14 @@ export default function Workspace({
             <section className="new-board-view">
               <div className="page-heading">
                 <span className="eyebrow">
-                  KNOW WHAT YOUR NEXT DECISION RESTS ON
+                  EVIDENCE · PERSPECTIVE · FRESHNESS
                 </span>
                 <h1 className="hero-title">
-                  <BlurText text="A board for answers" delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
-                  <BlurText text="that need to stay useful." delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
+                  <BlurText text="Know what your decision rests on —" delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
+                  <BlurText text="and how well it holds up." delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
                 </h1>
                 <p>
-                  Connect public sources to facts and decisions.
+                  Connect public sources to facts and decisions, weigh them by whom you trust.
                   <br className="desktop-break" /> When something changes, see
                   what needs another look.
                 </p>

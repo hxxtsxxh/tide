@@ -13,7 +13,7 @@ const SYSTEM = [
 ].join(' ');
 
 const Scalar = z.union([z.string().max(200), z.number().finite(), z.boolean()]);
-const Fact = z.object({ ref: z.string().min(1).max(20), source: z.string().min(1).max(20), key: z.string().min(1).max(80), value: Scalar, quote: z.string().min(1).max(400) });
+const Fact = z.object({ ref: z.string().min(1).max(20), source: z.string().min(1).max(20), key: z.string().min(1).max(80), value: Scalar, quote: z.string().min(1).max(400), stance: z.enum(['supports', 'opposes', 'neutral']).optional().catch(undefined) });
 const Answer = z.object({ ref: z.string().min(1).max(20), text: z.string().min(1).max(700), depends_on: z.array(z.string().max(20)).max(10), uses_requirements: z.boolean().optional() });
 
 export const Extraction = z.object({ facts: z.array(Fact).max(PUBLIC_LIMITS.facts), answers: z.array(Answer).max(PUBLIC_LIMITS.answers).optional() });
@@ -25,7 +25,7 @@ const fence = (sources: PromptSource[]): string =>
   sources.map((s) => `<source id="${s.id}" url="${s.url}">\n${s.text.replaceAll('</source>', '')}\n</source>`).join('\n');
 
 const FACT_SPEC =
-  '"facts": up to the requested number of objects {"ref":"F1","source":"<source id>","key":"<short_snake_case_name>","value":<string|number|boolean taken from the quote>,"quote":"<verbatim sentence from that source>"}.';
+  '"facts": up to the requested number of objects {"ref":"F1","source":"<source id>","key":"<short_snake_case_name>","value":<string|number|boolean taken from the quote>,"quote":"<verbatim sentence from that source>","stance":"supports|opposes|neutral"}. stance = whether the quote supports a yes answer to the user question, opposes it, or is neutral/background.';
 
 export function buildPrompt(question: string, requirements: string, sources: PromptSource[], maxFacts: number): { system: string; user: string } {
   return {

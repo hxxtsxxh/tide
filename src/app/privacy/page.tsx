@@ -2,14 +2,14 @@ import Link from "next/link";
 import { PUBLIC_LIMITS } from "@/lib/contracts/board";
 import { serverConfig } from "@/lib/server/config";
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Privacy and limits — Ripple" };
+export const metadata = { title: "Privacy and limits — Tide" };
 export default function Privacy() {
   const config = serverConfig();
   return (
     <main className="prose-page">
       <nav className="prose-nav" aria-label="Page navigation">
         <Link href="/" className="brand">
-          ripple
+          tide
         </Link>
         <Link href="/integrations">For coding agents</Link>
       </nav>
@@ -27,7 +27,7 @@ export default function Privacy() {
             Boards, evidence, immutable revisions and local review notes use
             IndexedDB. There is no account, cloud backup or cross-device sync. A
             fresh browser or device has an empty library. Browser storage is not
-            encrypted by Ripple. A small localStorage journal stores only board
+            encrypted by Tide. A small localStorage journal stores only board
             IDs and expected revisions so a confirmed deletion can finish after
             an interrupted page reload.
           </p>

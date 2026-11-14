@@ -2,7 +2,7 @@ import Link from "next/link";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Use Ripple with coding agents — Ripple" };
+export const metadata = { title: "Use Tide with coding agents — Tide" };
 export default function Integrations() {
   const checksumAvailable = existsSync(
     join(process.cwd(), "public/downloads/ripple-agent-kit.zip.sha256"),
@@ -14,7 +14,7 @@ export default function Integrations() {
     <main className="prose-page">
       <nav className="prose-nav" aria-label="Page navigation">
         <Link href="/" className="brand">
-          ripple
+          tide
         </Link>
         <Link href="/privacy">Privacy & limits</Link>
       </nav>
@@ -27,7 +27,7 @@ export default function Integrations() {
         with the work.
       </h1>
       <p className="lead">
-        Use Ripple from Claude Code or Codex to save the public evidence behind
+        Use Tide from Claude Code or Codex to save the public evidence behind
         a decision, then recheck that evidence before changing your integration.
       </p>
       <div className="panel">
@@ -35,13 +35,13 @@ export default function Integrations() {
         <p>
           The agent kit runs a local stdio MCP server. It calls the same bounded
           public research endpoints as this website. Source fetching and model
-          reasoning run on the Ripple service; you do not supply Telem, Tavily,
+          reasoning run on the Tide service; you do not supply Telem, Tavily,
           model, Redis or signing keys.
         </p>
         {kitAvailable ? (
           <div className="integration-status">
             <a href="/downloads/ripple-agent-kit.zip" download>
-              Download the Ripple agent source kit (.zip)
+              Download the Tide agent source kit (.zip)
             </a>
             {checksumAvailable && (
               <>
@@ -119,7 +119,7 @@ export default function Integrations() {
       </ol>
       <p className="notice">
         Normal host permissions and organization policies still apply. Skills
-        and MCP annotations do not grant authority. Ripple does not edit your
+        and MCP annotations do not grant authority. Tide does not edit your
         repository, run shell commands, read arbitrary local files or upload
         your code.
       </p>
@@ -155,7 +155,7 @@ export default function Integrations() {
         There is no background polling, scheduled monitoring, cross-device sync,
         anonymous cloud library or public remote MCP endpoint. Refresh is an
         explicit operation. Questions, URLs and necessary source excerpts reach
-        Ripple, Telem, Tavily (selected URLs only) and the configured model
+        Tide, Telem, Tavily (selected URLs only) and the configured model
         provider. The same
         supported-source restrictions and shared usage quotas apply to agent
         requests.

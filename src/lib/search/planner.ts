@@ -223,11 +223,11 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
 
 /** Apply one re-read page: update claims for existing facts, merge new keys as alternatives or new facts, rebuild the evidence excerpt. */
 function applySource(board: Board, dom: DomainState, meta: LegacyMeta, src: SourceRecord, page: AcquiredPage, raw: Extraction['facts'], at: string, limitations: string[]): void {
-  const mine = new Map<string, { value: string | number | boolean; quote: string }>();
+  const mine = new Map<string, { value: string | number | boolean; quote: string; stance?: Board['facts'][number]['stance'] }>();
   for (const f of raw) {
     const quote = locateQuote(page.text, f.quote);
     const key = slug(f.key);
-    if (quote && !mine.has(key)) mine.set(key, { value: f.value, quote });
+    if (quote && !mine.has(key)) mine.set(key, { value: f.value, quote, stance: f.stance });
   }
   const claimOf = (key: string, c: { value: unknown; quote: string }) => ({ hash: semanticHash(key, c.value), value: c.value as never, quote: c.quote });
   for (const f of Object.values(dom.facts)) {
@@ -248,7 +248,7 @@ function applySource(board: Board, dom: DomainState, meta: LegacyMeta, src: Sour
       const id = stableId('f', key);
       if (dom.facts[id]) continue;
       dom.facts[id] = { key, type: valueType(c.value), semanticHash: semanticHash(key, c.value), verifiedHash: null, semanticVersion: 0, state: 'unknown', supportSets: [[src.id]], claims: { [src.id]: claimOf(key, c) } };
-      board.facts.push({ id, value: c.value, status: 'unknown', source_id: src.id, quote: c.quote, support_sets: [[src.id]] });
+      board.facts.push({ id, value: c.value, status: 'unknown', source_id: src.id, quote: c.quote, support_sets: [[src.id]], ...(c.stance ? { stance: c.stance } : {}) });
       meta.factKeys[id] = key;
     }
   }

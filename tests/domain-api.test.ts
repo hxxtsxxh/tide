@@ -42,6 +42,7 @@ test('create: stable semantic IDs, DNF support sets, explicit unknown for the un
   assert.equal(answerOf(b, 'invented').status, 'unknown', 'a quote that is not on the page cannot support an answer');
   const st = openState(env.snapshot, SECRET, HOSTS);
   assert.equal(st.meta.domain.history.length, 1);
+  assert.equal(byQuote(b, 'at most 5 URLs').stance, 'supports', 'stance survives domain construction');
   assert.equal(st.meta.domain.facts[byQuote(b, 'at most 5 URLs').id]!.state, 'supported');
   assert.equal(Object.values(st.meta.domain.facts).filter((f) => f.state === 'missing').length, 1);
 });
