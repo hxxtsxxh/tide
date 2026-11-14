@@ -327,9 +327,10 @@ test('adapter never reads evaluation oracle data and never fetches user URLs nat
   const walk = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(`${dir}/${e.name}`) : [`${dir}/${e.name}`]));
   const files = walk('src').filter((f) => /\.(ts|tsx|mjs)$/.test(f));
   for (const f of files) assert.ok(!/oracle/i.test(readFileSync(f, 'utf8')) || f.endsWith('fixtures.ts'), `${f} mentions oracle`);
-  // Outbound network clients are confined to the three adapters + quota (fixed hosts only).
+  // Outbound network clients are confined to the three adapters + quota (fixed hosts only);
+  // client/api.ts is the browser's same-origin call into our own /api routes.
   const withFetch = files.filter((f) => /\bfetch\(|fetchImpl/.test(readFileSync(f, 'utf8'))).map((f) => f.replace(/^src\/lib\//, ''));
-  assert.deepEqual(withFetch.sort(), ['model/client.ts', 'search/telem.ts', 'server/guarded.ts', 'server/guards-core.mjs', 'server/operations.ts', 'server/quota.ts', 'server/research.ts']);
+  assert.deepEqual(withFetch.sort(), ['client/api.ts', 'model/client.ts', 'search/telem.ts', 'server/guarded.ts', 'server/guards-core.mjs', 'server/operations.ts', 'server/quota.ts', 'server/research.ts']);
 });
 
 void ENV;
