@@ -15,6 +15,8 @@ import { safeSourceLink, validateArchive } from "@/lib/client/archive";
 import BoardInspector from "./BoardInspector";
 import SimulationLab from "./SimulationLab";
 import { Icon, Modal, time } from "./ui";
+import RippleGrid from "./bits/RippleGrid";
+import BlurText from "./bits/BlurText";
 
 type Draft = {
   title: string;
@@ -398,6 +400,10 @@ export default function Workspace({
     : null;
   return (
     <div className="app-shell">
+      {/* Decorative, click-through ambient layer; RippleGrid itself skips motion under prefers-reduced-motion. */}
+      <div className="ambient-layer" aria-hidden="true">
+        <RippleGrid lightMode color="#0071E3" variant="dots" cellSize={34} opacity={0.55} glow={0.4} rippleStrength={0.6} rippleSpeed={0.5} autoRipple="random" rippleInterval={4.5} fade={0.55} clickRipple={false} />
+      </div>
       <a className="skip-link" href="#workspace">
         Skip to workspace
       </a>
@@ -612,10 +618,9 @@ export default function Workspace({
                 <span className="eyebrow">
                   KNOW WHAT YOUR NEXT DECISION RESTS ON
                 </span>
-                <h1>
-                  A board for answers
-                  <br />
-                  that need to stay useful.
+                <h1 className="hero-title">
+                  <BlurText text="A board for answers" delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
+                  <BlurText text="that need to stay useful." delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
                 </h1>
                 <p>
                   Connect public sources to facts and decisions.

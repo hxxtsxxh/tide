@@ -18,6 +18,7 @@
     "package:integrations": "python3 packages/ripple-mcp/scripts/package-kit.py --output public/downloads/ripple-agent-kit.zip"
   },
   "dependencies": {
+    "motion": "12.23.12",
     "next": "16.4.6",
     "react": "19.3.1",
     "react-dom": "19.3.1",
