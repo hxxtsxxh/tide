@@ -3,11 +3,11 @@
   "project": "ripple",
   "gate": "public-beta-v1",
   "base_url": "https://searchhack-ripple-08a1a865.vercel.app",
-  "commit": "08af7ea3268d89cd3ce5197c650ef7f03872f724",
-  "nonce": "dcd92d36d6ba6facef30f39662264fae",
+  "commit": "c47cb24f9b06c53f20b7e6492ecfc5cfdc770b66",
+  "nonce": "079bf7327ff25b00755e6797ae5ff218",
   "live": true,
   "executed": true,
-  "passed": true,
+  "passed": false,
   "checks": {
     "public_home": {
       "passed": true
@@ -23,28 +23,28 @@
       "passed": true
     },
     "real_custom_board": {
-      "passed": true
+      "passed": false
     },
     "observed_provenance": {
-      "passed": true
+      "passed": false
     },
     "persistent_reload": {
-      "passed": true
+      "passed": false
     },
     "independent_browser": {
       "passed": true
     },
     "requirement_edit": {
-      "passed": true
+      "passed": false
     },
     "live_refresh": {
-      "passed": true
+      "passed": false
     },
     "tamper_rejection": {
-      "passed": true
+      "passed": false
     },
     "export_import_delete": {
-      "passed": true
+      "passed": false
     },
     "search_discovery": {
       "passed": true
@@ -56,7 +56,15 @@
       "passed": true
     }
   },
-  "errors": [],
-  "startedAt": "2026-11-14T21:47:53.012Z",
-  "completedAt": "2026-11-14T21:48:10.517Z"
+  "errors": [
+    "real_custom_board: Custom create failed",
+    "observed_provenance: No created board",
+    "persistent_reload: Missing board",
+    "requirement_edit: Missing board",
+    "live_refresh: No edited board",
+    "tamper_rejection: Missing snapshot",
+    "export_import_delete: Missing board"
+  ],
+  "startedAt": "2026-11-14T21:58:08.943Z",
+  "completedAt": "2026-11-14T21:58:14.791Z"
 }

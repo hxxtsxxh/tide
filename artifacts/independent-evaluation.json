@@ -2,8 +2,8 @@
   "project": "ripple",
   "mode": "live",
   "strategy": "paired",
-  "passed": 3,
-  "failed": 0,
+  "passed": 0,
+  "failed": 3,
   "total": 3,
   "baseline_quality_failed": 0,
   "observations": [
@@ -11,106 +11,76 @@
       "case_id": "LIVE01",
       "strategy": "baseline",
       "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
-      "integrity_errors": [],
+      "integrity_errors": [
+        "Expected HTTP 200, received 502"
+      ],
       "quality_errors": [],
-      "http_status": 200,
-      "wall_ms": 8983,
-      "metrics": {
-        "model_calls": 1,
-        "elapsed_ms": 8704,
-        "cache_mode": "warm",
-        "query_count": 1,
-        "fetch_count": 1
-      },
-      "passed": true
+      "http_status": 502,
+      "wall_ms": 1087,
+      "passed": false
     },
     {
       "case_id": "LIVE01",
       "strategy": "treatment",
       "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
-      "integrity_errors": [],
+      "integrity_errors": [
+        "Expected HTTP 200, received 502"
+      ],
       "quality_errors": [],
-      "http_status": 200,
-      "wall_ms": 9955,
-      "metrics": {
-        "model_calls": 1,
-        "elapsed_ms": 8893,
-        "cache_mode": "warm",
-        "query_count": 1,
-        "fetch_count": 1
-      },
-      "passed": true
+      "http_status": 502,
+      "wall_ms": 977,
+      "passed": false
     },
     {
       "case_id": "LIVE02",
       "strategy": "treatment",
       "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
-      "integrity_errors": [],
+      "integrity_errors": [
+        "Expected HTTP 200, received 502"
+      ],
       "quality_errors": [],
-      "http_status": 200,
-      "wall_ms": 5501,
-      "metrics": {
-        "model_calls": 1,
-        "elapsed_ms": 5147,
-        "cache_mode": "warm",
-        "query_count": 1,
-        "fetch_count": 1
-      },
-      "passed": true
+      "http_status": 502,
+      "wall_ms": 1036,
+      "passed": false
     },
     {
       "case_id": "LIVE02",
       "strategy": "baseline",
       "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
-      "integrity_errors": [],
+      "integrity_errors": [
+        "Expected HTTP 200, received 502"
+      ],
       "quality_errors": [],
-      "http_status": 200,
-      "wall_ms": 7298,
-      "metrics": {
-        "model_calls": 1,
-        "elapsed_ms": 6942,
-        "cache_mode": "warm",
-        "query_count": 1,
-        "fetch_count": 1
-      },
-      "passed": true
+      "http_status": 502,
+      "wall_ms": 998,
+      "passed": false
     },
     {
       "case_id": "LIVE03",
       "strategy": "baseline",
       "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
-      "integrity_errors": [],
+      "integrity_errors": [
+        "Expected HTTP 200, received 502"
+      ],
       "quality_errors": [],
-      "http_status": 200,
-      "wall_ms": 4553,
-      "metrics": {
-        "model_calls": 1,
-        "elapsed_ms": 4199,
-        "cache_mode": "warm",
-        "query_count": 1,
-        "fetch_count": 1
-      },
-      "passed": true
+      "http_status": 502,
+      "wall_ms": 1002,
+      "passed": false
     },
     {
       "case_id": "LIVE03",
       "strategy": "treatment",
       "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
-      "integrity_errors": [],
+      "integrity_errors": [
+        "Expected HTTP 200, received 502"
+      ],
       "quality_errors": [],
-      "http_status": 200,
-      "wall_ms": 4217,
-      "metrics": {
-        "model_calls": 1,
-        "elapsed_ms": 3907,
-        "cache_mode": "warm",
-        "query_count": 1,
-        "fetch_count": 1
-      },
-      "passed": true
+      "http_status": 502,
+      "wall_ms": 1025,
+      "passed": false
     }
   ],
-  "generated_at": "2026-11-14T21:47:52.886506+00:00",
+  "generated_at": "2026-11-14T21:58:08.759842+00:00",
   "limitations": [
     "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
     "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
