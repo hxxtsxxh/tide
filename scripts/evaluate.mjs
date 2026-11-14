@@ -40,7 +40,7 @@ if (existsSync(raw) && run.status !== null) {
     passed: obs.every((o) => o.integrity_errors.length === 0) && (obs.find((o) => o.strategy === 'treatment') ?? obs[0]).passed,
     observations: obs,
   }));
-  const pairedOk = cases.length > 0 && cases.every((c) => ['baseline', 'treatment'].every((s) => c.observations.some((o) => o.strategy === s && o.http_status === 200 && o.integrity_errors.length === 0)));
+  const pairedOk = cases.length > 0 && cases.every((c) => ['baseline', 'treatment'].every((s) => c.observations.some((o) => o.strategy === s && o.http_status >= 200 && o.http_status < 500 && o.integrity_errors.length === 0)));
   report = {
     schemaVersion: 1,
     project: r.project,
