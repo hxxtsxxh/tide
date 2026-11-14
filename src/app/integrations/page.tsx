@@ -35,8 +35,8 @@ export default function Integrations() {
         <p>
           The agent kit runs a local stdio MCP server. It calls the same bounded
           public research endpoints as this website. Source fetching and model
-          reasoning run on the Ripple service; you do not supply Telem, model,
-          Redis or signing keys.
+          reasoning run on the Ripple service; you do not supply Telem, Tavily,
+          model, Redis or signing keys.
         </p>
         {kitAvailable ? (
           <div className="integration-status">
@@ -155,7 +155,8 @@ export default function Integrations() {
         There is no background polling, scheduled monitoring, cross-device sync,
         anonymous cloud library or public remote MCP endpoint. Refresh is an
         explicit operation. Questions, URLs and necessary source excerpts reach
-        Ripple, Telem and the configured model provider. The same
+        Ripple, Telem, Tavily (selected URLs only) and the configured model
+        provider. The same
         supported-source restrictions and shared usage quotas apply to agent
         requests.
       </p>

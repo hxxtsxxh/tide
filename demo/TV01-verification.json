@@ -1,0 +1,1360 @@
+{
+  "schemaVersion": 1,
+  "project": "ripple",
+  "task_id": "TV01",
+  "local_test": true,
+  "deployed_sponsor_gate": "not_run",
+  "public_ready": false,
+  "sponsors_ready": false,
+  "baselineStatus": "not_measured",
+  "api_runs": [
+    {
+      "schemaVersion": 1,
+      "project": "ripple",
+      "local_test": true,
+      "base_url": "http://127.0.0.1:4771",
+      "executedAt": "2026-11-14T20:29:00.742Z",
+      "passed": true,
+      "checks": {
+        "configured": true,
+        "signed_visitor_session": true,
+        "two_domain_source_backed_create": true,
+        "tavily_create": {
+          "request_id": "0cc3dd70-6082-4030-9b38-62b163558a8c",
+          "usage": {
+            "credits": 0
+          },
+          "status": "succeeded"
+        },
+        "meaningful_requirement_change_no_source_fetch": true,
+        "tavily_refresh": {
+          "request_id": "10603cd7-96c9-4960-9913-ee5a37691184",
+          "usage": {
+            "credits": 0
+          },
+          "status": "succeeded"
+        },
+        "refresh_trace_and_disjoint_sets": true
+      },
+      "operations": [
+        {
+          "stage": "create",
+          "request_id": "c6ccdc3b-e024-4840-b9e1-e558f35a0944",
+          "board_id": "b_0NjZeBjbz7I0",
+          "requirements_sha256": "cf21d6681b8a0219239eb9f0e3d1a6af1d04a9f8e76c55174d696e1e9dea577e",
+          "answers_sha256": "4666aa86786e7aa6d95a211404d2dfdd81f2ce711b438e7956a6f622e0d1ecbd",
+          "sources": [
+            {
+              "id": "s_4357b292",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "status": "succeeded",
+              "contentHash": "6d95ee746fd38338412931ffe82b9b386c0851f927992f732d2420f21a32b505",
+              "observedAt": "2026-11-14T20:29:01.016Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "0cc3dd70-6082-4030-9b38-62b163558a8c",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            },
+            {
+              "id": "s_39381ce3",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "status": "succeeded",
+              "contentHash": "bbcfe4bc23649cb78f0bd31e30a5d99974327ef41f021babc952595025f26e98",
+              "observedAt": "2026-11-14T20:29:01.016Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "0cc3dd70-6082-4030-9b38-62b163558a8c",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            }
+          ],
+          "citations": [
+            {
+              "fact_id": "f_dfb88fd4",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_04962860",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "console.log(response.ok); // returns true if the response returned successfully",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_da06e2f7",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_b61b139d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The reason for this error. It can be a message string or another exception instance.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_c8b6f55d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Though being an exception (a subclass of",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_2d5508c6",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "an `HTTPError` can also function as a non-exceptional file-like return value",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_0d6fdefd",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "An HTTP status code as defined in",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_7c41730f",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Contains the request URL.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_306fdb47",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The HTTP response headers for the HTTP request that caused the `HTTPError`.",
+              "in_preserved_excerpt": true
+            }
+          ],
+          "answers": [
+            {
+              "id": "a_62cea774",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4",
+                "f_04962860"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            },
+            {
+              "id": "a_a3fe2049",
+              "status": "fresh",
+              "depends_on": [
+                "f_da06e2f7",
+                "f_b61b139d",
+                "f_c8b6f55d",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            },
+            {
+              "id": "a_ad839da6",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_c8b6f55d",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            },
+            {
+              "id": "a_f1e25aa7",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_0d6fdefd",
+                "f_7c41730f",
+                "f_306fdb47"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            },
+            {
+              "id": "a_3684688a",
+              "status": "fresh",
+              "depends_on": [
+                "f_2d5508c6",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            }
+          ],
+          "update": {
+            "affected": [
+              "a_62cea774",
+              "a_a3fe2049",
+              "a_ad839da6",
+              "a_f1e25aa7",
+              "a_3684688a"
+            ],
+            "recomputed": [
+              "a_62cea774",
+              "a_a3fe2049",
+              "a_ad839da6",
+              "a_f1e25aa7",
+              "a_3684688a"
+            ],
+            "reused": [],
+            "unknown": []
+          },
+          "trace": {
+            "retrieval": [
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                "cached": true
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://docs.python.org/3/library/urllib.error.html",
+                "cached": true
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "tavily",
+                "transport": "direct",
+                "endpoint": "extract",
+                "mode": "live",
+                "status": "succeeded",
+                "requestId": "0cc3dd70-6082-4030-9b38-62b163558a8c",
+                "callId": "378a5b2a-20a8-4934-82a9-3e3d11323165",
+                "usage": {
+                  "credits": 0
+                },
+                "cache_state": "unknown",
+                "elapsed_ms": 579,
+                "urls": [
+                  "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                  "https://docs.python.org/3/library/urllib.error.html"
+                ],
+                "error": null
+              }
+            ],
+            "model_calls": 2,
+            "elapsed_ms": 28558,
+            "limitations": [
+              "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+              "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+              "Freshness covers only the sources checked here, not the rest of the web.",
+              "Tavily extraction is an observation; upstream cache freshness and redirect chains are not independently established.",
+              "Direct Tavily extraction and the Telem read of the same URL are two reads of one page, not independent sources."
+            ]
+          },
+          "revision": {
+            "id": "r1",
+            "parent_id": null,
+            "createdAt": "2026-11-14T20:29:29.572Z",
+            "kind": "created",
+            "summary": "Created from 2/2 readable source(s): 9 fact(s), 5 proposed answer(s)."
+          }
+        },
+        {
+          "stage": "requirements_edit",
+          "request_id": "74b98fde-0992-4888-8928-23eb91b3af95",
+          "board_id": "b_0NjZeBjbz7I0",
+          "requirements_sha256": "e665d160309e4566b3b51b0eb8662919e872f57094d28701527727f0c7480bd0",
+          "answers_sha256": "a1eb2bd1217a9bdad77c7f656ac3468e5275c00736631252f5ff7508f81fefd5",
+          "sources": [
+            {
+              "id": "s_4357b292",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "status": "succeeded",
+              "contentHash": "6d95ee746fd38338412931ffe82b9b386c0851f927992f732d2420f21a32b505",
+              "observedAt": "2026-11-14T20:29:01.016Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "0cc3dd70-6082-4030-9b38-62b163558a8c",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            },
+            {
+              "id": "s_39381ce3",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "status": "succeeded",
+              "contentHash": "bbcfe4bc23649cb78f0bd31e30a5d99974327ef41f021babc952595025f26e98",
+              "observedAt": "2026-11-14T20:29:01.016Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "0cc3dd70-6082-4030-9b38-62b163558a8c",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            }
+          ],
+          "citations": [
+            {
+              "fact_id": "f_dfb88fd4",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_04962860",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "console.log(response.ok); // returns true if the response returned successfully",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_da06e2f7",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_b61b139d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The reason for this error. It can be a message string or another exception instance.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_c8b6f55d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Though being an exception (a subclass of",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_2d5508c6",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "an `HTTPError` can also function as a non-exceptional file-like return value",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_0d6fdefd",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "An HTTP status code as defined in",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_7c41730f",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Contains the request URL.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_306fdb47",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The HTTP response headers for the HTTP request that caused the `HTTPError`.",
+              "in_preserved_excerpt": true
+            }
+          ],
+          "answers": [
+            {
+              "id": "a_62cea774",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4",
+                "f_04962860"
+              ],
+              "observedAt": "2026-11-14T20:29:29.799Z"
+            },
+            {
+              "id": "a_a3fe2049",
+              "status": "fresh",
+              "depends_on": [
+                "f_da06e2f7",
+                "f_b61b139d",
+                "f_c8b6f55d",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            },
+            {
+              "id": "a_ad839da6",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_c8b6f55d",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:29.799Z"
+            },
+            {
+              "id": "a_f1e25aa7",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_0d6fdefd",
+                "f_7c41730f",
+                "f_306fdb47"
+              ],
+              "observedAt": "2026-11-14T20:29:29.799Z"
+            },
+            {
+              "id": "a_3684688a",
+              "status": "fresh",
+              "depends_on": [
+                "f_2d5508c6",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            }
+          ],
+          "update": {
+            "affected": [
+              "a_62cea774",
+              "a_ad839da6",
+              "a_f1e25aa7"
+            ],
+            "recomputed": [
+              "a_62cea774",
+              "a_ad839da6",
+              "a_f1e25aa7"
+            ],
+            "reused": [
+              "a_a3fe2049",
+              "a_3684688a"
+            ],
+            "unknown": []
+          },
+          "trace": {
+            "retrieval": [],
+            "model_calls": 1,
+            "elapsed_ms": 3905,
+            "limitations": [
+              "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+              "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+              "Freshness covers only the sources checked here, not the rest of the web.",
+              "Requirement edits do not re-check sources; evidence timestamps are unchanged."
+            ]
+          },
+          "revision": {
+            "id": "r2",
+            "parent_id": "r1",
+            "createdAt": "2026-11-14T20:29:29.799Z",
+            "kind": "requirements_edit",
+            "summary": "Requirements edited by the user; sources were not re-checked and no external change was observed. 0 verified fact value(s) changed; 3 answer(s) recomputed, 2 reused, 0 unknown. Cost: 0 source check(s), 0 extraction call(s), 3 recomputation(s); refresh-all over the same observations would attempt 5."
+          }
+        },
+        {
+          "stage": "source_refresh",
+          "request_id": "1370b502-b40a-4d97-ac74-a6d55a1df235",
+          "board_id": "b_0NjZeBjbz7I0",
+          "requirements_sha256": "e665d160309e4566b3b51b0eb8662919e872f57094d28701527727f0c7480bd0",
+          "answers_sha256": "a1eb2bd1217a9bdad77c7f656ac3468e5275c00736631252f5ff7508f81fefd5",
+          "sources": [
+            {
+              "id": "s_4357b292",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "status": "succeeded",
+              "contentHash": "6d95ee746fd38338412931ffe82b9b386c0851f927992f732d2420f21a32b505",
+              "observedAt": "2026-11-14T20:29:33.732Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "10603cd7-96c9-4960-9913-ee5a37691184",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            },
+            {
+              "id": "s_39381ce3",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "status": "succeeded",
+              "contentHash": "bbcfe4bc23649cb78f0bd31e30a5d99974327ef41f021babc952595025f26e98",
+              "observedAt": "2026-11-14T20:29:33.732Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "10603cd7-96c9-4960-9913-ee5a37691184",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            }
+          ],
+          "citations": [
+            {
+              "fact_id": "f_dfb88fd4",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_04962860",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "console.log(response.ok); // returns true if the response returned successfully",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_da06e2f7",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_b61b139d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The reason for this error. It can be a message string or another exception instance.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_c8b6f55d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Though being an exception (a subclass of",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_2d5508c6",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "an `HTTPError` can also function as a non-exceptional file-like return value",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_0d6fdefd",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "An HTTP status code as defined in",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_7c41730f",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Contains the request URL.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_306fdb47",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The HTTP response headers for the HTTP request that caused the `HTTPError`.",
+              "in_preserved_excerpt": true
+            }
+          ],
+          "answers": [
+            {
+              "id": "a_62cea774",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4",
+                "f_04962860"
+              ],
+              "observedAt": "2026-11-14T20:29:29.799Z"
+            },
+            {
+              "id": "a_a3fe2049",
+              "status": "fresh",
+              "depends_on": [
+                "f_da06e2f7",
+                "f_b61b139d",
+                "f_c8b6f55d",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            },
+            {
+              "id": "a_ad839da6",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_c8b6f55d",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:29.799Z"
+            },
+            {
+              "id": "a_f1e25aa7",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_0d6fdefd",
+                "f_7c41730f",
+                "f_306fdb47"
+              ],
+              "observedAt": "2026-11-14T20:29:29.799Z"
+            },
+            {
+              "id": "a_3684688a",
+              "status": "fresh",
+              "depends_on": [
+                "f_2d5508c6",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:29:01.015Z"
+            }
+          ],
+          "update": {
+            "affected": [],
+            "recomputed": [],
+            "reused": [
+              "a_62cea774",
+              "a_a3fe2049",
+              "a_ad839da6",
+              "a_3684688a",
+              "a_f1e25aa7"
+            ],
+            "unknown": []
+          },
+          "trace": {
+            "retrieval": [
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                "requestId": "59a8d06e-061c-4ddc-aee7-40e95a73a713",
+                "cached": false
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://docs.python.org/3/library/urllib.error.html",
+                "requestId": "51c6ccce-3a1b-4ed8-a337-1710fb9c7f0b",
+                "cached": false
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "tavily",
+                "transport": "direct",
+                "endpoint": "extract",
+                "mode": "live",
+                "status": "succeeded",
+                "requestId": "10603cd7-96c9-4960-9913-ee5a37691184",
+                "callId": "4b55d8cf-90c9-4196-9e95-95ce030bb858",
+                "usage": {
+                  "credits": 0
+                },
+                "cache_state": "unknown",
+                "elapsed_ms": 390,
+                "urls": [
+                  "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                  "https://docs.python.org/3/library/urllib.error.html"
+                ],
+                "error": null
+              }
+            ],
+            "model_calls": 0,
+            "elapsed_ms": 583,
+            "limitations": [
+              "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+              "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+              "Freshness covers only the sources checked here, not the rest of the web.",
+              "Tavily extraction is an observation; upstream cache freshness and redirect chains are not independently established.",
+              "Direct Tavily extraction and the Telem read of the same URL are two reads of one page, not independent sources.",
+              "Provider cache state is reported per source; an equal content hash is not proof that unread parts of a page are unchanged."
+            ]
+          },
+          "revision": {
+            "id": "r3",
+            "parent_id": "r2",
+            "createdAt": "2026-11-14T20:29:33.731Z",
+            "kind": "source_refresh",
+            "summary": "Checked 2 source(s): 2 unchanged, 0 changed, 0 unreadable. 0 verified fact value(s) changed; 0 answer(s) recomputed, 5 reused, 0 unknown. Cost: 2 source check(s), 0 extraction call(s), 0 recomputation(s); refresh-all over the same observations would attempt 5."
+          }
+        }
+      ],
+      "limitations": [
+        "Native HTTP check only; independent deployed browser gate still required.",
+        "No paired refresh-all execution in this probe; baselineStatus=not_measured."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "project": "ripple",
+      "local_test": true,
+      "base_url": "http://127.0.0.1:4772",
+      "executedAt": "2026-11-14T20:33:31.328Z",
+      "passed": true,
+      "checks": {
+        "configured": true,
+        "signed_visitor_session": true,
+        "two_domain_source_backed_create": true,
+        "tavily_create": {
+          "request_id": "8dc38b0f-02d4-402f-9199-c3cb305e82a0",
+          "usage": {
+            "credits": 1
+          },
+          "status": "succeeded"
+        },
+        "meaningful_requirement_change_no_source_fetch": true,
+        "tavily_refresh": {
+          "request_id": "299688ae-d265-4aae-ab14-5e8e3011b5d0",
+          "usage": {
+            "credits": 0
+          },
+          "status": "succeeded"
+        },
+        "refresh_trace_and_disjoint_sets": true
+      },
+      "operations": [
+        {
+          "stage": "create",
+          "request_id": "897a2fd5-c8bd-4a60-b94b-7cb8c993f8f8",
+          "board_id": "b_RQMWgiOEvD5z",
+          "requirements_sha256": "cf21d6681b8a0219239eb9f0e3d1a6af1d04a9f8e76c55174d696e1e9dea577e",
+          "answers_sha256": "5d11e31f25a48d348a402f234c50c06e2e16530c710a486e5f60da1a812c34d9",
+          "sources": [
+            {
+              "id": "s_4357b292",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "status": "succeeded",
+              "contentHash": "6d95ee746fd38338412931ffe82b9b386c0851f927992f732d2420f21a32b505",
+              "observedAt": "2026-11-14T20:33:32.618Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "8dc38b0f-02d4-402f-9199-c3cb305e82a0",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            },
+            {
+              "id": "s_39381ce3",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "status": "succeeded",
+              "contentHash": "bbcfe4bc23649cb78f0bd31e30a5d99974327ef41f021babc952595025f26e98",
+              "observedAt": "2026-11-14T20:33:32.618Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "8dc38b0f-02d4-402f-9199-c3cb305e82a0",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            }
+          ],
+          "citations": [
+            {
+              "fact_id": "f_dfb88fd4",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_35bcd689",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_b61b139d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The reason for this error. It can be a message string or another exception instance.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_feca159c",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "an `HTTPError` can also function as a non-exceptional file-like return value",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_0d6fdefd",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "An HTTP status code as defined in",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_7c41730f",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Contains the request URL.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_306fdb47",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The HTTP response headers for the HTTP request that caused the `HTTPError`.",
+              "in_preserved_excerpt": true
+            }
+          ],
+          "answers": [
+            {
+              "id": "a_f38a7849",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4"
+              ],
+              "observedAt": "2026-11-14T20:33:32.616Z"
+            },
+            {
+              "id": "a_a53feb80",
+              "status": "fresh",
+              "depends_on": [
+                "f_35bcd689",
+                "f_b61b139d",
+                "f_feca159c",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:33:32.616Z"
+            },
+            {
+              "id": "a_09707eb4",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:33:32.616Z"
+            },
+            {
+              "id": "a_f1e25aa7",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_0d6fdefd",
+                "f_7c41730f",
+                "f_306fdb47"
+              ],
+              "observedAt": "2026-11-14T20:33:32.616Z"
+            }
+          ],
+          "update": {
+            "affected": [
+              "a_f38a7849",
+              "a_a53feb80",
+              "a_09707eb4",
+              "a_f1e25aa7"
+            ],
+            "recomputed": [
+              "a_f38a7849",
+              "a_a53feb80",
+              "a_09707eb4",
+              "a_f1e25aa7"
+            ],
+            "reused": [],
+            "unknown": []
+          },
+          "trace": {
+            "retrieval": [
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                "cached": true,
+                "http_attempts": 1
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://docs.python.org/3/library/urllib.error.html",
+                "cached": true
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "tavily",
+                "transport": "direct",
+                "endpoint": "extract",
+                "mode": "live",
+                "status": "succeeded",
+                "requestId": "8dc38b0f-02d4-402f-9199-c3cb305e82a0",
+                "callId": "eef408c7-c508-4b87-b544-a2470d697f1d",
+                "usage": {
+                  "credits": 1
+                },
+                "cache_state": "unknown",
+                "elapsed_ms": 911,
+                "http_attempts": 1,
+                "urls": [
+                  "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                  "https://docs.python.org/3/library/urllib.error.html"
+                ],
+                "error": null
+              }
+            ],
+            "model_calls": 2,
+            "elapsed_ms": 27066,
+            "limitations": [
+              "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+              "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+              "Freshness covers only the sources checked here, not the rest of the web.",
+              "Tavily extraction is an observation; upstream cache freshness and redirect chains are not independently established.",
+              "Direct Tavily extraction and the Telem read of the same URL are two reads of one page, not independent sources."
+            ]
+          },
+          "revision": {
+            "id": "r1",
+            "parent_id": null,
+            "createdAt": "2026-11-14T20:33:59.682Z",
+            "kind": "created",
+            "summary": "Created from 2/2 readable source(s): 7 fact(s), 4 proposed answer(s)."
+          }
+        },
+        {
+          "stage": "requirements_edit",
+          "request_id": "30ae9558-fccf-46e3-923d-18ea19c7c21e",
+          "board_id": "b_RQMWgiOEvD5z",
+          "requirements_sha256": "e665d160309e4566b3b51b0eb8662919e872f57094d28701527727f0c7480bd0",
+          "answers_sha256": "fbfb92642cb572d2bcd65dc22e813dd1a2a8c34b54d95365843ea8974d4a0d86",
+          "sources": [
+            {
+              "id": "s_4357b292",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "status": "succeeded",
+              "contentHash": "6d95ee746fd38338412931ffe82b9b386c0851f927992f732d2420f21a32b505",
+              "observedAt": "2026-11-14T20:33:32.618Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "8dc38b0f-02d4-402f-9199-c3cb305e82a0",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            },
+            {
+              "id": "s_39381ce3",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "status": "succeeded",
+              "contentHash": "bbcfe4bc23649cb78f0bd31e30a5d99974327ef41f021babc952595025f26e98",
+              "observedAt": "2026-11-14T20:33:32.618Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "8dc38b0f-02d4-402f-9199-c3cb305e82a0",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            }
+          ],
+          "citations": [
+            {
+              "fact_id": "f_dfb88fd4",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_35bcd689",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_b61b139d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The reason for this error. It can be a message string or another exception instance.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_feca159c",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "an `HTTPError` can also function as a non-exceptional file-like return value",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_0d6fdefd",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "An HTTP status code as defined in",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_7c41730f",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Contains the request URL.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_306fdb47",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The HTTP response headers for the HTTP request that caused the `HTTPError`.",
+              "in_preserved_excerpt": true
+            }
+          ],
+          "answers": [
+            {
+              "id": "a_f38a7849",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            },
+            {
+              "id": "a_a53feb80",
+              "status": "fresh",
+              "depends_on": [
+                "f_35bcd689",
+                "f_b61b139d",
+                "f_feca159c",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            },
+            {
+              "id": "a_09707eb4",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            },
+            {
+              "id": "a_f1e25aa7",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_0d6fdefd",
+                "f_7c41730f",
+                "f_306fdb47"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            }
+          ],
+          "update": {
+            "affected": [
+              "a_f38a7849",
+              "a_a53feb80",
+              "a_09707eb4",
+              "a_f1e25aa7"
+            ],
+            "recomputed": [
+              "a_f38a7849",
+              "a_a53feb80",
+              "a_09707eb4",
+              "a_f1e25aa7"
+            ],
+            "reused": [],
+            "unknown": []
+          },
+          "trace": {
+            "retrieval": [],
+            "model_calls": 1,
+            "elapsed_ms": 4103,
+            "limitations": [
+              "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+              "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+              "Freshness covers only the sources checked here, not the rest of the web.",
+              "Requirement edits do not re-check sources; evidence timestamps are unchanged."
+            ]
+          },
+          "revision": {
+            "id": "r2",
+            "parent_id": "r1",
+            "createdAt": "2026-11-14T20:33:59.775Z",
+            "kind": "requirements_edit",
+            "summary": "Requirements edited by the user; sources were not re-checked and no external change was observed. 0 verified fact value(s) changed; 4 answer(s) recomputed, 0 reused, 0 unknown. Cost: 0 source check(s), 0 extraction call(s), 4 recomputation(s); refresh-all over the same observations would attempt 4. Provider work: 0 Telem HTTP attempt(s), 0 direct Tavily HTTP attempt(s). Extraction calls above mean model fact-extraction calls."
+          }
+        },
+        {
+          "stage": "source_refresh",
+          "request_id": "495fb161-070f-4563-8cc3-efaa548649b4",
+          "board_id": "b_RQMWgiOEvD5z",
+          "requirements_sha256": "e665d160309e4566b3b51b0eb8662919e872f57094d28701527727f0c7480bd0",
+          "answers_sha256": "fbfb92642cb572d2bcd65dc22e813dd1a2a8c34b54d95365843ea8974d4a0d86",
+          "sources": [
+            {
+              "id": "s_4357b292",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+              "status": "succeeded",
+              "contentHash": "6d95ee746fd38338412931ffe82b9b386c0851f927992f732d2420f21a32b505",
+              "observedAt": "2026-11-14T20:34:03.970Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "299688ae-d265-4aae-ab14-5e8e3011b5d0",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            },
+            {
+              "id": "s_39381ce3",
+              "url": "https://docs.python.org/3/library/urllib.error.html",
+              "status": "succeeded",
+              "contentHash": "bbcfe4bc23649cb78f0bd31e30a5d99974327ef41f021babc952595025f26e98",
+              "observedAt": "2026-11-14T20:34:03.970Z",
+              "cache_state": "unknown",
+              "extractor": "tavily",
+              "provider_request_id": "299688ae-d265-4aae-ab14-5e8e3011b5d0",
+              "extraction_status": "succeeded",
+              "extraction_error": null
+            }
+          ],
+          "citations": [
+            {
+              "fact_id": "f_dfb88fd4",
+              "source_id": "s_4357b292",
+              "status": "supported",
+              "quote": "contains a Boolean stating whether the response was successful (status in the range 200-299) or not.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_35bcd689",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The handlers raise this exception (or derived exceptions) when they run into a problem.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_b61b139d",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The reason for this error. It can be a message string or another exception instance.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_feca159c",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "an `HTTPError` can also function as a non-exceptional file-like return value",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_0d6fdefd",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "An HTTP status code as defined in",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_7c41730f",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "Contains the request URL.",
+              "in_preserved_excerpt": true
+            },
+            {
+              "fact_id": "f_306fdb47",
+              "source_id": "s_39381ce3",
+              "status": "supported",
+              "quote": "The HTTP response headers for the HTTP request that caused the `HTTPError`.",
+              "in_preserved_excerpt": true
+            }
+          ],
+          "answers": [
+            {
+              "id": "a_f38a7849",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            },
+            {
+              "id": "a_a53feb80",
+              "status": "fresh",
+              "depends_on": [
+                "f_35bcd689",
+                "f_b61b139d",
+                "f_feca159c",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            },
+            {
+              "id": "a_09707eb4",
+              "status": "fresh",
+              "depends_on": [
+                "f_dfb88fd4",
+                "f_0d6fdefd"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            },
+            {
+              "id": "a_f1e25aa7",
+              "status": "fresh",
+              "depends_on": [
+                "f_b61b139d",
+                "f_0d6fdefd",
+                "f_7c41730f",
+                "f_306fdb47"
+              ],
+              "observedAt": "2026-11-14T20:33:59.775Z"
+            }
+          ],
+          "update": {
+            "affected": [],
+            "recomputed": [],
+            "reused": [
+              "a_f38a7849",
+              "a_a53feb80",
+              "a_09707eb4",
+              "a_f1e25aa7"
+            ],
+            "unknown": []
+          },
+          "trace": {
+            "retrieval": [
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                "requestId": "8bd20031-75f5-4f6d-9313-1ad87322d6d0",
+                "cached": false,
+                "http_attempts": 1
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "telem",
+                "transport": "telem",
+                "endpoint": "fetch",
+                "mode": "live",
+                "status": "succeeded",
+                "url": "https://docs.python.org/3/library/urllib.error.html",
+                "requestId": "e1c98d13-5c20-4655-95c0-2a27eb30b773",
+                "cached": false
+              },
+              {
+                "kind": "fetch",
+                "provider": "tavily",
+                "service": "tavily",
+                "transport": "direct",
+                "endpoint": "extract",
+                "mode": "live",
+                "status": "succeeded",
+                "requestId": "299688ae-d265-4aae-ab14-5e8e3011b5d0",
+                "callId": "e2003f0b-165b-4870-aec3-8455aee1ef9b",
+                "usage": {
+                  "credits": 0
+                },
+                "cache_state": "unknown",
+                "elapsed_ms": 611,
+                "http_attempts": 1,
+                "urls": [
+                  "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+                  "https://docs.python.org/3/library/urllib.error.html"
+                ],
+                "error": null
+              }
+            ],
+            "model_calls": 0,
+            "elapsed_ms": 934,
+            "limitations": [
+              "Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.",
+              "Dependencies between facts and answers are model-proposed hypotheses until reviewed.",
+              "Freshness covers only the sources checked here, not the rest of the web.",
+              "Tavily extraction is an observation; upstream cache freshness and redirect chains are not independently established.",
+              "Direct Tavily extraction and the Telem read of the same URL are two reads of one page, not independent sources.",
+              "Provider cache state is reported per source; an equal content hash is not proof that unread parts of a page are unchanged."
+            ]
+          },
+          "revision": {
+            "id": "r3",
+            "parent_id": "r2",
+            "createdAt": "2026-11-14T20:34:03.969Z",
+            "kind": "source_refresh",
+            "summary": "Checked 2 source(s): 2 unchanged, 0 changed, 0 unreadable. 0 verified fact value(s) changed; 0 answer(s) recomputed, 4 reused, 0 unknown. Cost: 2 source check(s), 0 extraction call(s), 0 recomputation(s); refresh-all over the same observations would attempt 4. Provider work: 1 Telem HTTP attempt(s), 1 direct Tavily HTTP attempt(s). Extraction calls above mean model fact-extraction calls."
+          }
+        }
+      ],
+      "limitations": [
+        "Native HTTP check only; independent deployed browser gate still required.",
+        "No paired refresh-all execution in this probe; baselineStatus=not_measured."
+      ]
+    }
+  ],
+  "browser": {
+    "transport": "actual Playwright MCP browser, no interception",
+    "base_url": "http://127.0.0.1:4772",
+    "create_http_status": 201,
+    "sources": [
+      {
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/Response/ok",
+        "extractor": "tavily",
+        "extraction_status": "succeeded",
+        "provider_request_id": "251cb4ec-4a56-4789-bab4-f7844df9d3fa"
+      }
+    ],
+    "facts": 3,
+    "answers": 2,
+    "reported_usage": {
+      "credits": 0
+    },
+    "supported_quotes_in_preserved_excerpt": true,
+    "evidence_extractor_visible": true,
+    "batch_usage_visible": true,
+    "independent_source_caveat_visible": true,
+    "horizontal_overflow_1440": false,
+    "horizontal_overflow_390": false,
+    "privacy_tavily_text_visible": true,
+    "privacy_horizontal_overflow_390": false,
+    "integration_horizontal_overflow_390": false,
+    "kit_http_status": 200,
+    "screenshots": [
+      "demo/TV01-evidence-desktop.png",
+      "demo/TV01-evidence-mobile.png"
+    ]
+  },
+  "limitations": [
+    "Local runs only; existing controller must publish and run unchanged independent HTTPS browser, MCP and sponsor gates on integrated commit.",
+    "Initial run produced 9 facts/5 answers; final API rerun produced 7 facts/4 answers, demonstrating model variation.",
+    "Initial Tavily batches reported 0 credits each; final API create reported 1 credit and refresh reported 0. This is observed usage, not a balance audit.",
+    "Earlier L01 fixture/live evaluations predate this integration; not rerun by TV01.",
+    "No paired total-work baseline executed here; legacy fetch_count means pages, not total provider attempts.",
+    "Tavily cache freshness and complete upstream redirects are not independently established."
+  ],
+  "tests": {
+    "check": "passed",
+    "main": {
+      "passed": 117,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tavily": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0
+    },
+    "mcp": {
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0
+    },
+    "build": "passed",
+    "client_secret_scan": {
+      "files": 14,
+      "configured_values": 6,
+      "matches": 0
+    },
+    "kit_manifest_files_verified": 12
+  }
+}

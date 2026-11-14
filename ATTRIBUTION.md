@@ -6,8 +6,10 @@ The local agent adapter, portable skills, setup helper, packaging script and pro
 
 The shared quota/security primitives in `src/lib/server/guards-core.mjs` retain the prepared reference and regression tests. Application integration, dependency engine, browser workflow, persistence repairs and observed live checks are recorded in task handoffs.
 
-Telem supplies live search and page acquisition; the selected application model extracts facts and proposes dependencies. Retrieved text belongs to its respective publishers. The app preserves bounded supporting excerpts and links to their public source URLs. Quotes establish presence, not publisher endorsement or factual truth.
+Telem supplies live discovery and page qualification; direct Tavily Extract supplies selected-page evidence text; the selected application model extracts facts and proposes dependencies. Retrieved text belongs to its respective publishers. The app preserves bounded supporting excerpts and links to their public source URLs. Quotes establish presence, not publisher endorsement or factual truth.
 
 Framework dependencies and versions are recorded in `package-lock.json`. The interface uses local CSS and system fonts. No new third-party photography, generated imagery or soundtrack is included in this task.
 
 Prior-art references, including Telem monitors and Zep/Graphiti temporal graphs, are listed in `.searchhack/context/SOURCES.md`. Ripple claims a scoped product integration and inspectable selective-refresh workflow, not global algorithmic novelty.
+
+TV01 adapted the read-only ripple-tavily-v1 prepared `reference/tavily-extract.mjs`, its declarations and adapter tests into `src/lib/search/` and `tests/`. This prepared reference is disclosed separately from the event integration, failure/accounting tests and actual local API observations. Official API references are linked in `INTEGRATION.md`.

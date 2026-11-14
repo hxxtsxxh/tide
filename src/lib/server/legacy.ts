@@ -235,10 +235,17 @@ export async function runLegacyLive(req: LegacyRequest, d: RunDeps, base: RunBud
       fetches: core.pages.map((p, i) => ({ source_id: board.sources[i]!.id, url: p.url, status: p.status, origin: 'telem_live' as const, request_id: p.requestId })),
       model_calls: dd.budget.attempts,
       elapsed_ms: elapsed,
-      cache_mode: core.pages.some((p) => p.cached === true) ? 'warm' : 'cold',
-      notes: ['From-scratch build: treatment and baseline perform identical source acquisition and extraction.'],
+      cache_mode: core.retrieval.some((r) => r.service === 'telem' && r.cached === true) ? 'warm' : 'cold',
+      notes: [
+        'From-scratch build: treatment and baseline perform identical source acquisition and extraction.',
+        `Actual acquisition HTTP attempts: Telem=${telem.http} (search + fetch, including retries); direct Tavily=${core.retrieval.filter((r) => r.service === 'tavily').reduce((n, r) => n + (r.http_attempts ?? 0), 0)}. Legacy fetches counts source pages, not provider HTTP attempts.`,
+        'Legacy cache_mode describes Telem observations only. Direct Tavily cache freshness is unknown; no cache-bypass or total-work savings claim is made.',
+        // The legacy schema only knows origin 'telem_live'; the actual evidence extractor is reported here.
+        ...board.sources.map((s) => `${s.id}: extractor=${s.extractor ?? 'telem'} status=${s.extraction_status ?? s.status} provider_request_id=${s.provider_request_id ?? 'null'}${s.extraction_error ? ` error=${s.extraction_error}` : ''}`),
+        ...core.retrieval.filter((r) => r.service === 'tavily').map((r) => `tavily direct extract: status=${r.status} request_id=${r.requestId ?? 'null'} credits=${r.usage ? r.usage.credits : 'not reported'}`),
+      ],
     },
     unknowns: unknown.map((id) => `${id}: no fully supported, freshly read dependency`),
-    limitations: core.limitations,
+    limitations: [...core.limitations],
   });
 }

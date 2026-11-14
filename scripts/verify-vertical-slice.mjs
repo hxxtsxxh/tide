@@ -18,7 +18,7 @@ async function call(path, body) {
 }
 function summarize(stage, envelope) {
   const board = envelope.board;
-  return { stage, request_id: envelope.request_id, board_id: board.id, requirements_sha256: hash(board.requirements), answers_sha256: hash(board.answers.map(a => a.text)), sources: board.sources.map(s => ({ id: s.id, url: s.url, status: s.status, contentHash: s.contentHash, observedAt: s.observedAt, cache_state: s.cache_state })), citations: board.facts.map(f => ({ fact_id: f.id, source_id: f.source_id, status: f.status, quote: f.quote, in_preserved_excerpt: board.sources.find(s => s.id === f.source_id)?.excerpt.includes(f.quote) === true })), answers: board.answers.map(a => ({ id: a.id, status: a.status, depends_on: a.depends_on, observedAt: a.observedAt })), update: envelope.update, trace: envelope.trace, revision: board.revisions.at(-1) };
+  return { stage, request_id: envelope.request_id, board_id: board.id, requirements_sha256: hash(board.requirements), answers_sha256: hash(board.answers.map(a => a.text)), sources: board.sources.map(s => ({ id: s.id, url: s.url, status: s.status, contentHash: s.contentHash, observedAt: s.observedAt, cache_state: s.cache_state, extractor: s.extractor, provider_request_id: s.provider_request_id, extraction_status: s.extraction_status, extraction_error: s.extraction_error })), citations: board.facts.map(f => ({ fact_id: f.id, source_id: f.source_id, status: f.status, quote: f.quote, in_preserved_excerpt: board.sources.find(s => s.id === f.source_id)?.excerpt.includes(f.quote) === true })), answers: board.answers.map(a => ({ id: a.id, status: a.status, depends_on: a.depends_on, observedAt: a.observedAt })), update: envelope.update, trace: envelope.trace, revision: board.revisions.at(-1) };
 }
 try {
   const health = await call('/api/health');
@@ -40,6 +40,17 @@ try {
     assert.ok(source?.status === 'succeeded' && f.quote && source.excerpt.includes(f.quote));
   }
   report.checks.two_domain_source_backed_create = true;
+  // ripple-tavily-v1: direct Tavily supplied the evidence text and Telem still read the same URLs in the same operation.
+  const tavilyOk = env => {
+    const t = env.trace.retrieval.filter(r => r.service === 'tavily');
+    assert.equal(t.length, 1, 'one batched direct Tavily extract');
+    assert.equal(t[0].transport, 'direct');
+    assert.equal(t[0].status, 'succeeded', `Tavily status ${t[0].status} ${t[0].error ?? ''}`);
+    assert.equal(env.trace.retrieval.filter(r => r.kind === 'fetch' && r.service === 'telem').length, input.urls.length, 'Telem fetch still contributes');
+    for (const s of env.board.sources.filter(s => s.status !== 'failed')) assert.equal(s.extractor, 'tavily', `${s.url} extractor ${s.extractor} ${s.extraction_error ?? ''}`);
+    return { request_id: t[0].requestId, usage: t[0].usage, status: t[0].status };
+  };
+  report.checks.tavily_create = tavilyOk(created);
   const edited = await call('/api/boards/refresh', { request_id: randomUUID(), snapshot: created.snapshot, force: false, requirements: 'Treat every non-2xx response, including HTTP 404 and HTTP 500, as a failure. Connection errors are failures too. Explain the changed acceptance check.' });
   report.operations.push(summarize('requirements_edit', edited));
   assert.equal(edited.board.id, created.board.id);
@@ -51,7 +62,7 @@ try {
   report.checks.meaningful_requirement_change_no_source_fetch = true;
   const refreshed = await call('/api/boards/refresh', { request_id: randomUUID(), snapshot: edited.snapshot, force: true });
   report.operations.push(summarize('source_refresh', refreshed));
-  assert.equal(refreshed.trace.retrieval.filter(r => r.kind === 'fetch').length, input.urls.length);
+  report.checks.tavily_refresh = tavilyOk(refreshed);
   assert.equal(refreshed.board.revisions.length, 3);
   assert.ok(!refreshed.update.recomputed.some(id => refreshed.update.reused.includes(id)));
   assert.ok(!refreshed.board.answers.some(a => a.status !== 'fresh' && refreshed.update.reused.includes(a.id)));

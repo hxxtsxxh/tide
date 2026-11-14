@@ -10,6 +10,10 @@ export function healthBody(env: Record<string, string | undefined> = process.env
     project: 'ripple',
     mode: 'live',
     configured: { telem: c.configured.telem, model: c.configured.model },
+    sponsors: {
+      telem: { configured: c.configured.telem, role: 'discovery, source routing and page qualification' },
+      tavily: { configured: c.configured.tavily, role: 'direct POST /extract (basic) of selected pages; evidence text' },
+    },
     public_beta: c.publicBetaReady,
     safety: { durable_quota: c.configured.quota, signed_snapshots: c.configured.signing, bounded_sources: true },
     limits: {

@@ -10,7 +10,7 @@ import { completeStructured, ModelFailure, type ModelDeps } from '../model/clien
 import { Extraction, factsOnlyPrompt, Rewrite, rewritePrompt } from '../model/extract.ts';
 import { buildBoard, mapTelem, telemClient, type RunDeps } from '../server/research.ts';
 import { signState, type State } from '../server/snapshots.ts';
-import type { FetchedPage } from './telem.ts';
+import { acquirePages, sourceProvenance, type AcquiredPage } from './acquire.ts';
 import { buildExcerpt, locateQuote, sha256, slug } from './text.ts';
 
 const nowMs = (d: RunDeps): number => (d.now ?? Date.now)();
@@ -18,7 +18,6 @@ const asIso = (v: string | null, fallback: string): string => (v && Number.isFin
 // The spread carries the injected transport/clock seams of RunDeps through unchanged.
 const modelDeps = (d: RunDeps): ModelDeps => ({ ...d, provider: d.secrets.modelProvider, model: d.secrets.model, apiKey: d.secrets.modelApiKey, deadline: d.deadlineAt });
 const degradable = (e: unknown): boolean => e instanceof ModelFailure || (e instanceof Error && e.message === 'RUN_TIMEOUT');
-const fetchTrace = (p: FetchedPage): RetrievalTrace => ({ kind: 'fetch', provider: p.provider, mode: 'live', status: p.status === 'succeeded' ? (p.truncated ? 'succeeded:truncated' : 'succeeded') : `failed:${p.error}`, url: p.url, ...(p.requestId ? { requestId: p.requestId } : {}), ...(p.cached !== null ? { cached: p.cached } : {}) });
 
 const baseLimitations = (board: Board): string[] => {
   const l = ['Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.', 'Dependencies between facts and answers are model-proposed hypotheses until reviewed.', 'Freshness covers only the sources checked here, not the rest of the web.'];
@@ -48,10 +47,10 @@ export async function createBoardDomain(req: CreateBoardRequest, d: RunDeps): Pr
   board.revisions = [{ id: 'r1', parent_id: null, createdAt: at, kind: 'created', summary: `Created from ${readable}/${board.sources.length} readable source(s): ${board.facts.length} fact(s), ${board.answers.length} proposed answer(s).` }];
   const ids = board.answers.map((a) => a.id);
   const meta = { factKeys: core.meta.factKeys, usesReq: core.meta.usesReq };
-  return envelope(d, t0, board, appendHistory(domain, { revisionId: 'r1', kind: 'created', at }), meta, { affected: ids, recomputed: ids, reused: [], unknown: board.answers.filter((a) => a.status === 'unknown').map((a) => a.id) }, core.retrieval, [...baseLimitations(board), ...core.limitations.filter((l) => /dropped|marked unknown|No answer/.test(l))]);
+  return envelope(d, t0, board, appendHistory(domain, { revisionId: 'r1', kind: 'created', at }), meta, { affected: ids, recomputed: ids, reused: [], unknown: board.answers.filter((a) => a.status === 'unknown').map((a) => a.id) }, core.retrieval, [...baseLimitations(board), ...core.limitations.filter((l) => /dropped|marked unknown|No answer/.test(l)), ...core.acquisitionLimitations]);
 }
 
-type Changed = { src: SourceRecord; page: FetchedPage };
+type Changed = { src: SourceRecord; page: AcquiredPage };
 
 /**
  * Refresh from the signed prior observation. `treatment` regenerates only the dirty closure; `baseline` regenerates every
@@ -72,13 +71,15 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
 
   // ---- 1. observe: one batch re-read of the checked sources (no_cache); failures never falsify anything ----
   if (req.force) {
-    let pages: FetchedPage[];
+    let acq: Awaited<ReturnType<typeof acquirePages>>;
     try {
-      pages = await telemClient(d).fetchPages(board.sources.map((s) => s.url), d.config.sourceHosts, { noCache: true });
+      acq = await acquirePages(telemClient(d), board.sources.map((s) => s.url), d, { noCache: true });
     } catch (e) {
       mapTelem(e);
     }
-    retrieval.push(...pages.map(fetchTrace));
+    const { pages } = acq;
+    retrieval.push(...acq.retrieval);
+    limitations.push(...acq.limitations);
     tally.checked = board.sources.length;
     for (const src of board.sources) {
       const page = pages.find((p) => p.url === src.url);
@@ -86,10 +87,13 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
       if (page?.cacheState) src.cache_state = page.cacheState;
       if (!page || page.status === 'failed') {
         ds.state = /^http_(404|410)$/.test(page?.error ?? '') ? 'deleted' : 'failed';
+        src.extraction_status = 'failed';
+        src.extraction_error = page?.extractionError ?? page?.error ?? 'SOURCE_UNAVAILABLE';
         src.status = 'failed'; // last good hash/excerpt/observedAt are kept: only the check failed
         tally[ds.state === 'deleted' ? 'deleted' : 'failed']++;
       } else if (sha256(page.text) === ds.contentHash) {
         ds.state = page.truncated ? 'partial' : 'ok';
+        Object.assign(src, sourceProvenance(page));
         src.status = page.truncated ? 'partial' : 'succeeded';
         src.observedAt = asIso(page.fetchedAt, at);
         tally.unchanged++;
@@ -110,7 +114,12 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
     } catch (e) {
       if (!degradable(e)) throw e;
       // Hash is NOT advanced, so the next refresh retries; the page is unread, hence its facts are unknown.
-      for (const { src } of changedSources) (dom.sources[src.id]!.state = 'partial', (src.status = 'partial'));
+      for (const { src } of changedSources) {
+        dom.sources[src.id]!.state = 'partial';
+        src.status = 'partial';
+        src.extraction_status = 'historical_unrevalidated';
+        src.extraction_error = 'FACT_EXTRACTION_UNAVAILABLE';
+      }
       limitations.push('A changed page could not be re-extracted this time; its facts have unknown freshness until the next successful refresh.');
     }
   }
@@ -201,7 +210,7 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
 
   // ---- 7. immutable revision (append-only list + hash-chained digest) with the cost of the check separated from recomputation ----
   const checks = req.force ? `Checked ${tally.checked} source(s): ${tally.unchanged} unchanged, ${tally.changed} changed, ${tally.failed + tally.deleted} unreadable${tally.deleted ? ` (${tally.deleted} gone)` : ''}.` : 'Requirements edited by the user; sources were not re-checked and no external change was observed.';
-  const summary = `${checks} ${noteChanged.length} verified fact value(s) changed; ${recomputed.size} answer(s) recomputed, ${reused.length} reused, ${unknown.length} unknown. Cost: ${tally.checked} source check(s), ${tally.extractions} extraction call(s), ${recomputed.size} recomputation(s); refresh-all over the same observations would attempt ${baselinePlan.recompute.length}.${reqChanged && req.force ? ' Requirements were also edited by the user.' : ''}`;
+  const summary = `${checks} ${noteChanged.length} verified fact value(s) changed; ${recomputed.size} answer(s) recomputed, ${reused.length} reused, ${unknown.length} unknown. Cost: ${tally.checked} source check(s), ${tally.extractions} extraction call(s), ${recomputed.size} recomputation(s); refresh-all over the same observations would attempt ${baselinePlan.recompute.length}. Provider work: ${retrieval.filter((r) => r.service === 'telem').reduce((n, r) => n + (r.http_attempts ?? 0), 0)} Telem HTTP attempt(s), ${retrieval.filter((r) => r.service === 'tavily').reduce((n, r) => n + (r.http_attempts ?? 0), 0)} direct Tavily HTTP attempt(s). Extraction calls above mean model fact-extraction calls.${reqChanged && req.force ? ' Requirements were also edited by the user.' : ''}`;
   const last = state.board.revisions.at(-1);
   const rev = { id: `r${state.board.revisions.length + 1}`, parent_id: last?.id ?? null, createdAt: at, kind: req.force ? 'source_refresh' : 'requirements_edit', summary };
   board.revisions = [...state.board.revisions, rev];
@@ -213,7 +222,7 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
 }
 
 /** Apply one re-read page: update claims for existing facts, merge new keys as alternatives or new facts, rebuild the evidence excerpt. */
-function applySource(board: Board, dom: DomainState, meta: LegacyMeta, src: SourceRecord, page: FetchedPage, raw: Extraction['facts'], at: string, limitations: string[]): void {
+function applySource(board: Board, dom: DomainState, meta: LegacyMeta, src: SourceRecord, page: AcquiredPage, raw: Extraction['facts'], at: string, limitations: string[]): void {
   const mine = new Map<string, { value: string | number | boolean; quote: string }>();
   for (const f of raw) {
     const quote = locateQuote(page.text, f.quote);
@@ -250,6 +259,7 @@ function applySource(board: Board, dom: DomainState, meta: LegacyMeta, src: Sour
   ds.contentHash = sha256(page.text);
   ds.contentVersion++;
   ds.state = page.truncated ? 'partial' : 'ok';
+  Object.assign(src, sourceProvenance(page));
   src.excerpt = excerpt || page.text.slice(0, 300);
   src.contentHash = ds.contentHash;
   src.observedAt = asIso(page.fetchedAt, at);

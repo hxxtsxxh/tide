@@ -104,6 +104,8 @@ export const HealthBody = z.strictObject({
   project: z.literal('ripple'),
   mode: z.enum(['live', 'fixture']),
   configured: z.strictObject({ telem: z.boolean(), model: z.boolean() }),
+  /** Key-free sponsor configuration: booleans only, never values. */
+  sponsors: z.strictObject({ telem: z.strictObject({ configured: z.boolean(), role: z.string() }), tavily: z.strictObject({ configured: z.boolean(), role: z.string() }) }).optional(),
   public_beta: z.boolean(),
   safety: z.strictObject({ durable_quota: z.boolean(), signed_snapshots: z.boolean(), bounded_sources: z.boolean() }),
   limits: z.strictObject({ sources: z.int(), facts: z.int(), answers: z.int(), model_calls: z.int(), search_queries: z.int(), timeout_ms: z.int() }),

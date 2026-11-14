@@ -1,0 +1,4 @@
+export type TavilySource = {url:string; status:'succeeded'|'partial'|'failed'; extractor:'tavily'; provider_request_id:string|null; content:string; contentHash:string|null; observedAt:string; cache_state:'unknown'; truncated:boolean; error:string|null};
+export type TavilyTrace = {kind:'fetch'; provider:'tavily'; service:'tavily'; transport:'direct'; endpoint:'extract'; mode:'live'; status:string; callId:string; requestId:string|null; usage:{credits:number}|null; cache_state:'unknown'; elapsed_ms:number; http_attempts:number; urls:string[]};
+export function allowedSource(input:string, hosts:string[]):string;
+export function extractTavily(urls:string[], options:{apiKey?:string;allowedHosts:string[];fetchImpl?:typeof fetch;signal?:AbortSignal}):Promise<{sources:TavilySource[];trace:TavilyTrace;error:{code:string;retryAfterSeconds:number|null}|null;limitations:string[]}>;

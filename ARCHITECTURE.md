@@ -4,7 +4,7 @@ Ripple is a Next.js App Router application with TypeScript domain logic. The bro
 
 ## Research and provenance
 
-`POST /api/discover` searches through Telem and offers allowlisted candidates. `POST /api/boards` accepts an original title, question, requirements and one to five public URLs. The server acquires selected pages through Telem, checks each returned status and canonical URL, and asks the configured model for typed facts and proposed answer dependencies. Search snippets never substitute for fetched passages.
+`POST /api/discover` searches through Telem and offers allowlisted candidates. `POST /api/boards` accepts an original title, question, requirements and one to five public URLs. The server reads the same selected pages through Telem for routing/qualification (title, status and canonical-policy checks) and direct Tavily `POST /extract` basic for evidence text. `src/lib/search/acquire.ts` coordinates both calls under the one already-reserved operation quota. It asks the configured model for typed facts and proposed answer dependencies. Search snippets never substitute for fetched passages.
 
 Each supported fact must quote its preserved source excerpt literally. Sources retain content hashes, provider metadata where returned, observation times and cache information. A quote establishes presence in the fetched text, not truth. Truncated pages remain partial; failures preserve prior observations with unknown freshness.
 
@@ -12,7 +12,7 @@ Each supported fact must quote its preserved source excerpt literally. Sources r
 
 `src/lib/domain` validates IDs and the acyclic graph, computes typed semantic hashes, evaluates alternative support sets and follows reverse dependencies. Alternative support sets are OR; members of a set are AND. A source formatting change can require extraction without changing a semantic fact or regenerating answers.
 
-`POST /api/boards/refresh` verifies the signed prior snapshot before quota admission. A requirement edit (`force=false`) changes user input without source fetching. A source refresh (`force=true`) rechecks the selected pages with Telem cache controls, compares facts and regenerates affected answers in dependency order. Unknown mappings are handled conservatively. Affected, attempted recomputation, reused and unknown sets are reported separately. Budget-exhausted answers remain stale or unknown; they never become fresh merely because the request ended.
+`POST /api/boards/refresh` verifies the signed prior snapshot before quota admission. A requirement edit (`force=false`) changes user input without source fetching. A source refresh (`force=true`) rechecks the selected pages with both providers (Telem cache controls apply only to Telem), compares Tavily-content facts and regenerates affected answers in dependency order. Unknown mappings are handled conservatively. Affected, attempted recomputation, reused and unknown sets are reported separately. Budget-exhausted answers remain stale or unknown; they never become fresh merely because the request ended.
 
 The browser displays proposed dependencies and accepts local review notes. Notes do not alter the signed graph. Carry a correction into requirements and rebuild when it must change computation. Direct dependency editing is outside this compact release.
 
@@ -43,3 +43,13 @@ Exports contain a versioned `ripple-board-v1` archive, with up to twenty recent 
 The paired legacy fixture baseline recomputes all computable answers over the same source observations; treatment follows affected closure. Its six expected recomputation-set mismatches are reported, not hidden. Live from-scratch paired cases measure source acquisition and evidence structure; they do not establish refresh savings. Custom-board refresh-all counts displayed in revision summaries are planned, not executed comparisons.
 
 The finite Simulation Lab is client-only and labeled synthetic. General fixture transport is explicitly enabled, localhost-only and disabled on hosted environments. Neither is a live fallback. Public readiness remains false until the independent browser gate passes on the actual HTTPS deployment and integrated commit; MCP readiness requires its independent deployed protocol gate as well.
+
+## Additive Tavily boundary
+
+The adapted prepared `tavily-extract.mjs` reference is imported through server-only `acquire.ts`; no endpoint or operator credential is client-configurable. It validates the exact existing host policy before dispatch and rejects returned URLs that differ from requested URLs. Basic only, one attempt, <=5 URLs, 15s provider/20s HTTP timeout, 1.5 MB wire cap and 30,000 raw characters/source are enforced. The application's smaller 12,000-character/source and 60,000-total limits still apply. Shared origin, schema, HMAC, quota and model boundaries are unchanged. No standalone Tavily route exists.
+
+Supported quotes must occur in the normalized Tavily content and the preserved excerpt before signing. Sources retain additive extractor/request/status fields through browser storage and the existing agent API. Telem text can supply a labeled degraded fallback when direct extraction fails; failed attempts remain trace evidence and never count as successful Tavily. Partial text keeps dependent freshness unknown.
+
+Per-batch direct trace rows include service/transport/endpoint, upstream request ID (nullable), a distinct local call ID, actual HTTP attempt count and observed usage (nullable). Telem rows retain the actual underlying provider, with batch attempts attached once to avoid multiplying them by page count. Revision summaries distinguish page checks, Telem/Tavily HTTP attempts, model fact extraction and answer recomputation. The strict legacy response retains its fields and reports additional accounting in `trace.notes`; its fetch count represents source pages, not total HTTP work. Its cache enum describes Telem only. No direct Tavily cache-bypass claim or new savings measurement is made.
+
+The provider does not expose an independently verified cache age or complete upstream redirect chain. Current timestamps describe observations. Hosted sponsor readiness is separate from health configuration and requires the unchanged external sponsor gate after controller deployment. Existing HTTPS browser/MCP gates remain mandatory.

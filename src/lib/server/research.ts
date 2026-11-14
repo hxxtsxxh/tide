@@ -6,7 +6,8 @@ import { Board as BoardSchema, PUBLIC_LIMITS } from '../contracts/board.ts';
 import { completeStructured, ModelFailure, type CallBudget, type ModelDeps } from '../model/client.ts';
 import { buildPrompt, Extraction, factsOnlyPrompt, Rewrite, rewritePrompt, type PromptSource } from '../model/extract.ts';
 import { affectedClosure, topoOrder, validateGraph, type GraphNode } from '../search/dag.ts';
-import { TelemClient, TelemFailure, type FetchedPage, type TelemLimits } from '../search/telem.ts';
+import { acquirePages, sourceProvenance, type AcquiredPage } from '../search/acquire.ts';
+import { TelemClient, TelemFailure, type TelemLimits } from '../search/telem.ts';
 import { buildExcerpt, canonicalJson, locateQuote, sha256, slug } from '../search/text.ts';
 import type { ServerConfig, secrets as secretsFn } from './config.ts';
 import { ApiError } from './guarded.ts';
@@ -75,7 +76,8 @@ export async function discover(req: DiscoverRequest, d: RunDeps): Promise<Discov
   } catch (e) {
     mapTelem(e);
   }
-  const retrieval: RetrievalTrace[] = out.providers.map((p) => ({ kind: 'search', provider: p.provider, mode: 'live', status: p.status === 'succeeded' ? 'succeeded' : `failed:${p.error}`, ...(out.requestId ? { requestId: out.requestId } : {}) }));
+  const retrieval: RetrievalTrace[] = out.providers.map((p) => ({ kind: 'search', provider: p.provider, service: 'telem', transport: 'telem', endpoint: 'search', mode: 'live', status: p.status === 'succeeded' ? 'succeeded' : `failed:${p.error}`, requestId: out.requestId }));
+  if (retrieval[0]) retrieval[0].http_attempts = telem.http;
   if (!out.providers.some((p) => p.status === 'succeeded')) throw new ApiError('UPSTREAM_UNAVAILABLE', 'No search provider returned results.');
   const seen = new Set<string>();
   const results: { url: string; title: string }[] = [];
@@ -158,14 +160,10 @@ function setStatuses(board: Board, stale: Set<string>): void {
   }
 }
 
-function sourceRecord(id: string, url: string, p: FetchedPage, now: string): SourceRecord {
+function sourceRecord(id: string, url: string, p: AcquiredPage, now: string): SourceRecord {
   return p.status === 'succeeded'
-    ? { id, url, title: p.title || new URL(url).hostname, status: p.truncated ? 'partial' : 'succeeded', observedAt: asIso(p.fetchedAt, now), contentHash: sha256(p.text), excerpt: '', ...(p.cacheState ? { cache_state: p.cacheState } : {}) }
-    : { id, url, title: new URL(url).hostname, status: 'failed', observedAt: now, contentHash: '', excerpt: '', ...(p.cacheState ? { cache_state: p.cacheState } : {}) };
-}
-
-function fetchTrace(p: FetchedPage): RetrievalTrace {
-  return { kind: 'fetch', provider: p.provider, mode: 'live', status: p.status === 'succeeded' ? (p.truncated ? 'succeeded:truncated' : 'succeeded') : `failed:${p.error}`, url: p.url, ...(p.requestId ? { requestId: p.requestId } : {}), ...(p.cached !== null ? { cached: p.cached } : {}) };
+    ? { id, url, title: p.title || new URL(url).hostname, status: p.truncated ? 'partial' : 'succeeded', observedAt: asIso(p.fetchedAt, now), contentHash: sha256(p.text), excerpt: '', ...(p.cacheState ? { cache_state: p.cacheState } : {}), ...sourceProvenance(p) }
+    : { id, url, title: new URL(url).hostname, status: 'failed', observedAt: now, contentHash: '', excerpt: '', ...(p.cacheState ? { cache_state: p.cacheState } : {}), ...sourceProvenance(p) };
 }
 
 const sourceExcerpt = (text: string, quotes: string[]): { excerpt: string; kept: Set<string> } => {
@@ -173,19 +171,19 @@ const sourceExcerpt = (text: string, quotes: string[]): { excerpt: string; kept:
   return r.excerpt ? r : { excerpt: text.slice(0, 300), kept: r.kept };
 };
 
-export type Core = { board: Board; meta: BoardMeta; pages: FetchedPage[]; texts: Map<string, string>; retrieval: RetrievalTrace[]; limitations: string[]; unverified: number };
+export type Core = { board: Board; meta: BoardMeta; pages: AcquiredPage[]; texts: Map<string, string>; retrieval: RetrievalTrace[]; limitations: string[]; acquisitionLimitations: string[]; unverified: number };
 
 export async function buildBoard(input: { title: string; question: string; requirements: string; urls: string[] }, d: RunDeps, telem: TelemClient = telemClient(d)): Promise<Core> {
   const now = nowIso(d);
-  let pages: FetchedPage[];
+  let acq: Awaited<ReturnType<typeof acquirePages>>;
   try {
-    pages = await telem.fetchPages(input.urls, d.config.sourceHosts);
+    acq = await acquirePages(telem, input.urls, d);
   } catch (e) {
     mapTelem(e);
   }
+  const { pages, retrieval } = acq;
   const sources = pages.map((p, i) => sourceRecord(`s${i + 1}`, p.url, p, now));
   const texts = new Map(sources.filter((s, i) => s.status !== 'failed' && pages[i]).map((s) => [s.id, pages[sources.indexOf(s)]!.text]));
-  const retrieval = pages.map(fetchTrace);
   if (!texts.size) throw new ApiError('SOURCE_UNAVAILABLE', 'None of the selected pages could be read. Nothing was extracted; try other supported pages.');
 
   const promptSources: PromptSource[] = [...texts].map(([id, text]) => ({ id, url: sources.find((s) => s.id === id)!.url, title: sources.find((s) => s.id === id)!.title, text }));
@@ -235,10 +233,10 @@ export async function buildBoard(input: { title: string; question: string; requi
   const board: Board = { id: `b_${randomBytes(9).toString('base64url')}`, title: input.title, question: input.question, requirements: input.requirements, sources, facts, answers, revisions: [] };
   setStatuses(board, new Set());
 
-  const limitations = baseLimitations(board);
+  const limitations = [...baseLimitations(board), ...acq.limitations];
   if (unverified.length || accepted.length > facts.length) limitations.push(`${unverified.length} proposed fact(s) were dropped or marked unknown because no verbatim quote was found in the fetched page.`);
   if (!answers.length) limitations.push('No answer could be supported by quoted facts; the board lists sources and facts only.');
-  return { board, meta: { factKeys: keys, usesReq }, pages, texts, retrieval, limitations, unverified: unverified.length };
+  return { board, meta: { factKeys: keys, usesReq }, pages, texts, retrieval, limitations, acquisitionLimitations: acq.limitations, unverified: unverified.length };
 }
 
 function baseLimitations(board: Board): string[] {
@@ -321,18 +319,22 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
 
   if (req.force) {
     const telem = telemClient(d);
-    let pages: FetchedPage[];
+    let acq: Awaited<ReturnType<typeof acquirePages>>;
     try {
-      pages = await telem.fetchPages(board.sources.map((s) => s.url), d.config.sourceHosts, { noCache: true });
+      acq = await acquirePages(telem, board.sources.map((s) => s.url), d, { noCache: true });
     } catch (e) {
       mapTelem(e);
     }
-    retrieval.push(...pages.map(fetchTrace));
-    const changed: { src: SourceRecord; page: FetchedPage }[] = [];
+    const { pages } = acq;
+    retrieval.push(...acq.retrieval);
+    limitations.push(...acq.limitations);
+    const changed: { src: SourceRecord; page: AcquiredPage }[] = [];
     for (const src of board.sources) {
       const page = pages.find((p) => p.url === src.url);
       if (!page || page.status === 'failed') {
         // Keep the last successful hash/excerpt/observedAt; the failed attempt is recorded in trace + revision.
+        src.extraction_status = 'failed';
+        src.extraction_error = page?.extractionError ?? page?.error ?? 'SOURCE_UNAVAILABLE';
         src.status = 'failed';
         if (page?.cacheState) src.cache_state = page.cacheState;
         tally.failed++;
@@ -340,6 +342,7 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
       }
       if (page.cacheState) src.cache_state = page.cacheState;
       if (sha256(page.text) === src.contentHash) {
+        Object.assign(src, sourceProvenance(page));
         src.status = page.truncated ? 'partial' : 'succeeded';
         src.observedAt = asIso(page.fetchedAt, now);
         tally.unchanged++;
@@ -382,6 +385,7 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
           const quotes = board.facts.filter((f) => f.source_id === src.id && f.status === 'supported' && f.quote).map((f) => f.quote);
           const { excerpt, kept } = sourceExcerpt(page.text, quotes);
           for (const f of board.facts) if (f.source_id === src.id && f.quote && !kept.has(f.quote)) { f.status = 'unknown'; f.quote = ''; }
+          Object.assign(src, sourceProvenance(page));
           src.excerpt = excerpt;
           src.contentHash = sha256(page.text);
           src.observedAt = asIso(page.fetchedAt, now);
@@ -393,6 +397,8 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
         // Changed content could not be re-read into facts: its facts become unknown; hash is NOT advanced so the next refresh retries.
         for (const { src } of changed) {
           src.status = 'partial';
+          src.extraction_status = 'historical_unrevalidated';
+          src.extraction_error = 'FACT_EXTRACTION_UNAVAILABLE';
           for (const f of board.facts) if (f.source_id === src.id) { f.status = 'unknown'; f.quote = ''; }
         }
         limitations.push('A changed page could not be re-extracted this time; its facts are unknown until the next successful refresh.');

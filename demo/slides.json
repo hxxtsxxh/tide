@@ -13,9 +13,10 @@
     {
       "title": "Sources \u2192 facts \u2192 decisions",
       "bullets": [
-        "Real Telem search and selected-page acquisition.",
+        "Telem discovers and qualifies selected URLs; direct Tavily basic extraction supplies their evidence text.",
         "Literal quotes, observed timestamps and proposed dependency edges.",
-        "Failed or partial evidence keeps dependent freshness unknown."
+        "Failed or partial evidence keeps dependent freshness unknown.",
+        "Extractor, provider request ID, batch usage and partial/error evidence remain visible; two reads of a URL are one source."
       ],
       "notes": "Quote presence is not truth; dependencies are model-proposed."
     },
@@ -45,6 +46,16 @@
         "No background monitoring, cloud sync or proven complete dependency discovery."
       ],
       "notes": "public_ready=false pending controller HTTPS gate. Native Claude/Codex invocation not_run; final video and presentation render not produced by L01."
+    },
+    {
+      "title": "Both providers, observed locally",
+      "bullets": [
+        "TV01 local API: 2 domains, 9 supported quoted facts and 5 answers.",
+        "Requirement edit: 0 source reads, 3 recomputed, 2 reused.",
+        "Source refresh: Telem + direct Tavily succeeded; 0 model calls and 5 reused.",
+        "First Tavily batches reported 0 credits; final create reported 1 and refresh 0. Cache freshness and total-work savings are not measured."
+      ],
+      "notes": "Observed local flow, not the deployed sponsor gate. Earlier L01 slide figures predate direct Tavily. Demo/TV01-verification.json has actual request IDs; no deployment/media/public readiness is asserted. Final API rerun: 7 facts/4 answers, create usage 1 credit and refresh usage 0; model output varies. No total-work savings measurement."
     }
   ]
 }
