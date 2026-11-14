@@ -107,16 +107,19 @@ export function agreementOf(fact: FactRecord, board: Board): { score: number | n
   const own = new Set((fact.support_sets ?? [[fact.source_id]]).flat());
   let agree = Math.max(0, own.size - 1);
   let disagree = fact.status === 'conflicting' ? 1 : 0;
+  let mixed = 0;
   if (stance !== 'neutral') {
     for (const [origin, vote] of originVotes(board.facts)) {
       if (own.has(origin)) continue;
       if (vote === stance) agree++;
-      else if (vote === 'mixed') (agree += 0.5), (disagree += 0.5);
+      else if (vote === 'mixed') (agree += 0.5), (disagree += 0.5), mixed++;
       else disagree++;
     }
   }
   const score = (100 * (1 + agree)) / (2 + agree + disagree);
-  const basis = agree || disagree ? `${agree} corroborating, ${disagree} contesting source${agree + disagree === 1 ? '' : 's'}` : 'uncorroborated, uncontested';
+  const clear = (n: number) => n - mixed / 2;
+  const parts = [clear(agree) ? `${clear(agree)} corroborating` : '', clear(disagree) ? `${clear(disagree)} contesting` : '', mixed ? `${mixed} mixed` : ''].filter(Boolean);
+  const basis = parts.length ? `${parts.join(', ')} source${agree + disagree === 1 ? '' : 's'}` : 'uncorroborated, uncontested';
   return { score, basis };
 }
 
