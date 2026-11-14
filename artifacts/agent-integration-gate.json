@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "project": "ripple",
+  "gate": "agent-mcp-v1",
+  "base_url": "https://searchhack-ripple-08a1a865.vercel.app",
+  "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+  "nonce": "dacae232b4e9aa756c8e9bbabb842515",
+  "live": true,
+  "executed": true,
+  "passed": false,
+  "errors": [
+    "Tool failed: QUOTA_EXCEEDED"
+  ],
+  "checks": {
+    "protocol": {
+      "passed": true,
+      "skipped": false
+    },
+    "catalog": {
+      "passed": true,
+      "skipped": false
+    }
+  },
+  "native_clients": {
+    "claude": "not-verified-by-this-gate",
+    "codex": "not-verified-by-this-gate"
+  },
+  "server_sha256": "545fa444a8b81c4d7d31eb3931cc320357aceace7a55d5a155534b9f57fc2b44"
+}

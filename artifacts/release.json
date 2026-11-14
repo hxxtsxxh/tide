@@ -1,0 +1,559 @@
+{
+  "project": "ripple",
+  "started_at": "2026-11-14T21:00:48.771373+00:00",
+  "status": "partial",
+  "checks": {
+    "build": [
+      {
+        "command": "npm run check",
+        "passed": true,
+        "seconds": 0.84
+      },
+      {
+        "command": "npm run test",
+        "passed": true,
+        "seconds": 0.85
+      },
+      {
+        "command": "npm run build",
+        "passed": true,
+        "seconds": 3.24
+      }
+    ],
+    "deployment": {
+      "name": "searchhack-ripple-08a1a865",
+      "repository": "hxxtsxxh/searchhack-ripple-08a1a865",
+      "repository_created": true,
+      "vercel_linked": true,
+      "vercel_project_id": "prj_Uu5OFuwxf8FB6bHkD20DRfcPqDRE",
+      "vercel_org_id": "team_iAUJBnryL4G6c8iEAA61VM2y",
+      "url": "https://searchhack-ripple-08a1a865.vercel.app",
+      "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+      "deployed_at": "2026-11-14T21:01:40.681684+00:00",
+      "verification": {
+        "url": "https://searchhack-ripple-08a1a865.vercel.app",
+        "checked_at": "2026-11-14T21:01:38.887794+00:00",
+        "public_home": true,
+        "health": true,
+        "live_mode": true,
+        "passed": true
+      }
+    },
+    "evaluation": {
+      "path": "artifacts/evaluation.json",
+      "executed": true,
+      "reported": {
+        "schemaVersion": 1,
+        "project": "ripple",
+        "mode": "live",
+        "executedAt": "2026-11-14T21:02:22.604Z",
+        "baseUrl": "https://searchhack-ripple-08a1a865.vercel.app",
+        "caseCount": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "cases": [
+          {
+            "id": "LIVE01",
+            "passed": true,
+            "observations": [
+              {
+                "case_id": "LIVE01",
+                "strategy": "baseline",
+                "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
+                "integrity_errors": [],
+                "quality_errors": [],
+                "http_status": 200,
+                "wall_ms": 10094,
+                "metrics": {
+                  "model_calls": 1,
+                  "elapsed_ms": 9577,
+                  "cache_mode": "warm",
+                  "query_count": 1,
+                  "fetch_count": 1
+                },
+                "passed": true
+              },
+              {
+                "case_id": "LIVE01",
+                "strategy": "treatment",
+                "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
+                "integrity_errors": [],
+                "quality_errors": [],
+                "http_status": 200,
+                "wall_ms": 8910,
+                "metrics": {
+                  "model_calls": 1,
+                  "elapsed_ms": 8539,
+                  "cache_mode": "warm",
+                  "query_count": 1,
+                  "fetch_count": 1
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "id": "LIVE02",
+            "passed": true,
+            "observations": [
+              {
+                "case_id": "LIVE02",
+                "strategy": "treatment",
+                "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
+                "integrity_errors": [],
+                "quality_errors": [],
+                "http_status": 200,
+                "wall_ms": 5916,
+                "metrics": {
+                  "model_calls": 1,
+                  "elapsed_ms": 5529,
+                  "cache_mode": "warm",
+                  "query_count": 1,
+                  "fetch_count": 1
+                },
+                "passed": true
+              },
+              {
+                "case_id": "LIVE02",
+                "strategy": "baseline",
+                "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
+                "integrity_errors": [],
+                "quality_errors": [],
+                "http_status": 200,
+                "wall_ms": 6966,
+                "metrics": {
+                  "model_calls": 1,
+                  "elapsed_ms": 6519,
+                  "cache_mode": "warm",
+                  "query_count": 1,
+                  "fetch_count": 1
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "id": "LIVE03",
+            "passed": true,
+            "observations": [
+              {
+                "case_id": "LIVE03",
+                "strategy": "baseline",
+                "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
+                "integrity_errors": [],
+                "quality_errors": [],
+                "http_status": 200,
+                "wall_ms": 4891,
+                "metrics": {
+                  "model_calls": 1,
+                  "elapsed_ms": 4502,
+                  "cache_mode": "warm",
+                  "query_count": 1,
+                  "fetch_count": 1
+                },
+                "passed": true
+              },
+              {
+                "case_id": "LIVE03",
+                "strategy": "treatment",
+                "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
+                "integrity_errors": [],
+                "quality_errors": [],
+                "http_status": 200,
+                "wall_ms": 4801,
+                "metrics": {
+                  "model_calls": 1,
+                  "elapsed_ms": 4418,
+                  "cache_mode": "warm",
+                  "query_count": 1,
+                  "fetch_count": 1
+                },
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "metrics": {
+          "baselineStatus": "measured",
+          "baselineQualityFailed": 0
+        },
+        "limitations": [
+          "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
+          "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
+          "Do not compare latency/cost across unequal cache modes; both strategies must include source checking and planning overhead.",
+          "No automatic monetary cost or percent-savings claim is inferred from call counts."
+        ]
+      }
+    },
+    "independent_evaluation": {
+      "project": "ripple",
+      "mode": "live",
+      "strategy": "paired",
+      "passed": 3,
+      "failed": 0,
+      "total": 3,
+      "baseline_quality_failed": 0,
+      "observations": [
+        {
+          "case_id": "LIVE01",
+          "strategy": "baseline",
+          "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 8818,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 8175,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE01",
+          "strategy": "treatment",
+          "input_sha256": "784530aa08d21ac9289a2d9b22060120c870dba0495a5944ac09a916089435c4",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 10729,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 10302,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE02",
+          "strategy": "treatment",
+          "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 7010,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 6136,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE02",
+          "strategy": "baseline",
+          "input_sha256": "8243cb508bf4d027e305d6ac6909ce1bf204dd60c8f435c6638248e6cb8f2c21",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 5006,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 4365,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE03",
+          "strategy": "baseline",
+          "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 5086,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 4215,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        },
+        {
+          "case_id": "LIVE03",
+          "strategy": "treatment",
+          "input_sha256": "755f94636b1a319220cd7f2736b0f57d17eb8479bf4b8ae3edbeac6c5fd2d94c",
+          "integrity_errors": [],
+          "quality_errors": [],
+          "http_status": 200,
+          "wall_ms": 6556,
+          "metrics": {
+            "model_calls": 1,
+            "elapsed_ms": 3989,
+            "cache_mode": "warm",
+            "query_count": 1,
+            "fetch_count": 1
+          },
+          "passed": true
+        }
+      ],
+      "generated_at": "2026-11-14T21:03:05.932368+00:00",
+      "limitations": [
+        "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
+        "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
+        "Do not compare latency/cost across unequal cache modes; both strategies must include source checking and planning overhead.",
+        "No automatic monetary cost or percent-savings claim is inferred from call counts."
+      ]
+    },
+    "public_beta": {
+      "passed": true,
+      "path": "artifacts/public-beta-gate.json",
+      "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+      "checks": {
+        "public_home": {
+          "passed": true
+        },
+        "server_safety_contract": {
+          "passed": true,
+          "note": "Configuration assertions; actual behavior is separately tested. Not a security audit."
+        },
+        "source_rejection": {
+          "passed": true
+        },
+        "cross_origin_rejection": {
+          "passed": true
+        },
+        "real_custom_board": {
+          "passed": true
+        },
+        "observed_provenance": {
+          "passed": true
+        },
+        "persistent_reload": {
+          "passed": true
+        },
+        "independent_browser": {
+          "passed": true
+        },
+        "requirement_edit": {
+          "passed": true
+        },
+        "live_refresh": {
+          "passed": true
+        },
+        "tamper_rejection": {
+          "passed": true
+        },
+        "export_import_delete": {
+          "passed": true
+        },
+        "search_discovery": {
+          "passed": true
+        },
+        "privacy_and_limits": {
+          "passed": true
+        },
+        "mobile_layout": {
+          "passed": true
+        }
+      },
+      "scope": "Limited public beta, not an enterprise/security certification"
+    },
+    "media": {
+      "schema_version": 1,
+      "project_id": "ripple",
+      "created_at": "20261114T210352.949183Z",
+      "base_url": "https://searchhack-ripple-08a1a865.vercel.app",
+      "outdir": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z",
+      "manifest": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/manifest.json",
+      "status": "failed",
+      "success": false,
+      "errors": [
+        "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"board-result\"]').first() to be visible\u001b[22m\n"
+      ],
+      "warnings": [],
+      "files": [
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/action-timestamps.json",
+          "relative_path": "action-timestamps.json",
+          "bytes": 1161,
+          "sha256": "e730a5c85712511f6629f84bb20dee80c8f11d85dcbc3a374b6b1abc5c9b9fb7"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/narration.aiff",
+          "relative_path": "narration.aiff",
+          "bytes": 4238872,
+          "sha256": "f244c4aa1dd4ddbc476110f5d22600b3b9202d65bdc49580e59b28e24b6ee7c5"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/narration.txt",
+          "relative_path": "narration.txt",
+          "bytes": 1499,
+          "sha256": "75934f43cad68905c5e9d7b47c639f38d8e5e73aee52d75f229756b3842166fe"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.html",
+          "relative_path": "slides-draft.html",
+          "bytes": 7691,
+          "sha256": "4fd54c351c06745e1eb25427751d5e2d0542a171a7cfa35dd716a6b0d0ada3cb"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.pdf",
+          "relative_path": "slides-draft.pdf",
+          "bytes": 85671,
+          "sha256": "322be121aa22e2d71d16d8770575c5576bf96f2b0d8e2ba707cff5d464dded66"
+        }
+      ],
+      "checks": {
+        "inputs_valid": true,
+        "narration": true,
+        "capture": false,
+        "mp4_1080p": false,
+        "desktop_screenshot": false,
+        "mobile_screenshot": false,
+        "slides_pdf": true,
+        "presentation_text_resolved": true
+      },
+      "input_files": {
+        "shotlist.json": "/Users/heetshah/SearchHack/ripple/demo/shotlist.json",
+        "slides.json": "/Users/heetshah/SearchHack/ripple/demo/slides.json",
+        "narration.txt": "/Users/heetshah/SearchHack/ripple/demo/narration.txt"
+      },
+      "narration": {
+        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/narration.aiff",
+        "engine": "macOS say",
+        "synthetic": true,
+        "duration_s": 96.026667
+      },
+      "capture": {
+        "format": "searchhack-browser-capture-v1",
+        "mode": "capture",
+        "status": "failed",
+        "events": [
+          {
+            "index": 0,
+            "action": "goto",
+            "caption": "Open the live demo",
+            "start_s": 0.19048179199999998,
+            "end_s": 1.70216375,
+            "status": "complete"
+          },
+          {
+            "index": 1,
+            "action": "fill",
+            "caption": "Enter the demo input",
+            "start_s": 5.839709667,
+            "end_s": 5.878706417,
+            "status": "complete"
+          },
+          {
+            "index": 2,
+            "action": "fill",
+            "caption": "Enter the demo input",
+            "start_s": 11.488096292,
+            "end_s": 11.499378542,
+            "status": "complete"
+          },
+          {
+            "index": 3,
+            "action": "fill",
+            "caption": "Enter the demo input",
+            "start_s": 17.136993292,
+            "end_s": 17.148610334,
+            "status": "complete"
+          },
+          {
+            "index": 4,
+            "action": "fill",
+            "caption": "Enter the demo input",
+            "start_s": 22.7859035,
+            "end_s": 22.79562025,
+            "status": "complete"
+          },
+          {
+            "index": 5,
+            "action": "click",
+            "caption": "Run the next product action",
+            "start_s": 28.434838167000002,
+            "end_s": 28.488273709,
+            "status": "complete"
+          }
+        ],
+        "screenshots": [],
+        "warnings": [],
+        "errors": [
+          "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"board-result\"]').first() to be visible\u001b[22m\n"
+        ],
+        "desktop_viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "mobile_viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mobile_scope": "Actual homepage in a fresh mobile browser context; desktop shotlist is recorded.",
+        "raw_video": null,
+        "duration_s": 94.088018959,
+        "failed_step": 7
+      },
+      "slides": {
+        "html": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.html",
+        "draft": true,
+        "unresolved": [],
+        "pdf": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.pdf",
+        "pages": 7
+      },
+      "review_note": "Watch the actual video and review the deck before submission. Action captions use recorded timestamps; synthesized narration is not word-aligned."
+    }
+  },
+  "errors": [
+    "Public beta: ripple-mcp-live-gate failed (1).\n{\"gate\":\"agent-mcp-v1\",\"passed\":false,\"live\":true,\"checks\":2,\"errors\":[\"Tool failed: QUOTA_EXCEEDED\"]}\n",
+    "Media manifest is incomplete; inspect actual errors and draft placeholders"
+  ],
+  "public_ready": false,
+  "capture_url": "https://searchhack-ripple-08a1a865.vercel.app",
+  "implemented_scope": {
+    "project": "ripple",
+    "scope": "compact",
+    "implemented": [
+      "Custom New board (title, question, 1-5 allowlisted URLs, requirements) and editable example inputs; optional bounded Telem source discovery",
+      "Real server-side Telem search/fetch with host allowlist, URL safety checks, per-result status and canonical-URL recheck",
+      "Model fact extraction requiring literal source quotes; unverifiable facts stay unknown, cross-source same-key different values become conflicting",
+      "Source -> fact -> answer DAG with typed semantic hashes, cycle/dangling/duplicate/40-node checks, reverse-closure invalidation and model-proposed (reviewable) dependencies",
+      "Requirement edit recomputes only affected answers without source acquisition and is labeled requirements_edit, not an external change",
+      "Refresh re-reads sources with no_cache; unchanged facts reuse answers; failed/partial reads keep last values and mark dependents unknown",
+      "HMAC-signed board snapshots with expiry, verified before quota",
+      "Browser IndexedDB library with immutable revisions, expected-revision writes, export/import (imports unverified) and delete",
+      "Same-origin guard, body caps, strict schemas, signed visitor cookie, Upstash atomic quotas, kill switch",
+      "Legacy /api/refresh evaluation adapter with paired baseline (refresh-all) and treatment (affected closure) strategies; fixture mode localhost-only behind ALLOW_FIXTURE_MODE",
+      "Client-only Simulation Lab labeled SYNTHETIC FIXTURE / mode=fixture",
+      "/privacy and /integrations pages; /api/health readiness",
+      "Local Node stdio MCP kit with nine tools, two portable skills, project-scoped setup helper, private per-origin vault and real downloadable source archive/checksum; same public API and quota boundary",
+      "Direct Tavily basic extraction supplies evidence text and refresh observations in create/refresh/legacy routes; additive extractor/request/status and per-batch usage/attempt trace with labeled degraded Telem fallback"
+    ],
+    "evaluation_case_ids": [
+      "LIVE01",
+      "LIVE02",
+      "LIVE03"
+    ],
+    "limitations": [
+      "Dependencies are model-proposed; there is no endpoint to edit dependency edges, so corrections are local notes plus a requirements rebuild",
+      "Pages are cut to 12,000 characters and truncated reads are reported partial, which keeps their dependents unknown",
+      "Custom-board refresh-all counts in revision summaries are planned counts; measured paired baseline exists only through the legacy evaluation adapter",
+      "No background monitoring or scheduling; refresh is user-triggered",
+      "Native Claude Code/Codex invocation and deployed MCP/API gate are not verified by local protocol tests",
+      "public_ready=false until the independent browser gate passes on the HTTPS deployment",
+      "Tavily cache freshness and upstream redirect chains not independently established; no post-integration deployed sponsor gate or total-work savings measurement by TV01"
+    ]
+  },
+  "completed_at": "2026-11-14T21:05:56.624682+00:00",
+  "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+  "submission_status": "Requires user's final Devpost entry/upload and confirmation; no submission was made.",
+  "mcp_ready": false,
+  "native_client_verification": {
+    "claude": "not-recorded",
+    "codex": "not-recorded"
+  }
+}

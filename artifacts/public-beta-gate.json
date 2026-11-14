@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "project": "ripple",
+  "gate": "public-beta-v1",
+  "base_url": "https://searchhack-ripple-08a1a865.vercel.app",
+  "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+  "nonce": "ce7d10981631ba247588800a8483b0c4",
+  "live": true,
+  "executed": true,
+  "passed": true,
+  "checks": {
+    "public_home": {
+      "passed": true
+    },
+    "server_safety_contract": {
+      "passed": true,
+      "note": "Configuration assertions; actual behavior is separately tested. Not a security audit."
+    },
+    "source_rejection": {
+      "passed": true
+    },
+    "cross_origin_rejection": {
+      "passed": true
+    },
+    "real_custom_board": {
+      "passed": true
+    },
+    "observed_provenance": {
+      "passed": true
+    },
+    "persistent_reload": {
+      "passed": true
+    },
+    "independent_browser": {
+      "passed": true
+    },
+    "requirement_edit": {
+      "passed": true
+    },
+    "live_refresh": {
+      "passed": true
+    },
+    "tamper_rejection": {
+      "passed": true
+    },
+    "export_import_delete": {
+      "passed": true
+    },
+    "search_discovery": {
+      "passed": true
+    },
+    "privacy_and_limits": {
+      "passed": true
+    },
+    "mobile_layout": {
+      "passed": true
+    }
+  },
+  "errors": [],
+  "startedAt": "2026-11-14T21:03:06.147Z",
+  "completedAt": "2026-11-14T21:03:51.679Z"
+}
