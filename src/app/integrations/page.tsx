@@ -38,6 +38,12 @@ export default function Integrations() {
           reasoning run on the Tide service; you do not supply Telem, Tavily,
           model, Redis or signing keys.
         </p>
+        <p>
+          Tide&apos;s agent kit keeps Ripple-compatible tool and archive names
+          (<code>ripple_*</code> MCP tools, the <code>ripple-board-v1</code>{" "}
+          archive format and <code>ripple-agent-kit.zip</code>), so existing
+          Ripple setups keep working.
+        </p>
         {kitAvailable ? (
           <div className="integration-status">
             <a href="/downloads/ripple-agent-kit.zip" download>
@@ -73,7 +79,7 @@ export default function Integrations() {
         project path and the operator&apos;s actual verified deployment origin:
       </p>
       <pre>
-        <code>{`python3 scripts/connect-agents.py \\\n  --project "/absolute/path/to/your-project" \\\n  --base-url "https://YOUR-VERIFIED-RIPPLE-DEPLOYMENT" \\\n  --agent both`}</code>
+        <code>{`python3 scripts/connect-agents.py \\\n  --project "/absolute/path/to/your-project" \\\n  --base-url "https://YOUR-VERIFIED-TIDE-DEPLOYMENT" \\\n  --agent both`}</code>
       </pre>
       <p>
         The first command is a dry run. Review its proposed changes, then run
@@ -82,7 +88,7 @@ export default function Integrations() {
         verified service URL.
       </p>
       <pre>
-        <code>{`python3 scripts/connect-agents.py \\\n  --project "/absolute/path/to/your-project" \\\n  --base-url "https://YOUR-VERIFIED-RIPPLE-DEPLOYMENT" \\\n  --agent both --apply`}</code>
+        <code>{`python3 scripts/connect-agents.py \\\n  --project "/absolute/path/to/your-project" \\\n  --base-url "https://YOUR-VERIFIED-TIDE-DEPLOYMENT" \\\n  --agent both --apply`}</code>
       </pre>
       <p>
         The helper merges the <code>ripple</code> entry into{" "}
@@ -177,7 +183,7 @@ export default function Integrations() {
       </p>
       <p>
         To uninstall, remove only the <code>ripple</code> MCP entry and the two
-        Ripple skill directories, or unload the optional local Claude plugin.
+        <code>ripple-*</code> skill directories, or unload the optional local Claude plugin.
         Preserve unrelated client configuration. Local boards remain until you
         explicitly delete them or the vault. Deleting a browser board does not
         delete agent copies or exported archives.

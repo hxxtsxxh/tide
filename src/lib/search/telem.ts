@@ -18,6 +18,8 @@ export class TelemFailure extends Error {
 }
 
 /** Hard caps for one operation; `attempts` counts every HTTP attempt including the one retry. */
+/** Telem /v1/search accepts at most this many include_domains per request. */
+export const MAX_INCLUDE_DOMAINS = 20;
 export type TelemLimits = { maxQueries: number; maxPages: number; maxHttp: number };
 export type TelemDeps = { apiKey: string; signal: AbortSignal; deadline: number; limits: TelemLimits; fetchImpl?: typeof fetch; now?: () => number };
 
@@ -125,6 +127,8 @@ export class TelemClient {
 
   /** One query across <=2 providers. Domain limits go to search.include_domains; results are filtered again by the caller. */
   async search(query: string, includeDomains: readonly string[], numResults = 8): Promise<SearchOutcome> {
+    // Telem rejects include_domains with more than 20 entries (HTTP 422); callers must chunk.
+    if (includeDomains.length > MAX_INCLUDE_DOMAINS) throw new TelemFailure('limit', `include_domains exceeds ${MAX_INCLUDE_DOMAINS}`);
     if (this.queries >= this.d.limits.maxQueries) throw new TelemFailure('limit', 'Search query budget exhausted');
     this.queries++;
     const j = await this.post('/v1/search', {

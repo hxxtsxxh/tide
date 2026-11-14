@@ -1,7 +1,7 @@
 import 'server-only';
 import type { HealthBody } from '../contracts/legacy.ts';
 import { SIMULATION_LAB_ENABLED } from '../demo-policy.ts';
-import { serverConfig } from './config.ts';
+import { modeHostLists, serverConfig } from './config.ts';
 
 export function healthBody(env: Record<string, string | undefined> = process.env): HealthBody {
   const c = serverConfig(env);
@@ -24,7 +24,8 @@ export function healthBody(env: Record<string, string | undefined> = process.env
       search_queries: c.limits.search_queries,
       timeout_ms: c.limits.timeout_ms,
     },
-    source_hosts: c.sourceHosts,
+    // Tide: the union of every research mode's exact hosts (each board is still checked against its own mode's list).
+    source_hosts: [...new Set(Object.values(modeHostLists(c)).flat())].sort(),
     simulation_lab: SIMULATION_LAB_ENABLED,
   };
 }

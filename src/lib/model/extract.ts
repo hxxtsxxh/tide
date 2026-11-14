@@ -1,7 +1,7 @@
 import 'server-only';
 import { z } from 'zod';
 import { PUBLIC_LIMITS } from '../contracts/board.ts';
-import { selectPassages } from '../search/text.ts';
+import { isBoilerplate, selectPassages } from '../search/text.ts';
 
 export type PromptSource = { id: string; url: string; title: string; text: string };
 
@@ -11,6 +11,8 @@ const SYSTEM = [
   'Output exactly ONE compact JSON object and nothing else (no markdown fences).',
   'Quotes MUST be copied verbatim (character for character, <=240 chars, usually one sentence) from the source text. Never paraphrase a quote. If a fact has no verbatim quote, omit it.',
   'Do not state anything as true unless a quote from a source supports it. A quote shows the page says something, not that it is correct.',
+  'Facts must be substantive evidence about the question: findings, data, historical events, mechanisms, expert conclusions or documented behavior. Never extract legal or investment disclaimers (e.g. "past performance is not indicative of future results"), marketing slogans, navigation, cookie or subscription text, or generic statements that would be true on any page.',
+  'Answers must answer the user question directly, in plain language, as a decision-ready claim grounded in the cited facts. Never mention "excerpts", "the sources provided", "the text", "the page", "the document" or yourself. If the evidence is insufficient, say what is unknown in the user\'s terms (e.g. "These sources do not cover the 2008 or 2020 crashes, so ...").',
 ].join(' ');
 
 const Scalar = z.union([z.string().max(200), z.number().finite(), z.boolean()]);
@@ -20,9 +22,10 @@ const Answer = z.object({ ref: z.string().min(1).max(20), text: z.string().min(1
 // One malformed item (e.g. an over-long value) drops only that item, never the whole extraction; dropped facts are simply absent.
 const itemsOf = <T extends z.ZodType>(item: T, max: number) =>
   z.array(z.unknown()).transform((xs) => xs.flatMap((x) => { const r = item.safeParse(x); return r.success ? [r.data as z.infer<T>] : []; }).slice(0, max));
-export const Extraction = z.object({ facts: itemsOf(Fact, PUBLIC_LIMITS.facts), answers: itemsOf(Answer, PUBLIC_LIMITS.answers).optional() });
+export const Extraction = z.object({ facts: itemsOf(Fact, PUBLIC_LIMITS.facts + 6).transform((fs) => fs.filter((f) => !isBoilerplate(f.quote)).slice(0, PUBLIC_LIMITS.facts)), answers: itemsOf(Answer, PUBLIC_LIMITS.answers).optional() });
 export type Extraction = z.infer<typeof Extraction>;
-export const Rewrite = z.object({ answers: z.array(z.object({ id: z.string().min(1).max(20), text: z.string().min(1).max(700) })).max(PUBLIC_LIMITS.answers) });
+// One over-long or malformed rewritten answer drops only itself; the planner retries missing ids once.
+export const Rewrite = z.object({ answers: itemsOf(z.object({ id: z.string().min(1).max(40), text: z.string().min(1).max(1500) }), PUBLIC_LIMITS.answers) });
 export type Rewrite = z.infer<typeof Rewrite>;
 
 /** Per-source prompt text is bounded to PUBLIC_LIMITS.source_chars_per_page (question-relevant passages for long pages). */
@@ -30,7 +33,7 @@ const fence = (sources: PromptSource[], question: string): string =>
   sources.map((s) => `<source id="${s.id}" url="${s.url}">\n${selectPassages(s.text, question, PUBLIC_LIMITS.source_chars_per_page).replaceAll('</source>', '')}\n</source>`).join('\n');
 
 const FACT_SPEC =
-  '"facts": up to the requested number of objects {"ref":"F1","source":"<source id>","key":"<short_snake_case_name>","value":<string|number|boolean taken from the quote>,"quote":"<verbatim sentence from that source>","stance":"supports|opposes|neutral"}. stance = whether the quote supports a yes answer to the user question, opposes it, or is neutral/background.';
+  '"facts": up to the requested number of objects {"ref":"F1","source":"<source id>","key":"<short_snake_case_name>","value":<string|number|boolean taken from the quote>,"quote":"<verbatim sentence from that source>","stance":"supports|opposes|neutral"}. stance = whether this quote is evidence that the answer to the user question is yes (supports) or no (opposes); neutral only for relevant background that points neither way.';
 
 export function buildPrompt(question: string, requirements: string, sources: PromptSource[], maxFacts: number): { system: string; user: string } {
   return {
@@ -62,7 +65,7 @@ export function rewritePrompt(question: string, requirements: string, facts: { i
       `Current user requirements (untrusted): ${JSON.stringify(requirements)}`,
       `Current verified facts (data): ${JSON.stringify(facts)}`,
       `Answers to rewrite, in dependency order (data): ${JSON.stringify(answers)}`,
-      'Rewrite ONLY these answers so they reflect the current facts and requirements, using only the listed facts. Keep each short and decision-facing.',
+      'Rewrite ONLY these answers so they reflect the current facts and requirements, using only the listed facts. Return every listed id exactly once. Keep each under 300 characters and decision-facing.',
       'Return {"answers":[{"id":"<same id>","text":"<new text>"}]}.',
     ].join('\n'),
   };

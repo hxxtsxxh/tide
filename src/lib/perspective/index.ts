@@ -91,11 +91,68 @@ export function weightedScore(metrics: Record<Metric, number | null>, weights: W
   };
 }
 
-export type ScoredFact = { fact: FactRecord; stance: Stance; url: string; tier: string; metrics: Record<Metric, number | null> };
-export type RankedFact = ScoredFact & { score: number | null; coverage: number; contributing: Metric[] };
+export type ScoredFact = { fact: FactRecord; stance: Stance; url: string; tier: string; metrics: Record<Metric, number | null>; basis: { popularity: string; time: string } };
+
+/**
+ * Tide agreement for EVERY fact once a board has >=2 readable sources (PS popularity needs >=2 stance-taking origins,
+ * which most single-source claims never reach). Laplace-smoothed share of other origins that corroborate vs contest:
+ * 100*(1+agree)/(2+agree+disagree). Corroboration = the same fact verified on another source (merged support sets)
+ * or another origin taking the same stance; contest = the opposite stance from another origin, or a value conflict.
+ * One uncorroborated, uncontested source -> 50.
+ */
+export function agreementOf(fact: FactRecord, board: Board): { score: number | null; basis: string } {
+  const readable = new Set(board.sources.filter((s) => s.status !== 'failed').map((s) => s.id));
+  if (readable.size < 2) return { score: null, basis: 'needs two or more sources' };
+  const stance = stanceOf(fact);
+  const own = new Set((fact.support_sets ?? [[fact.source_id]]).flat());
+  let agree = Math.max(0, own.size - 1);
+  let disagree = fact.status === 'conflicting' ? 1 : 0;
+  if (stance !== 'neutral') {
+    for (const [origin, vote] of originVotes(board.facts)) {
+      if (own.has(origin)) continue;
+      if (vote === stance) agree++;
+      else if (vote === 'mixed') (agree += 0.5), (disagree += 0.5);
+      else disagree++;
+    }
+  }
+  const score = (100 * (1 + agree)) / (2 + agree + disagree);
+  const basis = agree || disagree ? `${agree} corroborating, ${disagree} contesting source${agree + disagree === 1 ? '' : 's'}` : 'uncorroborated, uncontested';
+  return { score, basis };
+}
+
+/**
+ * Time on a fresh board (one observation): a recency proxy from the newest year in the source URL, else the latest
+ * year cited in the title/excerpt; 100 for the current year, -8 per year, floor 20. No year found -> 50, labelled.
+ */
+export function recencyOf(src: { url: string; title?: string; excerpt?: string } | undefined, nowYear = new Date().getUTCFullYear()): { score: number; basis: string } {
+  if (!src) return { score: 50, basis: 'single observation' };
+  const valid = (y: number) => y >= 1900 && y <= nowYear;
+  const fromUrl = (src.url.match(/\/((?:19|20)\d{2})\//g) ?? []).map((m) => Number(m.slice(1, 5))).filter(valid);
+  const fromText = (`${src.title ?? ''} ${src.excerpt ?? ''}`.match(/\b(?:19|20)\d{2}\b/g) ?? []).map(Number).filter(valid);
+  const year = fromUrl.length ? Math.max(...fromUrl) : fromText.length ? Math.max(...fromText) : null;
+  if (year === null) return { score: 50, basis: 'single observation, no date found' };
+  return { score: Math.max(20, 100 - 8 * (nowYear - year)), basis: `recency proxy: ${fromUrl.length ? 'URL dated' : 'latest year cited'} ${year}` };
+}
+
+/**
+ * Per-quote evidence adjustment on top of the publisher tier (a deterministic slice of PS's authority rubric):
+ * +6 for traceable data (a number or statistic in the quote), -8 for hedged or second-hand attribution.
+ */
+export function quoteEvidence(quote: string): { delta: number; label: string } {
+  const data = /\d/.test(quote.replace(/\b(?:19|20)\d{2}\b/g, ''));
+  const hedged = /\b(some|critics|skeptics|proponents|reportedly|allegedly|may|might|could|believe[sd]?|claim(?:s|ed)?|argue[sd]?|say|says|said)\b/i.test(quote);
+  const delta = (data ? 6 : 0) - (hedged ? 8 : 0);
+  return { delta, label: [data ? '+data' : '', hedged ? '−hedged' : ''].filter(Boolean).join(' ') };
+}
+
+/** Latest plausible year cited in the quote itself (evidence recency), if any. */
+export function quoteYear(quote: string, nowYear = new Date().getUTCFullYear()): number | null {
+  const ys = (quote.match(/\b(?:19|20)\d{2}\b/g) ?? []).map(Number).filter((y) => y >= 1900 && y <= nowYear);
+  return ys.length ? Math.max(...ys) : null;
+}
 
 /** Weight-independent scores, computed once per board (sliders only rerank). */
-export function scoreBoard(board: Board, history: Board[] = []): ScoredFact[] {
+export function scoreBoard(board: Board, history: Board[] = [], nowYear?: number): ScoredFact[] {
   const periods = [...history, board].map((b) => b.facts);
   const uniquePeriods = periods.filter((p, i) => i === 0 || JSON.stringify(p) !== JSON.stringify(periods[i - 1]));
   return board.facts
@@ -104,9 +161,25 @@ export function scoreBoard(board: Board, history: Board[] = []): ScoredFact[] {
       const stance = stanceOf(fact);
       const src = board.sources.find((s) => s.id === fact.source_id);
       const a = authorityOf(src?.url ?? '');
-      return { fact, stance, url: src?.url ?? '', tier: a.tier, metrics: { authority: a.score, popularity: popularityOf(stance, board.facts), time: timeOf(stance, uniquePeriods) } };
+      const agreement = agreementOf(fact, board);
+      // After rechecks, PS cross-revision time consistency; on a single observation, the labelled recency proxy.
+      const consistency = timeOf(stance, uniquePeriods);
+      const year = quoteYear(fact.quote, nowYear);
+      const ny = nowYear ?? new Date().getUTCFullYear();
+      const recency = year !== null ? { score: Math.max(20, 100 - 8 * (ny - year)), basis: `recency proxy: quote cites ${year}` } : recencyOf(src, nowYear);
+      const ev = quoteEvidence(fact.quote);
+      return {
+        fact,
+        stance,
+        url: src?.url ?? '',
+        tier: ev.label ? `${a.tier} ${ev.label}` : a.tier,
+        metrics: { authority: Math.max(0, Math.min(100, a.score + ev.delta)), popularity: agreement.score, time: consistency ?? recency.score },
+        basis: { popularity: agreement.basis, time: consistency !== null ? 'consistency across saved revisions' : recency.basis },
+      };
     });
 }
+
+export type RankedFact = ScoredFact & { score: number | null; coverage: number; contributing: Metric[] };
 
 /** Pure rerank: deterministic tie-break by fact id, unscorable facts last. */
 export function rank(scored: ScoredFact[], weights: Weights): RankedFact[] {

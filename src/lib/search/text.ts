@@ -95,3 +95,19 @@ export function selectPassages(text: string, question: string, maxChars = 12_000
     .map((w) => text.slice(w.start, w.end).trim())
     .join(' … ');
 }
+
+/** Deterministic backstop for the extraction prompt: disclaimers, navigation and cookie/subscription text are never evidence. */
+const BOILERPLATE = [
+  /past performance (is|does) not (necessarily )?(indicative|a guarantee|guarantee|indicate)/i,
+  /(does|do) not (guarantee|ensure|assure) (any )?(investment )?(returns?|profits?|results?)/i,
+  /eliminate (the )?risk of loss/i,
+  /\bnot (intended as |to be construed as |)(financial|investment|legal|medical|tax) advice\b/i,
+  /for (general )?informational purposes only/i,
+  /consult (with )?(your|a) (doctor|physician|financial (advisor|adviser)|professional)/i,
+  /all rights reserved/i,
+  /\b(accept|manage|use of) (all )?cookies\b|\bthis (site|website) uses cookies\b/i,
+  /\b(privacy policy|terms of (use|service))\b/i,
+  /\b(subscribe to|sign up for) (our|the) newsletter\b/i,
+  /\b(skip|jump) to (main )?content\b/i,
+];
+export const isBoilerplate = (quote: string): boolean => BOILERPLATE.some((re) => re.test(quote));

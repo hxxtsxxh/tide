@@ -204,7 +204,9 @@ export default function BoardInspector({
     <>
       <div className="execution-strip" aria-label="Last operation accounting">
         <div>
-          <span>Source reads attempted</span>
+          <span title="One Telem qualification check per page plus one batched Tavily extract call">
+            Source reads attempted · Telem check per page + Tavily batch
+          </span>
           <strong>
             {trace
               ? trace.retrieval.filter((r) => r.kind === "fetch").length
@@ -598,7 +600,10 @@ export default function BoardInspector({
                     key={a.id}
                     onClick={() => setSelected({ kind: "answer", id: a.id })}
                   >
-                    {a.id} <Icon size={14} />
+                    <span className="dependent-text">
+                      {a.text.length > 120 ? `${a.text.slice(0, 117)}…` : a.text}
+                    </span>{" "}
+                    <Status value={status(a.status)} /> <Icon size={14} />
                   </button>
                 ))}
             </>

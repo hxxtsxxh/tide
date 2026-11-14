@@ -469,7 +469,7 @@ export default function Workspace({
             ))}
             {ready && !library.length && (
               <p className="library-empty">
-                Your research starts here.
+                Your research starts here.{" "}
                 <br />
                 Saved in this browser.
               </p>

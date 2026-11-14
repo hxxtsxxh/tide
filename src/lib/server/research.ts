@@ -7,7 +7,8 @@ import { completeStructured, ModelFailure, type CallBudget, type ModelDeps } fro
 import { buildPrompt, Extraction, factsOnlyPrompt, Rewrite, rewritePrompt, type PromptSource } from '../model/extract.ts';
 import { affectedClosure, topoOrder, validateGraph, type GraphNode } from '../search/dag.ts';
 import { acquirePages, sourceProvenance, type AcquiredPage } from '../search/acquire.ts';
-import { TelemClient, TelemFailure, type TelemLimits } from '../search/telem.ts';
+import { MAX_INCLUDE_DOMAINS, TelemClient, TelemFailure, type TelemLimits } from '../search/telem.ts';
+import { HOST_TIERS, TIER_INFO } from '../modes.ts';
 import { buildExcerpt, canonicalJson, locateQuote, sha256, slug } from '../search/text.ts';
 import type { ServerConfig, secrets as secretsFn } from './config.ts';
 import { ApiError } from './guarded.ts';
@@ -67,15 +68,37 @@ const isDegradable = (e: unknown): boolean => e instanceof ModelFailure || (e in
 
 // ---- Discover ----------------------------------------------------------------------------------
 
+/** Split a host list into Telem-sized include_domains chunks, curated high-authority hosts first. */
+export function domainChunks(hosts: readonly string[], size = MAX_INCLUDE_DOMAINS): string[][] {
+  const rank = (h: string) => -(HOST_TIERS[h] ? TIER_INFO[HOST_TIERS[h]!].score : 0);
+  const ordered = hosts.map((h, i) => [h, i] as const).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(([h]) => h);
+  const out: string[][] = [];
+  for (let i = 0; i < ordered.length; i += size) out.push(ordered.slice(i, i + size));
+  return out;
+}
+
 export async function discover(req: DiscoverRequest, d: RunDeps): Promise<DiscoverResponse> {
   const t0 = nowMs(d);
   const telem = telemClient(d);
-  let out;
-  try {
-    out = await telem.search(req.query.slice(0, 400), d.config.sourceHosts, PUBLIC_LIMITS.discover_results);
-  } catch (e) {
-    mapTelem(e);
+  // Large mode host lists are searched in chunks of <=20 (Telem's include_domains cap), highest-authority hosts first,
+  // within the query budget; hits are merged and still post-filtered against the full mode list below.
+  const chunks = domainChunks(d.config.sourceHosts).slice(0, PUBLIC_LIMITS.search_queries);
+  const out: { providers: Awaited<ReturnType<TelemClient['search']>>['providers']; hits: Awaited<ReturnType<TelemClient['search']>>['hits']; requestId: string | null } = { providers: [], hits: [], requestId: null };
+  let lastError: unknown = null;
+  const perChunk: (typeof out.hits)[] = [];
+  for (const chunk of chunks) {
+    try {
+      const r = await telem.search(req.query.slice(0, 400), chunk, PUBLIC_LIMITS.discover_results);
+      out.providers.push(...r.providers);
+      perChunk.push(r.hits);
+      out.requestId ??= r.requestId;
+    } catch (e) {
+      lastError = e;
+    }
   }
+  // Interleave chunks so one host group cannot crowd out the other within the result cap.
+  for (let i = 0; perChunk.some((h) => i < h.length); i++) for (const h of perChunk) if (h[i]) out.hits.push(h[i]!);
+  if (!out.providers.length) mapTelem(lastError);
   const retrieval: RetrievalTrace[] = out.providers.map((p) => ({ kind: 'search', provider: p.provider, service: 'telem', transport: 'telem', endpoint: 'search', mode: 'live', status: p.status === 'succeeded' ? 'succeeded' : `failed:${p.error}`, requestId: out.requestId }));
   if (retrieval[0]) retrieval[0].http_attempts = telem.http;
   if (!out.providers.some((p) => p.status === 'succeeded')) throw new ApiError('UPSTREAM_UNAVAILABLE', 'No search provider returned results.');
@@ -95,7 +118,7 @@ export async function discover(req: DiscoverRequest, d: RunDeps): Promise<Discov
     results.push({ url, title: h.title || new URL(url).hostname });
     if (results.length >= PUBLIC_LIMITS.discover_results) break;
   }
-  const limitations = ['Candidates come from search results; snippets are never used as evidence. Select pages and build a board to fetch and quote them.', 'Only the supported documentation hosts are offered; out-of-policy results are dropped.'];
+  const limitations = ['Candidates come from search results; snippets are never used as evidence. Select pages and build a board to fetch and quote them.', 'Only this mode\'s supported hosts are offered; out-of-policy results are dropped.'];
   if (rejected) limitations.push(`${rejected} result(s) outside the supported hosts were dropped.`);
   if (!results.length) limitations.push('No supported-host candidates were found for this query.');
   return { mode: 'live', request_id: d.requestId, results, trace: { retrieval, model_calls: 0, elapsed_ms: nowMs(d) - t0, limitations } };

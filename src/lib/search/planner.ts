@@ -173,20 +173,26 @@ export async function refreshBoardDomain(req: RefreshBoardRequest, state: State,
   if (plan.recompute.length) {
     const needed = new Set(plan.recompute.flatMap((id) => board.answers.find((a) => a.id === id)!.depends_on));
     const facts = board.facts.filter((f) => needed.has(f.id)).map((f) => ({ id: f.id, key: dom.facts[f.id]!.key, value: f.value, source_id: f.source_id, quote: f.quote }));
-    try {
-      const p = rewritePrompt(board.question, newRequirements, facts, plan.recompute.map((id) => { const a = board.answers.find((x) => x.id === id)!; return { id, previous: a.text, depends_on: a.depends_on }; }));
-      const out = await completeStructured(modelDeps(d), p.system, p.user, (r) => Rewrite.parse(r));
-      for (const r of out.answers) {
-        const a = board.answers.find((x) => x.id === r.id);
-        if (!a || !plan.recompute.includes(a.id) || recomputed.has(a.id)) continue;
-        a.text = r.text;
-        a.observedAt = at;
-        recomputed.add(a.id);
+    // One retry for ids the model omitted or returned malformed, so an affected answer is not left stale by a partial reply.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const todo = plan.recompute.filter((id) => !recomputed.has(id));
+      if (!todo.length) break;
+      try {
+        const p = rewritePrompt(board.question, newRequirements, facts, todo.map((id) => { const a = board.answers.find((x) => x.id === id)!; return { id, previous: a.text, depends_on: a.depends_on }; }));
+        const out = await completeStructured(modelDeps(d), p.system, p.user, (r) => Rewrite.parse(r));
+        for (const r of out.answers) {
+          const a = board.answers.find((x) => x.id === r.id);
+          if (!a || !todo.includes(a.id) || recomputed.has(a.id)) continue;
+          a.text = r.text;
+          a.observedAt = at;
+          recomputed.add(a.id);
+        }
+      } catch (e) {
+        if (!degradable(e)) throw e;
+        break;
       }
-    } catch (e) {
-      if (!degradable(e)) throw e;
-      limitations.push('Affected answers could not be regenerated; they are marked stale rather than fresh.');
     }
+    if (recomputed.size < plan.recompute.length) limitations.push(`${plan.recompute.length - recomputed.size} affected answer(s) could not be regenerated; they are marked stale rather than fresh and will be retried on the next refresh or requirement edit.`);
   }
 
   // ---- 6. statuses: never fresh when evidence is unknown or a needed recomputation did not happen ----

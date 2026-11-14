@@ -76,3 +76,35 @@ test('extraction: one malformed item is dropped, not the whole model output; lon
   assert.equal(buildExcerpt(long, quotes).kept.size, 16, "all quotes fit the long-page excerpt");
   assert.ok(buildExcerpt(long, quotes, 3000).kept.size < 16, 'the old 3,000-char budget would have dropped some');
 });
+
+test('discover: General (31 hosts) never sends more than 20 include_domains; chunks are merged and post-filtered', async () => {
+  const { discover, domainChunks } = await import('../src/lib/server/research.ts');
+  const { newWorld, deps } = await import('./retrieval-fakes.ts');
+  const { TelemClient } = await import('../src/lib/search/telem.ts');
+  const general = withMode(serverConfig({}), 'general').sourceHosts;
+  assert.ok(general.length > 20);
+  const chunks = domainChunks(general);
+  assert.ok(chunks.every((c) => c.length <= 20));
+  assert.deepEqual([...chunks.flat()].sort(), [...general].sort(), 'every host is searched exactly once');
+  assert.equal(chunks[0]![0], 'www.federalreserve.gov', 'highest-authority hosts first');
+  const w = newWorld({ search: [{ provider: 'brave', results: [{ url: 'https://en.wikipedia.org/wiki/Gold', title: 'Gold' }, { url: 'https://docs.telem.ai/api/', title: 'off-mode' }] }] });
+  const base = deps(w);
+  const r = await discover({ request_id: 'g', query: 'gold safe haven', mode: 'general' }, { ...base, config: withMode(base.config, 'general') });
+  const searches = w.calls.filter((c) => c.path === '/api/v1/search');
+  assert.equal(searches.length, 2);
+  for (const c of searches) assert.ok(c.body.search.include_domains.length <= 20, 'Telem 422s above 20');
+  assert.deepEqual(r.results.map((x) => x.url), ['https://en.wikipedia.org/wiki/Gold'], 'merged, deduped, off-mode host dropped');
+  await assert.rejects(new TelemClient({ limits: { maxQueries: 2, maxPages: 5, maxHttp: 6 } } as never).search('q', general), /include_domains/);
+});
+
+test('boilerplate quotes never become facts; substantive quotes survive', async () => {
+  const { Extraction } = await import('../src/lib/model/extract.ts');
+  const { isBoilerplate } = await import('../src/lib/search/text.ts');
+  for (const q of ['Past performance is not necessarily indicative of future results.', 'Diversification does not guarantee any investment returns and does not eliminate the risk of loss.', 'This website uses cookies to improve your experience.', 'This material is for informational purposes only.', 'Jump to content'])
+    assert.ok(isBoilerplate(q), q);
+  for (const q of ['Gold rose 25% in 2008 while equities fell.', 'An inverted yield curve preceded every U.S. recession since 1970.', 'Remote workers saved 72 minutes per day of commuting.'])
+    assert.ok(!isBoilerplate(q), q);
+  const f = (ref: string, quote: string) => ({ ref, source: 's1', key: ref, value: 1, quote });
+  const parsed = Extraction.parse({ facts: [f('F1', 'Past performance is not necessarily indicative of future results.'), f('F2', 'Gold rose 25% in 2008 while equities fell.')] });
+  assert.deepEqual(parsed.facts.map((x) => x.ref), ['F2']);
+});

@@ -97,3 +97,45 @@ test('curated general-source authority tiers and labels', async () => {
   assert.match(fed.tier, /central bank/i);
   assert.equal(a('https://www.nih.gov/x').score, 95);
 });
+
+test('Tide agreement and recency: every fact scored on a fresh multi-source board; mid-range sliders reorder', async () => {
+  const { agreementOf, recencyOf, scoreBoard: sb, rank: rk } = await import('../src/lib/perspective/index.ts');
+  const src = (id: string, url: string, excerpt = '') => ({ id, url, status: 'succeeded', title: '', excerpt });
+  const mk = (facts: FactRecord[], sources: ReturnType<typeof src>[]) => ({ facts, sources, answers: [], revisions: [] }) as unknown as Board;
+  // one source -> no cross-source signal
+  assert.equal(agreementOf(fact('f1', 's1', 'supports'), mk([fact('f1', 's1', 'supports')], [src('s1', 'https://a.org')])).score, null);
+  const b = mk(
+    [fact('f1', 's1', 'supports'), fact('f2', 's2', 'supports'), fact('f3', 's3', 'opposes'), fact('f4', 's3', 'neutral'), { ...fact('f5', 's1', 'neutral'), support_sets: [['s1'], ['s2']] }],
+    [src('s1', 'https://medium.com/2025/01/a'), src('s2', 'https://dev.to/b', 'Updated 2019.'), src('s3', 'https://www.federalreserve.gov/c')],
+  );
+  const ag = (id: string) => agreementOf(b.facts.find((f) => f.id === id)!, b).score!;
+  assert.equal(ag("f1"), 50, 'one corroborating, one contesting -> 50');
+  assert.ok(ag('f3') < 50, 'contested by two origins');
+  assert.equal(ag('f4'), 50, 'neutral, uncorroborated');
+  assert.ok(ag('f5') > 50, 'same fact verified on a second source corroborates');
+  assert.equal(recencyOf(src('x', 'https://medium.com/2025/01/a'), 2026).score, 92);
+  assert.equal(recencyOf(src('x', 'https://dev.to/b', 'Updated 2019.'), 2026).score, 44);
+  assert.deepEqual(recencyOf(src('x', 'https://www.federalreserve.gov/c'), 2026), { score: 50, basis: 'single observation, no date found' });
+  const scored = sb(b, [], 2026);
+  assert.ok(scored.every((s) => s.metrics.popularity !== null && s.metrics.time !== null), 'no N/A on a fresh 3-source board');
+  const order = (w: { authority: number; popularity: number; time: number }) => rk(scored, w).map((r) => r.fact.id).join();
+  assert.notEqual(order({ authority: 70, popularity: 20, time: 60 }), order({ authority: 30, popularity: 70, time: 40 }), 'mid-range change reorders');
+  assert.notEqual(order({ authority: 50, popularity: 50, time: 20 }), order({ authority: 50, popularity: 50, time: 80 }), 'time slider alone reorders');
+});
+
+test('single-page board: per-quote evidence and recency make mid-range slider moves reorder', async () => {
+  const { scoreBoard: sb, rank: rk, quoteEvidence, quoteYear } = await import('../src/lib/perspective/index.ts');
+  assert.deepEqual(quoteEvidence('GDP fell 3.2% in two quarters.'), { delta: 6, label: '+data' });
+  assert.equal(quoteEvidence('Skeptics say it may not be reliable.').delta, -8);
+  assert.equal(quoteYear('Since 1970 and again in 2019.', 2026), 2019);
+  const q = (id: string, stance: FactRecord['stance'], quote: string) => ({ ...fact(id, 's1', stance), quote });
+  const b = {
+    facts: [q('f1', 'supports', 'Every recession since 1970 was preceded by an inversion.'), q('f2', 'opposes', 'Skeptics say the 2024 signal may be a false alarm.'), q('f3', 'supports', 'Eight of eight signals were followed by recessions.'), q('f4', 'opposes', 'Lead times varied widely.')],
+    sources: [{ id: 's1', url: 'https://en.wikipedia.org/wiki/X', status: 'succeeded', title: '', excerpt: '' }, { id: 's2', url: 'https://www.newyorkfed.org/y', status: 'succeeded', title: '', excerpt: '' }],
+    answers: [], revisions: [],
+  } as unknown as Board;
+  const scored = sb(b, [], 2026);
+  const order = (w: { authority: number; popularity: number; time: number }) => rk(scored, w).map((r) => r.fact.id).join();
+  const seen = new Set([order({ authority: 70, popularity: 20, time: 60 }), order({ authority: 90, popularity: 20, time: 20 })]);
+  assert.ok(seen.size >= 2, `mid-range moves reorder: ${[...seen].join(' | ')}`);
+});

@@ -216,3 +216,24 @@ test('model omission of requirement-use mapping is conservative through the actu
   assert.ok(edited!.update.recomputed.includes(answer.id));
   assert.equal(edited!.trace.retrieval.length, 0);
 });
+
+test('partial rewrite replies: omitted id is retried once; a still-stale answer is retried on the next refresh', async () => {
+  const { env, w } = await created();
+  const a1 = answerOf(env.board, 'Send at most 5').id;
+  const a4 = answerOf(env.board, 'Plan the number').id;
+  // First reply omits one id; the planner's single retry recovers it.
+  let calls = 0;
+  w.rewrite = (items) => ({ answers: items.slice(calls++ === 0 ? 1 : 0).map((i) => ({ id: i.id, text: `${i.previous} [rewritten]` })) });
+  const { env: r } = await refresh(env.snapshot, w, { force: false, requirements: 'batch of 9' });
+  assert.deepEqual(sorted(r!.update.recomputed), sorted([a1, a4]));
+  assert.ok(r!.board.answers.every((a) => a.status !== 'stale'));
+  // A model that keeps omitting one id leaves it stale (never fresh) ...
+  w.rewrite = (items) => ({ answers: items.filter((i) => i.id !== a4).map((i) => ({ id: i.id, text: `${i.previous} [again]` })) });
+  const { env: s } = await refresh(r!.snapshot, w, { force: false, requirements: 'batch of 11' });
+  assert.equal(s!.board.answers.find((a) => a.id === a4)!.status, 'stale');
+  // ... and the next plain refresh retries it even though no source changed.
+  w.rewrite = (items) => ({ answers: items.map((i) => ({ id: i.id, text: `${i.previous} [fixed]` })) });
+  const { env: t } = await refresh(s!.snapshot, w);
+  assert.ok(t!.update.recomputed.includes(a4));
+  assert.equal(t!.board.answers.find((a) => a.id === a4)!.status, 'fresh');
+});
