@@ -1,5 +1,5 @@
 import { runGuarded } from '@/lib/server/guarded';
-import { createBoardSpec } from '@/lib/server/operations';
+import { createBoardSpec } from '@/app/api/_lib/specs';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
