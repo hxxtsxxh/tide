@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PUBLIC_LIMITS } from "@/lib/contracts/board";
 import { serverConfig } from "@/lib/server/config";
+import { MODES, hostsForMode } from "@/lib/modes";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Privacy and limits — Tide" };
 export default function Privacy() {
@@ -95,13 +96,18 @@ export default function Privacy() {
       <h2>Supported public sources</h2>
       <p>
         Only HTTPS public text pages on these exact operator-approved hosts are
-        accepted:
+        accepted. Each research mode has its own list:
       </p>
-      <div className="host-list">
-        {config.sourceHosts.map((host) => (
-          <code key={host}>{host}</code>
-        ))}
-      </div>
+      {MODES.map((m) => (
+        <div key={m.id}>
+          <h3>{m.label}</h3>
+          <div className="host-list">
+            {hostsForMode(m.id, config.sourceHosts, config.modeHostOverrides).map((host) => (
+              <code key={host}>{host}</code>
+            ))}
+          </div>
+        </div>
+      ))}
       <p>
         Private documents, logins, paywalled pages, signed URLs, PDF/video
         uploads, arbitrary internet crawling and medical, legal or financial

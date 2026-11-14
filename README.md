@@ -40,6 +40,18 @@ Modes live in one data registry, `src/lib/modes.ts`. Each mode has an id, label,
   - Quotes are still verified literally against the full fetched text, and truncated pages are still labelled partial.
   - Limit: facts that sit only in passages the model never saw are not extracted.
 
+### Example boards verified locally (live creates, 2026-11-14)
+
+| Example | Mode | URLs | Result |
+|---|---|---|---|
+| Inverted yield curve → U.S. recession | General | en.wikipedia.org/wiki/Inverted_yield_curve, www.newyorkfed.org/research/capital_markets/ycfaq, en.wikipedia.org/wiki/Yield_curve | 3/3 sources read, 7 facts supported, 4/4 answers fresh; Leans no (60/40) |
+| Gold as a safe haven | Finance & Economics | en.wikipedia.org/wiki/Gold_as_an_investment, www.gold.org/goldhub/research/relevance-of-gold-as-a-strategic-asset | 2/2 sources read, 5 of 7 facts supported, 2 of 4 answers fresh (run before the long-page excerpt fix); Leans no (82%) |
+| Remote work productivity | General / Work & Society | en.wikipedia.org/wiki/Remote_work, www.nber.org/papers/w30866, www.gallup.com/workplace/398135/advantages-challenges-hybrid-work.aspx | 3/3 sources read, 9 facts supported, 4/4 answers fresh; Leans yes (76%) |
+| Coffee and type 2 diabetes | Health & Science | en.wikipedia.org/wiki/Health_effects_of_coffee | 1/1 source read, 5 facts supported, 3/3 answers fresh; Leans yes (2 supporting quotes, 0 opposing) |
+
+- **What these verdicts reflect.** They come from model-assigned stances on boilerplate as well as findings. For example, gold.org's "Past performance is not necessarily indicative…" was tagged *opposes*. Read the quotes before you trust a verdict.
+- **The NY Fed FAQ page has contributed no facts so far.** Its extracted text starts with long navigation.
+
 Quota keys moved from `ripple:v1:*` to `tide:v1:*`, so Tide and Ripple don't share counters.
 
 ## Run (local)

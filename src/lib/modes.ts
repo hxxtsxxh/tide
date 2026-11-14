@@ -75,7 +75,7 @@ const YIELD: Example = {
   label: 'Yield curve → recession',
   title: 'Yield curve and recessions',
   question: 'Does an inverted yield curve reliably predict a U.S. recession within 12 months?',
-  urls: ['https://en.wikipedia.org/wiki/Inverted_yield_curve', 'https://www.newyorkfed.org/research/capital_markets/ycfaq'],
+  urls: ['https://en.wikipedia.org/wiki/Inverted_yield_curve', 'https://www.newyorkfed.org/research/capital_markets/ycfaq', 'https://en.wikipedia.org/wiki/Yield_curve'],
   requirements: 'Judge reliability since 1970; note lead times and false signals.',
 };
 const GOLD: Example = {
