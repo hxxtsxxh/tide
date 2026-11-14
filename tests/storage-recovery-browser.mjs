@@ -1,6 +1,7 @@
 // Historical test data only. Run with Playwright MCP on a newly built local server.
 async (page) => {
-  const base='http://127.0.0.1:4508';
+  // Navigate the MCP page to the app first; do not hardcode another task's server.
+  const base=new URL(page.url()).origin;
   const ensure=(ok,message)=>{if(!ok)throw new Error(message);};
   const board={id:'T05-storage-recovery',title:'T05 historical storage regression',question:'Test archive, no live observation',requirements:'',sources:[],facts:[],answers:[],revisions:[{id:'r1',parent_id:null,createdAt:'2026-11-14T19:00:00.000Z',kind:'test',summary:'Historical test'}]};
   const raw=Buffer.from(JSON.stringify({schemaVersion:1,format:'ripple-board-v1',board,snapshot:null,exportedAt:'2026-11-14T19:00:00.000Z'}));
