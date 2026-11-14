@@ -2,34 +2,47 @@
 
 When one source changes, know which decisions to revisit.
 
-Ripple is a browser research board for technical founders and developers whose integration decisions depend on changing documentation. Create a board from your own question, requirements and supported public URLs. Real Telem discovery and source qualification, followed by direct Tavily basic page extraction, feed a source → fact → answer graph, with literal source passages and explicit unknown states.
+Ripple is a browser research board for technical founders and developers whose integration decisions depend on changing documentation. Create a board from your own question, requirements and supported public URLs. Telem discovers and qualifies the selected pages; direct Tavily basic extraction supplies their text. The result is a source → fact → answer graph, with literal source passages and explicit unknown states.
 
-Change a requirement to revisit its dependent answers without reading the web again. Refresh evidence to check actual sources, preserve unrelated answers and keep an auditable history. Boards persist in this browser and can be exported, imported as unverified history, or deleted. A downloadable local stdio agent kit carries the same workflow into a separate local vault.
+Change a requirement to revisit its dependent answers without reading the web again. Refresh evidence to check the actual sources, preserve unrelated answers and keep an auditable history. Boards persist in this browser and can be exported, imported as unverified history, or deleted. A downloadable local stdio agent kit carries the same workflow into a separate local vault.
 
 ## What we built
 
-Next.js/TypeScript web workflow; real Telem, direct Tavily Extract and configured model adapters; typed fact comparison and dependency invalidation; signed snapshots; IndexedDB persistence; source/body/time limits; shared atomic Redis quotas; privacy UI; client-only synthetic teaching lab; local MCP adapter distribution. No separate research database, scheduled monitoring or cloud library.
+Next.js/TypeScript web workflow; real Telem, direct Tavily Extract and configured model adapters; typed fact comparison and dependency invalidation; signed snapshots; IndexedDB persistence; source, body and time limits; shared atomic Redis quotas; privacy UI; a client-only synthetic teaching lab; and a local MCP adapter distribution. There is no separate research database, scheduled monitoring or cloud library.
 
-The compact contribution is an inspectable decision-facing workflow with alternative evidence support and exact affected/recomputed/reused sets. Temporal graphs and source monitors already exist; no claim of inventing them or discovering every natural-language dependency is made.
+The compact contribution is an inspectable, decision-facing workflow: alternative evidence support sets, and exact affected, recomputed and reused answer sets for each change. Temporal knowledge graphs and source monitors already exist; this project does not claim to have invented them, nor to discover every natural-language dependency.
 
 ## Evidence and boundaries
 
-The earlier L01 local paired evaluation recorded 10/10 treatment fixture cases and 3/3 selected live cases (LIVE01–03). Refresh-all produced six expected fixture recomputation-set mismatches because it also recomputed unaffected answers. Live initial-build comparisons used real search/fetch/model calls, with no demonstrated monetary or latency saving. Current rerun results and any failures are recorded separately in `demo/L01-resume-verification.json` and `handoffs/L01.md`.
+All figures below come from records in `demo/` and `handoffs/`, observed on 2026-11-14. Each record states its own scope.
 
-The earlier real Telem documentation browser run created two sources, nine quoted facts and five fresh answers. Changing the requirement from three to eight URLs read no sources, recomputed one answer and reused four. An unchanged source refresh read two pages and reused all five answers. These are observed local examples, not a general benchmark or a promise about a future recording.
+- **Local test gates** (this worktree, `handoffs/L03.md`): typecheck, 125/125 unit tests, 22/22 Tavily tests, 23/23 MCP tests and the production build all passed.
+- **Live evaluator** (`handoffs/L02.md`, `demo/L02-verification.json`): 3/3 selected live cases (LIVE01–03), each with actual Telem, Tavily and model calls against a local production build. Fixture evaluator: 10/10 treatment cases, run in a separate localhost fixture mode. Refresh-all produced six expected recomputation-set mismatches on fixture cases because it also recomputed unaffected answers. Cold-versus-warm cache differences mean latency is not comparable, and no saving is claimed.
+- **Browser flow before direct Tavily** (`demo/L01-resume-verification.json`): create gave 8 quoted facts and 4 answers. Changing the requirement text from three to eight read no sources, recomputed 1 answer and reused 3. An unchanged source refresh read 2 pages, recomputed 0 and reused 4. This predates the Tavily path and is not the recording's result.
+- **Two-provider local API flows** (`demo/TV01-verification.json`, `handoffs/TV02.md`): create, requirement-edit and refresh flows ran with actual Telem, Tavily, model and shared Redis calls. The local sponsor observer passed 6/6 with `live=false` and `sponsors_ready=false`. Telem made 3 HTTP attempts, direct Tavily made 2, and 1 credit was reported for create. Reported credits are returned usage, not a balance or a free-use promise.
+- **Independent local gates**: the browser gate passed 15/15 on localhost only. The MCP gate passed 12/12 locally. Neither is a deployed HTTPS gate.
 
-Dependencies are model-proposed. Direct signed edge editing is not implemented; local review notes must be carried into requirements and a rebuild. Unsupported, failed and partial evidence remains unknown; exhausted regeneration can remain stale. Custom-board refresh-all numbers are planned counts. No native-client compatibility certification is claimed.
+Limitations that apply to every figure above:
+
+- Dependencies are model-proposed and need your review. Direct edge editing is not implemented. A correction goes into the requirements and the board is rebuilt.
+- Quotes establish that text was fetched. They do not establish that it is true. Telem and Tavily reading one URL are one source.
+- Failed or partial evidence keeps dependent answers unknown. A truncated page (12,000 characters) is partial.
+- Tavily cache age and provider-side redirect chains are not independently established. The observation time is the extraction attempt, not the page's publication time.
+- Some failed-request error responses do not expose a provider-work ledger. Absence of a count there is unmeasured, not zero.
+- Custom-board refresh-all counts in revision summaries are planned counts. Only the legacy evaluation adapter measures a paired baseline.
+- No refresh savings and no total provider-work savings are measured.
+- No background monitoring, cloud sync or native Claude Code/Codex invocation is verified.
 
 ## Release status
 
-Deployment URL: not measured in this task; controller-owned.
+Deployment URL: not recorded in this document; the controller performs deployment.
 
-Public readiness: false until the independent HTTPS deployment gate passes. MCP deployed readiness and native Claude/Codex invocation: unverified until their respective checks run. Final video, presentation render and submission: controller-owned, not produced or submitted by this task.
+Public readiness: `public_ready=false`. It stays false until the independent browser gate passes on the HTTPS deployment. MCP deployed readiness and native Claude/Codex invocation are unverified until their own checks run. Sponsor readiness for the deployed commit is likewise unverified. The video, presentation render and submission are controller-owned; this document does not claim they exist.
 
 See `README.md`, `ARCHITECTURE.md`, `PUBLIC-READINESS.md`, `IMPLEMENTED-SCOPE.json` and `ATTRIBUTION.md` for operation, scope and preparation disclosure.
 
-## Sponsor integration update (TV01)
+## Sponsor integration
 
-Telem remains the real discovery/router and qualifies selected source pages. Direct Tavily `POST /extract` basic supplies the text used for source-bound facts, literal quotes, content hashes and refresh observations across web, legacy evaluation and the same MCP API. The evidence drawer reports extractor, observed request ID, status, partial/error evidence and batch credits. Two services reading one URL do not create two independent sources.
+Telem remains the discovery and routing service. It qualifies the selected source pages for titles, status and destination policy. Direct Tavily `POST /extract` basic supplies the text used for source-bound facts, literal quotes, content hashes and refresh observations. The same path serves the web app, the legacy evaluation route and the MCP API.
 
-The current local two-domain API create/requirement-edit/refresh flow passed with actual Telem, Tavily, model and shared Redis. Observed details are in `demo/TV01-verification.json`; the earlier L01 figures above predate this addition. The first flow reported zero credits in each Tavily batch; the final API rerun reported one credit for create and zero for refresh. These are returned usage values, not a balance or future free-use guarantee. Post-integration deployed sponsor/browser/MCP readiness and total-work savings remain unmeasured here. Failed direct extraction may use an explicit degraded Telem fallback and does not count as successful Tavily. Cache freshness and provider-side redirect chains are not independently established.
+The evidence view shows each source's URL, extractor, provider request ID, status, partial or error evidence and batch credits. Failed direct extraction can fall back to Telem text, but that fallback is labeled degraded and does not count as successful Tavily.

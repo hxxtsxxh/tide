@@ -1,15 +1,13 @@
-Research answers can outlive the facts they depend on. Ripple keeps the connection between a source, a factual observation and a decision.
+Research answers can outlive the facts they depend on. Ripple keeps the connection between a source, a quoted fact and a decision.
 
-Here I create a page-ingestion board with my own question and two public Telem documentation URLs. Telem discovers and qualifies the pages; direct Tavily Extract supplies their actual page text. The server checks the model's proposed facts against literal source passages. The earlier L01 local run produced eight quoted facts and four fresh answers; those numbers predate direct Tavily and are not predictions for this recording. Dependencies remain proposals for review, not proof that every relationship has been discovered.
+I create a board with my own question and two public Telem documentation pages. Telem reads those selected pages to qualify them, and direct Tavily Extract returns the page text that Ripple uses. Each fact must quote text that was actually returned, and the board shows the source, the extractor and the provider request ID.
 
-I change the requirement from three source URLs to eight. Ripple reads no sources, recomputes one answer and reuses three. This is a user requirement change, not a website change. Reloading restores the saved board from this browser.
+Dependencies are proposed by the model. They are for review, not proof that every relationship has been found.
 
-Now I refresh actual evidence. In this local run both pages were unchanged: two sources checked, no model call and all four answers reused. This check now includes both a Telem read and a direct Tavily batch; source count is not total HTTP work. Unchanged evidence is a valid result. A failed or partial read would leave dependent freshness unknown.
+Next I change the requirement text from three to eight. That is my input, not a change on the web, so Ripple does not read the sources again. It recomputes only the answers that depend on the changed requirement and reuses the rest. The counts on screen are the ones this recording observes.
 
-The optional Simulation Lab is labeled synthetic and runs only in the browser. It explains a changed fact without pretending a live website changed.
+Last, I check the evidence. Ripple rechecks the selected pages with Telem and direct Tavily. If a page has not changed, its answers are reused. A failed or partial read leaves the dependent answers unknown rather than fresh.
 
-The ten authored fixture cases passed treatment assertions. Refresh-all did more answer work on sparse fixture changes over the same source checks. Live initial-build comparisons do not establish monetary savings. The downloadable local agent kit uses the same service and quotas, with a separate local vault. Deployment readiness and native client compatibility require separate verification.
+The Simulation Lab is not part of this recording. It is a labeled synthetic teaching tool that runs only in the browser.
 
-In TV01, a separate actual local MDN and Python API flow created nine supported quoted facts and five answers. A requirement edit read no sources, recomputed three and reused two. Refresh used Telem and direct Tavily again, made no model call and reused all five. The evidence view names the extractor, actual provider request ID and usage once per batch. Tavily reported zero credits in each batch, not a guarantee of free future usage. Provider cache age remains unknown. Two services reading one page are one source. Failed direct extraction is explicit and any Telem fallback is degraded. The deployed sponsor/browser/MCP gates and final recording remain controller-owned.
-
-The final API rerun produced seven facts and four answers; all four were recomputed for the changed requirement, and an unchanged source refresh reused all four with no model call. That create reported one Tavily credit, and refresh reported zero. Model output and reported usage can vary; the current trace, rather than a previous demo number, is authoritative.
+Figures from earlier local runs are recorded in the verification files and are not measured for this recording. Savings from refresh are not measured. Two services reading one URL count as one source. The deployed HTTPS gates and native client checks are separate and are not shown here.

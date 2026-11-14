@@ -8,54 +8,54 @@
         "A technical integration plan depends on changing documentation.",
         "Create a board from your own question, requirements and public URLs."
       ],
-      "notes": "Compact web application; deployment URL not measured in this task."
+      "notes": "Compact web application. Deployment URL not recorded in this document; the controller performs deployment."
     },
     {
-      "title": "Sources \u2192 facts \u2192 decisions",
+      "title": "Sources → facts → decisions",
       "bullets": [
-        "Telem discovers and qualifies selected URLs; direct Tavily basic extraction supplies their evidence text.",
-        "Literal quotes, observed timestamps and proposed dependency edges.",
+        "Telem qualifies selected URLs; direct Tavily basic extraction supplies their evidence text.",
+        "Literal quotes, observation timestamps and model-proposed dependency edges.",
         "Failed or partial evidence keeps dependent freshness unknown.",
-        "Extractor, provider request ID, batch usage and partial/error evidence remain visible; two reads of a URL are one source."
+        "Extractor, provider request ID, batch usage and partial or error evidence stay visible; two reads of one URL are one source."
       ],
-      "notes": "Quote presence is not truth; dependencies are model-proposed."
+      "notes": "Quote presence is not truth. Dependencies are model-proposed."
     },
     {
       "title": "A requirement edit has a visible boundary",
       "bullets": [
-        "Observed local board: 2 pages, 8 quoted facts, 4 fresh answers.",
-        "Three URLs \u2192 eight: 0 source reads, 1 answer recomputed, 3 reused.",
-        "Reload preserved the board. Unchanged refresh: 2 reads, 0 model calls, 4 reused."
+        "Earlier browser record (before direct Tavily): 2 pages, 8 quoted facts, 4 answers.",
+        "Requirement text three → eight: 0 source reads, 1 answer recomputed, 3 reused.",
+        "Unchanged source refresh: 2 pages read, 0 recomputed, 4 reused."
       ],
-      "notes": "Observed L01 resumed browser run; no interception. Future recording may produce different model output."
+      "notes": "From demo/L01-resume-verification.json. The recording will show its own observed counts. Model output can vary between runs."
     },
     {
       "title": "Measure work, preserve uncertainty",
       "bullets": [
-        "Earlier L01: 10/10 fixture treatment cases; 3/3 selected live initial-build cases.",
-        "Refresh-all has 6 expected fixture recomputation-set mismatches.",
-        "Live refresh savings percentage: not measured."
+        "Live evaluator: 3/3 selected cases (LIVE01–03). Fixture evaluator: 10/10 treatment cases.",
+        "Refresh-all has 6 expected recomputation-set mismatches on fixture cases.",
+        "Refresh savings and total provider-work savings: not measured."
       ],
-      "notes": "Current rerun outcomes are in demo/L01-resume-verification.json. Synthetic fixture examples are not live website changes."
+      "notes": "From demo/L02-verification.json. Cold and warm caches make latency not comparable. Fixture cases are synthetic, not live website changes."
     },
     {
       "title": "Carry the evidence forward",
       "bullets": [
-        "Browser IndexedDB library, immutable revisions and explicit export/import.",
-        "Local stdio agent source kit: same service and quotas; separate local vault.",
+        "Browser IndexedDB library, immutable revisions and explicit export and import.",
+        "Local stdio agent kit: same service and quotas, separate local vault.",
         "No background monitoring, cloud sync or proven complete dependency discovery."
       ],
-      "notes": "public_ready=false pending controller HTTPS gate. Native Claude/Codex invocation not_run; final video and presentation render not produced by L01."
+      "notes": "public_ready=false until the controller's HTTPS browser gate passes. Native Claude Code and Codex invocation is not verified. Final video and presentation render are controller-owned."
     },
     {
       "title": "Both providers, observed locally",
       "bullets": [
-        "TV01 local API: 2 domains, 9 supported quoted facts and 5 answers.",
-        "Requirement edit: 0 source reads, 3 recomputed, 2 reused.",
-        "Source refresh: Telem + direct Tavily succeeded; 0 model calls and 5 reused.",
-        "First Tavily batches reported 0 credits; final create reported 1 and refresh 0. Cache freshness and total-work savings are not measured."
+        "Local two-domain API flows (TV01) ran actual Telem, Tavily, model and shared Redis calls.",
+        "Local sponsor observer: 6/6, with live=false and sponsors_ready=false.",
+        "That run: Telem 3 HTTP attempts, direct Tavily 2, 1 credit reported for create.",
+        "Reported credits are usage returned by the provider, not a balance or a free-use promise."
       ],
-      "notes": "Observed local flow, not the deployed sponsor gate. Earlier L01 slide figures predate direct Tavily. Demo/TV01-verification.json has actual request IDs; no deployment/media/public readiness is asserted. Final API rerun: 7 facts/4 answers, create usage 1 credit and refresh usage 0; model output varies. No total-work savings measurement."
+      "notes": "Not the deployed sponsor gate. Provider cache age and redirect chains are not independently established. Records: demo/TV01-verification.json and handoffs/TV02.md."
     }
   ]
 }
