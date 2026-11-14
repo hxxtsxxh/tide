@@ -60,14 +60,15 @@ test('schema errors and unsafe sources are rejected before quota or execution', 
   assert.equal(x.seen.length, 0);
 });
 
-test('unimplemented operations answer 501 without reserving quota', async () => {
+test('guard specs without executors answer 501 without reserving quota', async () => {
   const q = counting();
   for (const [spec, body, path] of [
     [createBoardSpec, create, '/api/boards'],
     [refreshBoardSpec, { request_id: 'q', snapshot: 'a.b', force: true }, '/api/boards/refresh'],
     [discoverSpec, { request_id: 'q', query: 'fetch abort' }, '/api/discover'],
   ] as const) {
-    const r = await runGuarded(post(body, { path }), spec as GuardSpec<unknown>, { env, quota: q.store });
+    const stub = { ...spec, prepare: undefined, execute: undefined } as GuardSpec<unknown>;
+    const r = await runGuarded(post(body, { path }), stub, { env, quota: q.store });
     assert.equal(r.status, 501, path);
   }
   assert.equal(q.calls.length, 0);
