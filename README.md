@@ -8,6 +8,7 @@ Scope: **compact** (see `IMPLEMENTED-SCOPE.json`). `public_ready=false` until th
 ```bash
 npm ci
 npm run check && npm test && npm run build
+npm run test:mcp
 npm run start -- --hostname 127.0.0.1 --port 4611
 SEARCHHACK_BASE_URL=http://127.0.0.1:4611 npm run evaluate -- --mode live --output artifacts/evaluation.json
 ```
@@ -21,5 +22,13 @@ Server-only environment: `TELEM_API_KEY`, `APP_MODEL_PROVIDER`, `APP_MODEL`, the
 
 ## Limits
 Dependencies are model-proposed and need your review. Pages are cut to 12,000 characters. Refresh runs only when you trigger it; there is no background monitor. Quotas: per visitor per minute/day, plus a global daily cap.
+
+## Agent kit
+
+The local stdio bridge is in `packages/ripple-mcp`. Its nine tools call the same guarded API, with a persistent signed visitor cookie and the same shared quotas. Browser IndexedDB and the local agent vault are separate; transfer boards through explicit JSON export/import. No provider credentials are needed by consumers.
+
+`npm run test:mcp` runs adapter and subprocess protocol tests. `npm run package:integrations` creates `public/downloads/ripple-agent-kit.zip` and its SHA-256 checksum before deployment; Python is not required by the hosting build. The kit includes two portable skills and a dry-run-first project connection helper. See its README and `/integrations`; no global installation or native-client verification was performed by this task.
+
+See [ARCHITECTURE.md](ARCHITECTURE.md), [SUBMISSION.md](SUBMISSION.md), [ATTRIBUTION.md](ATTRIBUTION.md) and [handoffs/L01.md](handoffs/L01.md). Current resumed verification is recorded separately in `demo/L01-resume-verification.json`. Deployment and release media remain controller-owned.
 
 Prepared specification, fixtures and evaluator by the SearchHack preparation package (`.searchhack/context`); sources in `.searchhack/context/SOURCES.md`.

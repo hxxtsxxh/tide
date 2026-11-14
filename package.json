@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.18" },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
     "check": "tsc --noEmit",
     "test": "node --conditions=react-server --test \"tests/**/*.test.ts\" \"tests/**/*.test.mjs\"",
-    "evaluate": "node scripts/evaluate.mjs"
+    "evaluate": "node scripts/evaluate.mjs",
+    "test:mcp": "node --test packages/ripple-mcp/tests/*.test.mjs",
+    "package:integrations": "python3 packages/ripple-mcp/scripts/package-kit.py --output public/downloads/ripple-agent-kit.zip"
   },
   "dependencies": {
     "next": "16.4.6",

@@ -1,0 +1,29 @@
+# Ripple — know which answers became stale
+
+When one source changes, know which decisions to revisit.
+
+Ripple is a browser research board for technical founders and developers whose integration decisions depend on changing documentation. Create a board from your own question, requirements and supported public URLs. Real Telem search and page acquisition feed a source → fact → answer graph, with literal source passages and explicit unknown states.
+
+Change a requirement to revisit its dependent answers without reading the web again. Refresh evidence to check actual sources, preserve unrelated answers and keep an auditable history. Boards persist in this browser and can be exported, imported as unverified history, or deleted. A downloadable local stdio agent kit carries the same workflow into a separate local vault.
+
+## What we built
+
+Next.js/TypeScript web workflow; real Telem and configured model adapters; typed fact comparison and dependency invalidation; signed snapshots; IndexedDB persistence; source/body/time limits; shared atomic Redis quotas; privacy UI; client-only synthetic teaching lab; local MCP adapter distribution. No separate research database, scheduled monitoring or cloud library.
+
+The compact contribution is an inspectable decision-facing workflow with alternative evidence support and exact affected/recomputed/reused sets. Temporal graphs and source monitors already exist; no claim of inventing them or discovering every natural-language dependency is made.
+
+## Evidence and boundaries
+
+The earlier L01 local paired evaluation recorded 10/10 treatment fixture cases and 3/3 selected live cases (LIVE01–03). Refresh-all produced six expected fixture recomputation-set mismatches because it also recomputed unaffected answers. Live initial-build comparisons used real search/fetch/model calls, with no demonstrated monetary or latency saving. Current rerun results and any failures are recorded separately in `demo/L01-resume-verification.json` and `handoffs/L01.md`.
+
+The earlier real Telem documentation browser run created two sources, nine quoted facts and five fresh answers. Changing the requirement from three to eight URLs read no sources, recomputed one answer and reused four. An unchanged source refresh read two pages and reused all five answers. These are observed local examples, not a general benchmark or a promise about a future recording.
+
+Dependencies are model-proposed. Direct signed edge editing is not implemented; local review notes must be carried into requirements and a rebuild. Unsupported, failed and partial evidence remains unknown; exhausted regeneration can remain stale. Custom-board refresh-all numbers are planned counts. No native-client compatibility certification is claimed.
+
+## Release status
+
+Deployment URL: not measured in this task; controller-owned.
+
+Public readiness: false until the independent HTTPS deployment gate passes. MCP deployed readiness and native Claude/Codex invocation: unverified until their respective checks run. Final video, presentation render and submission: controller-owned, not produced or submitted by this task.
+
+See `README.md`, `ARCHITECTURE.md`, `PUBLIC-READINESS.md`, `IMPLEMENTED-SCOPE.json` and `ATTRIBUTION.md` for operation, scope and preparation disclosure.

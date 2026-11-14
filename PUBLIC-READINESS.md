@@ -6,4 +6,6 @@ T05 verified a real Telem/model/Redis-backed custom-board workflow locally, incl
 
 An actual HTTPS deployment and its independent gate for the integrated release commit are still controller-owned and pending. Local health configuration, unit tests and localhost browser passes cannot set public_ready=true. No preview URL or release media is asserted here.
 
-MCP packaging/protocol and native-client verification belong to T05A and the independent agent gate. Prepared paired live evaluation and release documentation/media remain subsequent tasks. Custom-board refresh-all counts shown in revision summaries are planned counts; no live paired baseline measurement or savings percentage is claimed by T05.
+L01 resumed integration packaged the supplied local MCP bridge, portable skills and setup helper; adapter/protocol unit tests pass. Local MCP/API and browser gate outcomes are recorded in `demo/L01-resume-verification.json` and `handoffs/L01.md`. Native Claude/Codex invocation remains not_run. No building-agent configuration was changed.
+
+The earlier L01 paired HTTP evaluator measured ten fixture cases and three selected live initial-build cases. Current rerun results are recorded separately. Custom-board refresh-all counts shown in revision summaries remain planned counts; no measured live refresh savings percentage is claimed. Architecture, submission, attribution and demo text now exist; final deployed gates, video and presentation render remain controller-owned.

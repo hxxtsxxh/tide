@@ -1,0 +1,50 @@
+{
+  "title": "Ripple",
+  "subtitle": "When one source changes, know which decisions to revisit.",
+  "slides": [
+    {
+      "title": "Research outlives its sources",
+      "bullets": [
+        "A technical integration plan depends on changing documentation.",
+        "Create a board from your own question, requirements and public URLs."
+      ],
+      "notes": "Compact web application; deployment URL not measured in this task."
+    },
+    {
+      "title": "Sources \u2192 facts \u2192 decisions",
+      "bullets": [
+        "Real Telem search and selected-page acquisition.",
+        "Literal quotes, observed timestamps and proposed dependency edges.",
+        "Failed or partial evidence keeps dependent freshness unknown."
+      ],
+      "notes": "Quote presence is not truth; dependencies are model-proposed."
+    },
+    {
+      "title": "A requirement edit has a visible boundary",
+      "bullets": [
+        "Observed local board: 2 pages, 8 quoted facts, 4 fresh answers.",
+        "Three URLs \u2192 eight: 0 source reads, 1 answer recomputed, 3 reused.",
+        "Reload preserved the board. Unchanged refresh: 2 reads, 0 model calls, 4 reused."
+      ],
+      "notes": "Observed L01 resumed browser run; no interception. Future recording may produce different model output."
+    },
+    {
+      "title": "Measure work, preserve uncertainty",
+      "bullets": [
+        "Earlier L01: 10/10 fixture treatment cases; 3/3 selected live initial-build cases.",
+        "Refresh-all has 6 expected fixture recomputation-set mismatches.",
+        "Live refresh savings percentage: not measured."
+      ],
+      "notes": "Current rerun outcomes are in demo/L01-resume-verification.json. Synthetic fixture examples are not live website changes."
+    },
+    {
+      "title": "Carry the evidence forward",
+      "bullets": [
+        "Browser IndexedDB library, immutable revisions and explicit export/import.",
+        "Local stdio agent source kit: same service and quotas; separate local vault.",
+        "No background monitoring, cloud sync or proven complete dependency discovery."
+      ],
+      "notes": "public_ready=false pending controller HTTPS gate. Native Claude/Codex invocation not_run; final video and presentation render not produced by L01."
+    }
+  ]
+}

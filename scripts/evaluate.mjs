@@ -3,7 +3,7 @@
 // Thin wrapper over the prepared independent runner (.searchhack/context/evaluation/run.py), which
 // owns case selection and the oracle. This script only forwards arguments and reshapes its report.
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -27,6 +27,8 @@ if (mode === 'live' && existsSync('IMPLEMENTED-SCOPE.json')) {
 }
 
 mkdirSync(dirname(output), { recursive: true });
+// A failed runner must never turn a previous invocation's observations into fresh evidence.
+rmSync(raw, { force: true });
 const run = spawnSync('python3', runner, { stdio: ['ignore', 'inherit', 'inherit'], timeout: 175_000 });
 const executedAt = new Date().toISOString();
 
