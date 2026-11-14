@@ -8,7 +8,7 @@
         "A technical integration plan depends on changing documentation.",
         "Create a board from your own question, requirements and public URLs."
       ],
-      "notes": "Compact web application. Deployment URL not recorded in this document; the controller performs deployment."
+      "notes": "Compact web application, deployed at https://searchhack-ripple-08a1a865.vercel.app (controller deployment of commit 3eb7c5c)."
     },
     {
       "title": "Sources → facts → decisions",
@@ -45,7 +45,7 @@
         "Local stdio agent kit: same service and quotas, separate local vault.",
         "No background monitoring, cloud sync or proven complete dependency discovery."
       ],
-      "notes": "public_ready=false until the controller's HTTPS browser gate passes. Native Claude Code and Codex invocation is not verified. Final video and presentation render are controller-owned."
+      "notes": "The public-beta HTTPS browser gate passed against the 3eb7c5c deployment (artifacts/public-beta-gate.json). The first deployed MCP gate failed with QUOTA_EXCEEDED: the shared 100-run daily cap had been used up by build and evaluation traffic. Release readiness is decided by the controller's retry. Native Claude Code and Codex invocation is not verified."
     },
     {
       "title": "Both providers, observed locally",

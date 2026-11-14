@@ -35,9 +35,9 @@ Limitations that apply to every figure above:
 
 ## Release status
 
-Deployment URL: not recorded in this document; the controller performs deployment.
+Deployment URL: https://searchhack-ripple-08a1a865.vercel.app (controller deployment of commit 3eb7c5c; health reports live mode).
 
-Public readiness: `public_ready=false`. It stays false until the independent browser gate passes on the HTTPS deployment. MCP deployed readiness and native Claude/Codex invocation are unverified until their own checks run. Sponsor readiness for the deployed commit is likewise unverified. The video, presentation render and submission are controller-owned; this document does not claim they exist.
+Public readiness: `public_ready=false` in this document. The independent public-beta browser gate passed on the HTTPS deployment of 3eb7c5c (`artifacts/public-beta-gate.json`). The first deployed MCP gate failed with `QUOTA_EXCEEDED` because the shared 100-run daily cap was used up (`artifacts/agent-integration-gate.json`). The controller retries it. MCP deployed readiness and native Claude/Codex invocation are unverified until their own checks run. Sponsor readiness for the deployed commit is likewise unverified. The video, presentation render and submission are controller-owned; this document does not claim they exist.
 
 See `README.md`, `ARCHITECTURE.md`, `PUBLIC-READINESS.md`, `IMPLEMENTED-SCOPE.json` and `ATTRIBUTION.md` for operation, scope and preparation disclosure.
 
