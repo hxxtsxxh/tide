@@ -1,23 +1,23 @@
 {
   "project": "ripple",
-  "started_at": "2026-11-14T21:00:48.771373+00:00",
-  "status": "partial",
+  "started_at": "2026-11-14T21:36:05.148752+00:00",
+  "status": "complete",
   "checks": {
     "build": [
       {
         "command": "npm run check",
         "passed": true,
-        "seconds": 0.84
+        "seconds": 0.95
       },
       {
         "command": "npm run test",
         "passed": true,
-        "seconds": 0.85
+        "seconds": 1.26
       },
       {
         "command": "npm run build",
         "passed": true,
-        "seconds": 3.24
+        "seconds": 2.51
       }
     ],
     "deployment": {
@@ -28,11 +28,11 @@
       "vercel_project_id": "prj_Uu5OFuwxf8FB6bHkD20DRfcPqDRE",
       "vercel_org_id": "team_iAUJBnryL4G6c8iEAA61VM2y",
       "url": "https://searchhack-ripple-08a1a865.vercel.app",
-      "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
-      "deployed_at": "2026-11-14T21:01:40.681684+00:00",
+      "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
+      "deployed_at": "2026-11-14T21:36:46.286136+00:00",
       "verification": {
         "url": "https://searchhack-ripple-08a1a865.vercel.app",
-        "checked_at": "2026-11-14T21:01:38.887794+00:00",
+        "checked_at": "2026-11-14T21:36:44.712231+00:00",
         "public_home": true,
         "health": true,
         "live_mode": true,
@@ -46,7 +46,7 @@
         "schemaVersion": 1,
         "project": "ripple",
         "mode": "live",
-        "executedAt": "2026-11-14T21:02:22.604Z",
+        "executedAt": "2026-11-14T21:37:29.496Z",
         "baseUrl": "https://searchhack-ripple-08a1a865.vercel.app",
         "caseCount": 3,
         "passed": 3,
@@ -64,10 +64,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 10094,
+                "wall_ms": 9542,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 9577,
+                  "elapsed_ms": 9087,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -81,10 +81,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 8910,
+                "wall_ms": 9578,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 8539,
+                  "elapsed_ms": 9326,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -104,10 +104,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 5916,
+                "wall_ms": 6032,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 5529,
+                  "elapsed_ms": 5803,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -121,10 +121,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 6966,
+                "wall_ms": 7159,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 6519,
+                  "elapsed_ms": 6250,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -144,10 +144,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 4891,
+                "wall_ms": 5655,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 4502,
+                  "elapsed_ms": 5383,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -161,10 +161,10 @@
                 "integrity_errors": [],
                 "quality_errors": [],
                 "http_status": 200,
-                "wall_ms": 4801,
+                "wall_ms": 4925,
                 "metrics": {
                   "model_calls": 1,
-                  "elapsed_ms": 4418,
+                  "elapsed_ms": 4586,
                   "cache_mode": "warm",
                   "query_count": 1,
                   "fetch_count": 1
@@ -202,10 +202,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 8818,
+          "wall_ms": 10130,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 8175,
+            "elapsed_ms": 9835,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -219,10 +219,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 10729,
+          "wall_ms": 9365,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 10302,
+            "elapsed_ms": 9066,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -236,10 +236,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 7010,
+          "wall_ms": 7603,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 6136,
+            "elapsed_ms": 7365,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -253,10 +253,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 5006,
+          "wall_ms": 6448,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 4365,
+            "elapsed_ms": 6188,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -270,10 +270,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 5086,
+          "wall_ms": 4561,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 4215,
+            "elapsed_ms": 4225,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -287,10 +287,10 @@
           "integrity_errors": [],
           "quality_errors": [],
           "http_status": 200,
-          "wall_ms": 6556,
+          "wall_ms": 4516,
           "metrics": {
             "model_calls": 1,
-            "elapsed_ms": 3989,
+            "elapsed_ms": 4208,
             "cache_mode": "warm",
             "query_count": 1,
             "fetch_count": 1
@@ -298,7 +298,7 @@
           "passed": true
         }
       ],
-      "generated_at": "2026-11-14T21:03:05.932368+00:00",
+      "generated_at": "2026-11-14T21:38:12.272028+00:00",
       "limitations": [
         "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
         "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
@@ -309,7 +309,7 @@
     "public_beta": {
       "passed": true,
       "path": "artifacts/public-beta-gate.json",
-      "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+      "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
       "checks": {
         "public_home": {
           "passed": true
@@ -360,58 +360,171 @@
       },
       "scope": "Limited public beta, not an enterprise/security certification"
     },
+    "agent_integration": {
+      "passed": true,
+      "path": "artifacts/agent-integration-gate.json",
+      "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
+      "checks": {
+        "protocol": {
+          "passed": true,
+          "skipped": false
+        },
+        "catalog": {
+          "passed": true,
+          "skipped": false
+        },
+        "real_custom_board": {
+          "passed": true,
+          "skipped": false
+        },
+        "structured_evidence": {
+          "passed": true,
+          "skipped": false
+        },
+        "no_secret_summary": {
+          "passed": true,
+          "skipped": false
+        },
+        "local_reload": {
+          "passed": true,
+          "skipped": false
+        },
+        "revision_conflict": {
+          "passed": true,
+          "skipped": false
+        },
+        "requirements_update": {
+          "passed": true,
+          "skipped": false
+        },
+        "source_refresh": {
+          "passed": true,
+          "skipped": false
+        },
+        "portable_archive": {
+          "passed": true,
+          "skipped": false
+        },
+        "local_delete": {
+          "passed": true,
+          "skipped": false
+        },
+        "source_rejection": {
+          "passed": true,
+          "skipped": false
+        }
+      },
+      "native_clients": {
+        "claude": "not-verified-by-this-gate",
+        "codex": "not-verified-by-this-gate"
+      },
+      "scope": "Real stdio protocol + deployed API; native client discovery is separately recorded"
+    },
     "media": {
       "schema_version": 1,
       "project_id": "ripple",
-      "created_at": "20261114T210352.949183Z",
+      "created_at": "20261114T213837.105009Z",
       "base_url": "https://searchhack-ripple-08a1a865.vercel.app",
-      "outdir": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z",
-      "manifest": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/manifest.json",
-      "status": "failed",
-      "success": false,
-      "errors": [
-        "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"board-result\"]').first() to be visible\u001b[22m\n"
-      ],
+      "outdir": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z",
+      "manifest": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/manifest.json",
+      "status": "complete",
+      "success": true,
+      "errors": [],
       "warnings": [],
       "files": [
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/action-timestamps.json",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/action-timestamps.json",
           "relative_path": "action-timestamps.json",
-          "bytes": 1161,
-          "sha256": "e730a5c85712511f6629f84bb20dee80c8f11d85dcbc3a374b6b1abc5c9b9fb7"
+          "bytes": 3905,
+          "sha256": "629b296434286b04f7f5e03c1567bde86732d39b73dfa56af6e4166d09453d47"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/narration.aiff",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/captions.srt",
+          "relative_path": "captions.srt",
+          "bytes": 1187,
+          "sha256": "d3690005d8605c4b790200af45ff514ed6a09c7c20db28bd8c23adba1f99be1e"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/demo.mp4",
+          "relative_path": "demo.mp4",
+          "bytes": 3246863,
+          "sha256": "c662ac5622224e4929ff26178663251c31b092de9d63abf81f13d4abcb589243"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/desktop.png",
+          "relative_path": "desktop.png",
+          "bytes": 543947,
+          "sha256": "40c9cf76c96bdcb77c40f0cd028bc597231791818bee3fc2ba858a3cbbe9a25a"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/mobile.png",
+          "relative_path": "mobile.png",
+          "bytes": 133872,
+          "sha256": "02708f98072ff1c524e1cf86a0bf57a1ba7b6ddfe9a5c80cec8869ff8abc4c5b"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/narration.aiff",
           "relative_path": "narration.aiff",
           "bytes": 4238872,
           "sha256": "f244c4aa1dd4ddbc476110f5d22600b3b9202d65bdc49580e59b28e24b6ee7c5"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/narration.txt",
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/narration.txt",
           "relative_path": "narration.txt",
           "bytes": 1499,
           "sha256": "75934f43cad68905c5e9d7b47c639f38d8e5e73aee52d75f229756b3842166fe"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.html",
-          "relative_path": "slides-draft.html",
-          "bytes": 7691,
-          "sha256": "4fd54c351c06745e1eb25427751d5e2d0542a171a7cfa35dd716a6b0d0ada3cb"
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-08.png",
+          "relative_path": "shot-08.png",
+          "bytes": 304528,
+          "sha256": "9344bef06afbebbb3c0787269b1c28abf8600e4466e003a35a7755be4b78dc95"
         },
         {
-          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.pdf",
-          "relative_path": "slides-draft.pdf",
-          "bytes": 85671,
-          "sha256": "322be121aa22e2d71d16d8770575c5576bf96f2b0d8e2ba707cff5d464dded66"
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-10.png",
+          "relative_path": "shot-10.png",
+          "bytes": 544695,
+          "sha256": "c86b46f43d7d3c47ceb535ff4afb751166321a43bf4a929e66aa40da3add9285"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-14.png",
+          "relative_path": "shot-14.png",
+          "bytes": 516388,
+          "sha256": "04d3ea15f3764098a269195be14128f738db274bbd9e1ff5d0fd5eb127e4f5aa"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-17.png",
+          "relative_path": "shot-17.png",
+          "bytes": 543947,
+          "sha256": "40c9cf76c96bdcb77c40f0cd028bc597231791818bee3fc2ba858a3cbbe9a25a"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.html",
+          "relative_path": "slides.html",
+          "bytes": 1458864,
+          "sha256": "f4dacfa50e1c6f83a77034ef99880e99582cab0727bac18beba3d09a4afca01a"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.pdf",
+          "relative_path": "slides.pdf",
+          "bytes": 612930,
+          "sha256": "bc2d1d1f4e9306c9fa3c48757c8278123a88cc3aea0e383416d4fb38d4c51c7f"
+        },
+        {
+          "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/walkthrough.webm",
+          "relative_path": "walkthrough.webm",
+          "bytes": 10149595,
+          "sha256": "0aafd30ba92038a1a2489089b5720b83d2bc904f1320c2cae07ddc77e6aeef14"
         }
       ],
       "checks": {
         "inputs_valid": true,
         "narration": true,
-        "capture": false,
-        "mp4_1080p": false,
-        "desktop_screenshot": false,
-        "mobile_screenshot": false,
+        "capture": true,
+        "captions": true,
+        "mp4_1080p": true,
+        "desktop_screenshot": true,
+        "mobile_screenshot": true,
         "slides_pdf": true,
         "presentation_text_resolved": true
       },
@@ -421,7 +534,7 @@
         "narration.txt": "/Users/heetshah/SearchHack/ripple/demo/narration.txt"
       },
       "narration": {
-        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/narration.aiff",
+        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/narration.aiff",
         "engine": "macOS say",
         "synthetic": true,
         "duration_s": 96.026667
@@ -429,62 +542,181 @@
       "capture": {
         "format": "searchhack-browser-capture-v1",
         "mode": "capture",
-        "status": "failed",
+        "status": "complete",
         "events": [
           {
             "index": 0,
             "action": "goto",
             "caption": "Open the live demo",
-            "start_s": 0.19048179199999998,
-            "end_s": 1.70216375,
+            "start_s": 0.05583195799999999,
+            "end_s": 0.789820125,
             "status": "complete"
           },
           {
             "index": 1,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 5.839709667,
-            "end_s": 5.878706417,
+            "start_s": 5.705479040999999,
+            "end_s": 5.732014333,
             "status": "complete"
           },
           {
             "index": 2,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 11.488096292,
-            "end_s": 11.499378542,
+            "start_s": 11.354532125,
+            "end_s": 11.365930291,
             "status": "complete"
           },
           {
             "index": 3,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 17.136993292,
-            "end_s": 17.148610334,
+            "start_s": 17.004008708,
+            "end_s": 17.016047458,
             "status": "complete"
           },
           {
             "index": 4,
             "action": "fill",
             "caption": "Enter the demo input",
-            "start_s": 22.7859035,
-            "end_s": 22.79562025,
+            "start_s": 22.652761791,
+            "end_s": 22.668593708,
             "status": "complete"
           },
           {
             "index": 5,
             "action": "click",
             "caption": "Run the next product action",
-            "start_s": 28.434838167000002,
-            "end_s": 28.488273709,
+            "start_s": 28.301946708000003,
+            "end_s": 28.394617166,
+            "status": "complete"
+          },
+          {
+            "index": 6,
+            "action": "wait",
+            "caption": "Wait for the product result",
+            "start_s": 33.95094387500001,
+            "end_s": 37.247081291,
+            "status": "complete"
+          },
+          {
+            "index": 7,
+            "action": "screenshot",
+            "caption": "A custom board: Telem source qualification + direct Tavily evidence text",
+            "start_s": 39.600322875,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-08.png",
+            "end_s": 39.792050166,
+            "status": "complete"
+          },
+          {
+            "index": 8,
+            "action": "click",
+            "caption": "Run the next product action",
+            "start_s": 45.249621416000004,
+            "end_s": 45.296794125,
+            "status": "complete"
+          },
+          {
+            "index": 9,
+            "action": "screenshot",
+            "caption": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness",
+            "start_s": 50.899443,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-10.png",
+            "end_s": 51.168509958,
+            "status": "complete"
+          },
+          {
+            "index": 10,
+            "action": "fill",
+            "caption": "Enter the demo input",
+            "start_s": 56.549052875,
+            "end_s": 56.567292,
+            "status": "complete"
+          },
+          {
+            "index": 11,
+            "action": "click",
+            "caption": "Run the next product action",
+            "start_s": 62.19776387500001,
+            "end_s": 62.212542583,
+            "status": "complete"
+          },
+          {
+            "index": 12,
+            "action": "wait",
+            "caption": "Wait for the product result",
+            "start_s": 67.84730975,
+            "end_s": 69.362028875,
+            "status": "complete"
+          },
+          {
+            "index": 13,
+            "action": "screenshot",
+            "caption": "Requirement changes are different from external source changes",
+            "start_s": 73.49602349999999,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-14.png",
+            "end_s": 73.71558275,
+            "status": "complete"
+          },
+          {
+            "index": 14,
+            "action": "click",
+            "caption": "Run the next product action",
+            "start_s": 79.14949604099999,
+            "end_s": 79.193662541,
+            "status": "complete"
+          },
+          {
+            "index": 15,
+            "action": "wait",
+            "caption": "Wait for the product result",
+            "start_s": 84.799051666,
+            "end_s": 86.30931158299998,
+            "status": "complete"
+          },
+          {
+            "index": 16,
+            "action": "screenshot",
+            "caption": "Actual source recheck; unchanged pages may legitimately preserve answers",
+            "start_s": 90.447462583,
+            "file": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-17.png",
+            "end_s": 90.690621166,
             "status": "complete"
           }
         ],
-        "screenshots": [],
-        "warnings": [],
-        "errors": [
-          "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"board-result\"]').first() to be visible\u001b[22m\n"
+        "screenshots": [
+          {
+            "kind": "desktop",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/desktop.png"
+          },
+          {
+            "kind": "shot",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-08.png",
+            "caption": "A custom board: Telem source qualification + direct Tavily evidence text"
+          },
+          {
+            "kind": "shot",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-10.png",
+            "caption": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness"
+          },
+          {
+            "kind": "shot",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-14.png",
+            "caption": "Requirement changes are different from external source changes"
+          },
+          {
+            "kind": "shot",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/shot-17.png",
+            "caption": "Actual source recheck; unchanged pages may legitimately preserve answers"
+          },
+          {
+            "kind": "mobile",
+            "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/mobile.png"
+          }
         ],
+        "warnings": [],
+        "errors": [],
         "desktop_viewport": {
           "width": 1920,
           "height": 1080
@@ -494,25 +726,117 @@
           "height": 844
         },
         "mobile_scope": "Actual homepage in a fresh mobile browser context; desktop shotlist is recorded.",
-        "raw_video": null,
-        "duration_s": 94.088018959,
-        "failed_step": 7
+        "raw_video": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/walkthrough.webm",
+        "duration_s": 97.32824925
+      },
+      "caption_cues": [
+        {
+          "start_s": 0.79,
+          "end_s": 5.732,
+          "text": "Open the live demo"
+        },
+        {
+          "start_s": 5.732,
+          "end_s": 11.366,
+          "text": "Enter the demo input"
+        },
+        {
+          "start_s": 11.366,
+          "end_s": 17.016,
+          "text": "Enter the demo input"
+        },
+        {
+          "start_s": 17.016,
+          "end_s": 22.669,
+          "text": "Enter the demo input"
+        },
+        {
+          "start_s": 22.669,
+          "end_s": 28.395,
+          "text": "Enter the demo input"
+        },
+        {
+          "start_s": 28.395,
+          "end_s": 37.247,
+          "text": "Run the next product action"
+        },
+        {
+          "start_s": 37.247,
+          "end_s": 39.792,
+          "text": "Wait for the product result"
+        },
+        {
+          "start_s": 39.792,
+          "end_s": 45.297,
+          "text": "A custom board: Telem source qualification + direct Tavily evidence text"
+        },
+        {
+          "start_s": 45.297,
+          "end_s": 51.169,
+          "text": "Run the next product action"
+        },
+        {
+          "start_s": 51.169,
+          "end_s": 56.567,
+          "text": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness"
+        },
+        {
+          "start_s": 56.567,
+          "end_s": 62.213,
+          "text": "Enter the demo input"
+        },
+        {
+          "start_s": 62.213,
+          "end_s": 69.362,
+          "text": "Run the next product action"
+        },
+        {
+          "start_s": 69.362,
+          "end_s": 73.716,
+          "text": "Wait for the product result"
+        },
+        {
+          "start_s": 73.716,
+          "end_s": 79.194,
+          "text": "Requirement changes are different from external source changes"
+        },
+        {
+          "start_s": 79.194,
+          "end_s": 86.309,
+          "text": "Run the next product action"
+        },
+        {
+          "start_s": 86.309,
+          "end_s": 90.691,
+          "text": "Wait for the product result"
+        },
+        {
+          "start_s": 90.691,
+          "end_s": 98.24,
+          "text": "Actual source recheck; unchanged pages may legitimately preserve answers"
+        }
+      ],
+      "video": {
+        "path": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/demo.mp4",
+        "width": 1920,
+        "height": 1080,
+        "duration_s": 98.24,
+        "has_narration": true,
+        "caption_mode": "embedded selectable subtitle track and companion SRT",
+        "source": "Actual Playwright recording of the supplied running app"
       },
       "slides": {
-        "html": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.html",
-        "draft": true,
+        "html": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.html",
+        "draft": false,
         "unresolved": [],
-        "pdf": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T210352.949183Z/slides-draft.pdf",
+        "pdf": "/Users/heetshah/SearchHack/ripple/artifacts/demo/20261114T213837.105009Z/slides.pdf",
         "pages": 7
       },
       "review_note": "Watch the actual video and review the deck before submission. Action captions use recorded timestamps; synthesized narration is not word-aligned."
     }
   },
-  "errors": [
-    "Public beta: ripple-mcp-live-gate failed (1).\n{\"gate\":\"agent-mcp-v1\",\"passed\":false,\"live\":true,\"checks\":2,\"errors\":[\"Tool failed: QUOTA_EXCEEDED\"]}\n",
-    "Media manifest is incomplete; inspect actual errors and draft placeholders"
-  ],
-  "public_ready": false,
+  "errors": [],
+  "public_ready": true,
   "capture_url": "https://searchhack-ripple-08a1a865.vercel.app",
   "implemented_scope": {
     "project": "ripple",
@@ -543,17 +867,20 @@
       "Pages are cut to 12,000 characters and truncated reads are reported partial, which keeps their dependents unknown",
       "Custom-board refresh-all counts in revision summaries are planned counts; measured paired baseline exists only through the legacy evaluation adapter",
       "No background monitoring or scheduling; refresh is user-triggered",
-      "Native Claude Code/Codex invocation and deployed MCP/API gate are not verified by local protocol tests",
       "public_ready=false until the independent browser gate passes on the HTTPS deployment",
-      "Tavily cache freshness and upstream redirect chains not independently established; no post-integration deployed sponsor gate or total-work savings measurement by TV01"
+      "Tavily provider cache freshness and upstream redirect chains are not independently established; final post-integration HTTPS sponsor verification remains controller-owned.",
+      "T06 native verification is local: Claude status/list/create passed; Codex status/list passed but its host approval policy refused create, so native Codex source-backed use remains unverified.",
+      "Prepared live paired cases are from-scratch builds: both strategies used identical acquisition/model counts; no live selective-refresh efficiency gain or semantic accuracy claim is established.",
+      "Fatal mandatory-Telem errors keep the JSON error schema; observed Telem/Tavily HTTP attempts and provider-reported Tavily credits for that operation are returned in the X-Ripple-Upstream-Attempts header and the redacted server log ('unknown' when not observed), not in a body trace.",
+      "Direct stateless duplicate refresh requests are separately quota-admitted, not deduplicated; the browser prevents duplicate submission and detects local revision conflicts."
     ]
   },
-  "completed_at": "2026-11-14T21:05:56.624682+00:00",
-  "commit": "3eb7c5ca37f5c85b44275151592c049454c78c32",
+  "mcp_ready": true,
+  "completed_at": "2026-11-14T21:40:53.217850+00:00",
+  "commit": "7c19431c9f09a496c868297bc93547e64ef359ca",
   "submission_status": "Requires user's final Devpost entry/upload and confirmation; no submission was made.",
-  "mcp_ready": false,
   "native_client_verification": {
-    "claude": "not-recorded",
-    "codex": "not-recorded"
+    "claude": "not-verified-by-this-gate",
+    "codex": "not-verified-by-this-gate"
   }
 }

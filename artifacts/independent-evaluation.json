@@ -14,10 +14,10 @@
       "integrity_errors": [],
       "quality_errors": [],
       "http_status": 200,
-      "wall_ms": 8818,
+      "wall_ms": 10130,
       "metrics": {
         "model_calls": 1,
-        "elapsed_ms": 8175,
+        "elapsed_ms": 9835,
         "cache_mode": "warm",
         "query_count": 1,
         "fetch_count": 1
@@ -31,10 +31,10 @@
       "integrity_errors": [],
       "quality_errors": [],
       "http_status": 200,
-      "wall_ms": 10729,
+      "wall_ms": 9365,
       "metrics": {
         "model_calls": 1,
-        "elapsed_ms": 10302,
+        "elapsed_ms": 9066,
         "cache_mode": "warm",
         "query_count": 1,
         "fetch_count": 1
@@ -48,10 +48,10 @@
       "integrity_errors": [],
       "quality_errors": [],
       "http_status": 200,
-      "wall_ms": 7010,
+      "wall_ms": 7603,
       "metrics": {
         "model_calls": 1,
-        "elapsed_ms": 6136,
+        "elapsed_ms": 7365,
         "cache_mode": "warm",
         "query_count": 1,
         "fetch_count": 1
@@ -65,10 +65,10 @@
       "integrity_errors": [],
       "quality_errors": [],
       "http_status": 200,
-      "wall_ms": 5006,
+      "wall_ms": 6448,
       "metrics": {
         "model_calls": 1,
-        "elapsed_ms": 4365,
+        "elapsed_ms": 6188,
         "cache_mode": "warm",
         "query_count": 1,
         "fetch_count": 1
@@ -82,10 +82,10 @@
       "integrity_errors": [],
       "quality_errors": [],
       "http_status": 200,
-      "wall_ms": 5086,
+      "wall_ms": 4561,
       "metrics": {
         "model_calls": 1,
-        "elapsed_ms": 4215,
+        "elapsed_ms": 4225,
         "cache_mode": "warm",
         "query_count": 1,
         "fetch_count": 1
@@ -99,10 +99,10 @@
       "integrity_errors": [],
       "quality_errors": [],
       "http_status": 200,
-      "wall_ms": 6556,
+      "wall_ms": 4516,
       "metrics": {
         "model_calls": 1,
-        "elapsed_ms": 3989,
+        "elapsed_ms": 4208,
         "cache_mode": "warm",
         "query_count": 1,
         "fetch_count": 1
@@ -110,7 +110,7 @@
       "passed": true
     }
   ],
-  "generated_at": "2026-11-14T21:03:05.932368+00:00",
+  "generated_at": "2026-11-14T21:38:12.272028+00:00",
   "limitations": [
     "Live checks test application-reported trace and evidence structure, not factual correctness or cryptographic provider attestation.",
     "Fixture cases are authored regression examples, not a sealed generalization benchmark.",
