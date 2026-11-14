@@ -1,0 +1,1 @@
+All documents and vendor/room facts in worlds.json are authored synthetic inputs. They are not live web retrieval and must have a persistent fixture label. No expected answers are included in this file. Deep-merge the selected world input with request.input, replacing lists as a whole. The evaluation oracle is separate and must never be imported by production code.

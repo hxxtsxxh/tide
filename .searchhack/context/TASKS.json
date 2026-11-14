@@ -1,0 +1,232 @@
+[
+  {
+    "id": "T01",
+    "title": "Freeze contracts and create deployable application shell",
+    "role": "integrator",
+    "depends_on": [],
+    "priority": "core",
+    "estimate_minutes": 20,
+    "owned_paths": [
+      "**"
+    ],
+    "description": "Read all prepared context. Scaffold Next.js/TypeScript with lockfile and scripts dev/start/check/test/build/evaluate. Implement health project=ripple; validate contract examples; create one deployable page. The scaffold tests must already execute real schema checks; only unimplemented evaluation paths should fail. Freeze shared interfaces before parallel work. Prepare src/lib/demo-policy.ts with an explicit enabled flag for the finite authored Simulation Lab. No extra deployment environment variable is needed; default product mode stays live. PUBLIC BETA: Read PUBLIC-BETA.md and public-beta/API.md. Freeze BoardEnvelope API, custom-board endpoints, test IDs and IndexedDB types. Public no-login application; create/discover/refresh endpoints share one guarded server entrypoint. Include reference/guards.mjs through a server-only wrapper, or port it preserving tests. Prepare /privacy, /api/session, source policy, global quota interface and public-beta health. No backend network access should happen on importing modules. Unit tests include the guard regression suite. Preserve the legacy /api/refresh schema for the existing independent evaluator. AGENT INTERFACE: Read AGENT-INTEGRATION.md and agents/BUILD-PLAN.md. Freeze the shared BoardEnvelope and public archive contract; no second retrieval engine, no remote shared-board store, no new owner keys. Native consumers need Node 22+, public HTTPS service and local storage only.",
+    "acceptance": [
+      "Build, check and non-watch tests execute successfully for scaffold",
+      "Health has exact project ID and no secrets",
+      "Shared request/result types match contracts and the frontend/backend handoff",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T02",
+    "title": "Build bounded Telem and model evidence adapters",
+    "role": "backend",
+    "depends_on": [
+      "T01"
+    ],
+    "priority": "core",
+    "estimate_minutes": 35,
+    "owned_paths": [
+      "src/lib/search/**",
+      "src/lib/model/**",
+      "src/app/api/**",
+      "tests/retrieval*",
+      "src/lib/server/**",
+      "tests/public-server*"
+    ],
+    "description": "Implement real Telem search/fetch per contracts/TELEM.md, typed extraction, source scope, timestamps, request identity and literal passages. Count failed attempts and enforce limits. Add explicitly gated fixture transport reading only fixtures/worlds.json. Never read evaluation/oracle.json at runtime. Main endpoint is /api/refresh. Preserve provider errors and observed trace fields. PUBLIC BETA: Implement /api/discover, /api/boards and /api/boards/refresh, not just named samples. Accept unseen bounded questions/requirements and supported public HTTPS URLs. Discover candidates through Telem when no URLs supplied; fetched passages, not search snippets, support facts. Return typed BoardEnvelope, quote verification, signed snapshot, source status and real trace. Perform strict same-origin/body/schema/source checks before paid work. Atomically reserve shared Upstash quotas; no process-local production fallback. Bound all retries/provider fanout/model tokens. The server chooses operation limits. Rehydrate evidence or verify signed snapshots, never trust client-invented evidence. Preserve original API as a guarded adapter. Finite browser-only Simulation Lab has no remote fixture execution endpoint. AGENT INTERFACE: The existing no-login public API also accepts native calls that present its origin and signed anonymous visitor cookie. Origin is a browser CSRF defense, NOT native authentication. Keep every same quota, snapshot, URL, request and response bound. Do not add service-key bypasses. Use a persistent ripple_visitor cookie (or document exact ripple-prefixed cookie) compatible with the connector.",
+    "acceptance": [
+      "Real authenticated Telem request observed or precise blocker reported",
+      "No silent fixture fallback in live mode",
+      "Bounded transport, safe URL/domain handling and source-bound extraction tested",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T03",
+    "title": "Build the judge-facing workflow and evidence inspector",
+    "role": "frontend",
+    "depends_on": [
+      "T01"
+    ],
+    "priority": "core",
+    "estimate_minutes": 40,
+    "owned_paths": [
+      "src/app/page.tsx",
+      "src/components/**",
+      "src/app/globals.css",
+      "tests/ui*",
+      "src/lib/client/**",
+      "src/app/privacy/**",
+      "src/app/integrations/**"
+    ],
+    "description": "Implement the journey and UX in SPEC.md with typed data; wire a single API boundary. Include sample, editable constraints, result, evidence drawer, trace tab, and separate labeled simulation tab. Follow all selectors in demo/shotlist.json. Never embed live keys or render source HTML. Memory that knows when to recheck itself. PUBLIC BETA: Main UI opens New board, not a sample-only view. Build custom title/question/URLs/requirements form and real source discovery chooser, proposed-dependency review, history, evidence, quota/errors, Save/Reload, JSON Export/Import and delete confirmation. Implement IndexedDB in src/lib/client/** with transactional expected-revision handling. Imported archives are unverified historical records until a live rebuild; do not show imported facts fresh. Use the exact public-beta/API.md test IDs. Add privacy/limits copy and supported host list. Meet 390px/mobile and keyboard paths; no raw HTML rendering. AGENT INTERFACE: Add /integrations explaining native Claude Code/Codex setup, permissions, local vault vs IndexedDB, explicit archive transfer and no background polling. After T05A packages the kit, link the actual local public/downloads/ripple-agent-kit.zip. An imported archive may have snapshot:null; it stays unverified and must rebuild. Do not show an uncreated link as working.",
+    "acceptance": [
+      "Responsive 390px/desktop and keyboard paths",
+      "Meaningful loading/unknown/error states",
+      "Source and fixture labels remain visible; no fake live results",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T04",
+    "title": "Implement source/fact/answer graph and immutable versions",
+    "role": "backend",
+    "depends_on": [
+      "T02"
+    ],
+    "priority": "core",
+    "estimate_minutes": 40,
+    "owned_paths": [
+      "src/lib/domain/**",
+      "src/lib/search/planner.ts",
+      "src/app/api/**",
+      "tests/domain*",
+      "src/lib/server/snapshots*"
+    ],
+    "description": "Implement DNF evidence support, typed semantic hashes, cycle rejection, topological ordering, reverse dirty closure and separate affected/recomputed/reused sets. A failed fetch makes freshness unknown. Do not equate content change with fact change. Baseline refreshes all answers from identical source observations. Implement baseline in the same endpoint via strategy=baseline with identical sources/model/limits. Both variants must work on unseen bounded inputs, not case IDs. PUBLIC BETA: Build the user-board constructor and refresh planner from real observations; do not match on sample IDs or strings. Track stable semantic IDs, explicit missing/deleted/conflicting/unknown states, reviewed vs model-proposed dependencies, content vs semantic versions and immutable revisions. Freshness is scoped to checked dependencies, never completeness of the web. Unknown dependency mapping conservatively marks answers for review. Requirement edits are labeled user changes, not web events. Use full signed server snapshot for prior observed history; reject tampered snapshots. Preserve custom question/title/source identity and output the BoardEnvelope update sets. Implement efficient no-change path, including source-check costs.",
+    "acceptance": [
+      "Algorithm invariants exercised by unit tests",
+      "API returns real calculated results with valid evidence references",
+      "Baseline is actual execution, not a canned inferior result",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T05",
+    "title": "Integrate and verify the useful vertical slice",
+    "role": "integrator",
+    "depends_on": [
+      "T03",
+      "T04"
+    ],
+    "priority": "core",
+    "estimate_minutes": 25,
+    "owned_paths": [
+      "**"
+    ],
+    "description": "Merge backend and UI; exercise real live flow with editable input and official evidence. Confirm source scopes, request hashes and trace counts. Use the shared deployment workflow for a reachable preview; final release remains controller-owned. No screenshot-only claims. PUBLIC BETA: Verify create-from-your-own-question-and-URL -> evidence -> edit requirement -> save/reload -> refresh -> export/import -> delete. Use at least two allowed domains and non-template questions. Connect actual Redis quotas. Missing credentials are a precise deployment blocker, never a reason to remove quotas. Backend/environment secrets cannot enter client bundles. Handle browser storage failures without claiming saves succeeded. AGENT INTERFACE: Prove the shared public API with a native request before building the thin adapter. Keep the public web flow the primary demonstration; do not migrate the product to a CLI-only app.",
+    "acceptance": [
+      "Live Telem-backed input-to-result flow works",
+      "Input changes produce a meaningful new calculation",
+      "Build/check/test pass on combined code",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T05A",
+    "title": "Package and connect the local Ripple MCP interface",
+    "role": "backend",
+    "depends_on": [
+      "T05"
+    ],
+    "priority": "core",
+    "estimate_minutes": 30,
+    "owned_paths": [
+      "packages/ripple-mcp/**",
+      "integrations/**",
+      "public/downloads/**",
+      "scripts/package-ripple-integrations.py",
+      "package.json",
+      "package-lock.json",
+      "tests/agent*"
+    ],
+    "description": "Copy agents/reference exactly into packages/ripple-mcp as the starting implementation, preserving its tests and license. It is runnable dependency-free Node 22 ESM, not the research backend. Reuse existing public-beta API, signed visitor cookie, snapshots and quotas. Run its tests and adapt only when API contract evidence requires it. Implement root test:mcp and package:integrations scripts; create the distributable kit using scripts/package-kit.py into public/downloads/ripple-agent-kit.zip plus SHA256, not a fictional npm package. The kit contains nine tools, two portable skills, Claude plugin manifest and a conflict-safe project-scope Claude/Codex configuration helper. Test import -> unverified -> rebuild, revision conflicts, persisted session, cancellation, two concurrent sessions and no secret output. No remote HTTP MCP, OAuth service, cloud board storage, auto-repo ingestion or global permission changes. See agents/BUILD-PLAN.md for exact paths and commands.",
+    "acceptance": [
+      "Real stdio initialize, tools/list and tools/call work against the implemented API",
+      "Nine bounded tools preserve public quotas, real evidence and local revision checks",
+      "Two skills, Claude plugin and Codex setup instructions ship without secrets or broad permission grants",
+      "Distributable archive and checksum exist; npm test:mcp passes; no unpublished registry name advertised"
+    ]
+  },
+  {
+    "id": "T06",
+    "title": "Run fixtures, live checks and honest comparison",
+    "role": "qa",
+    "depends_on": [
+      "T05",
+      "T05A"
+    ],
+    "priority": "core",
+    "estimate_minutes": 35,
+    "owned_paths": [
+      "tests/**",
+      "scripts/**",
+      "artifacts/evaluation/**",
+      "IMPLEMENTED-SCOPE.json",
+      "packages/ripple-mcp/tests/**",
+      "artifacts/native-client-verification.json"
+    ],
+    "description": "Run .searchhack/context/evaluation/run.py against the actual app in fixture mode and separately in live mode. Add domain/browser tests for unobservable properties. No oracle label editing or runtime oracle access. Record failures, false positives, baseline successes and operational errors. Write IMPLEMENTED-SCOPE.json with actual capabilities and supported LIVE IDs; never infer implementation from elapsed time. Npm evaluate wrapper reads SEARCHHACK_BASE_URL and passes through mode/output flags. PUBLIC BETA: Additionally run the immutable public-beta/evaluation/browser-gate.mjs against the implemented app; for local checks explicitly set local_test=true in config. It must NOT be rewritten by product agents. Add tests for quota concurrency, service outage fail-closed, forged capsule, unsupported hosts, cross-origin POST, oversized payload, source redirects, imported XSS text, duplicate/concurrent refresh and expired snapshots. A locally passing gate is not deployed success. Unit tests require all common guarded routes. No eval allowlist/token may bypass production quotas. Record checks in artifacts/public-beta-qa.json. AGENT INTERFACE: Run packages/ripple-mcp tests and the immutable agents/evaluation/mcp-gate.mjs against the app (local_test:true only for local tests). Record actual native Claude and Codex tool invocation in separate disposable project configs, not just installed config listings; absence of an authenticated client is explicit unverified, not a protocol failure. Never modify immutable gates or mark native success from generic transport tests.",
+    "acceptance": [
+      "Fixture and live results explicitly separated",
+      "Raw observations, model/budget/cache conditions recorded",
+      "Scope accurately selects supported live case IDs; no fabricated improvement",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T07",
+    "title": "Harden and freeze the scoped product",
+    "role": "integrator",
+    "depends_on": [
+      "T06"
+    ],
+    "priority": "core",
+    "estimate_minutes": 20,
+    "owned_paths": [
+      "**"
+    ],
+    "description": "Fix observed core defects. Verify input/response bounds, no secrets, no unauthorized source writes, evidence links, accessible mobile view and cancellation. Make uncertainties visible. Freeze stretch features; do not replace source-backed outcomes with fixture replay to make the demo green. PUBLIC BETA: Inspect actual rate-limiter wiring on EVERY billable route including legacy /api/refresh; test configured global/day cap with a separate test namespace or mock service, not by exhausting production quota. Fail closed when Redis inaccessible. Run secret-bundle scan and same-origin tests; root/public scripts never return secrets. Add kill switch, request IDs, redacted error logging and privacy copy. If custom-board workflow or quotas are incomplete, report prototype_only and do not claim public_ready. AGENT INTERFACE: Audit adapter schemas, URLs, no-shell/no-arbitrary-file boundary, redacted errors, private vault, lock behavior, revision checks, session/remote limits and imported evidence states. Retain remote auth/cloud sync as deferred. Do not remove public-beta guardrails to make native calls pass.",
+    "acceptance": [
+      "All declared scope tests pass",
+      "No blocked mandatory service disguised as success",
+      "Public sample is useful and honest",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T08",
+    "title": "Prepare narrative, docs and real capture inputs",
+    "role": "docs",
+    "depends_on": [
+      "T07"
+    ],
+    "priority": "core",
+    "estimate_minutes": 15,
+    "owned_paths": [
+      "demo/**",
+      "README.md",
+      "ARCHITECTURE.md",
+      "SUBMISSION.md",
+      "PUBLIC-READINESS.md"
+    ],
+    "description": "Customize the prepared shotlist, narration and slides to actual UI and observed results. Use explicit not measured where necessary. Document prior art and prepared work, real Telem role, API where applicable and limitations. Controller generates actual video/PDF/release after tasks; do not require future artifacts to complete this task. PUBLIC BETA: First recording must create a user-entered board using real docs, edit requirements, reload saved state and refresh. Retain the original sample and labeled Simulation Lab only as separate teaching aids. Document supported sources, browser-local storage/data loss and export, provider processing, limits, no background monitoring and quota reset. Include exact deployment/build identity and real unmeasured/cost caveats. Presentation explains source->fact->decision dependencies, not just graph styling. AGENT INTERFACE: Include docs for both client paths, package version/hash, uninstall and explicit archive transfer. Add a brief real native-agent clip only after web demonstration is secured; never use simulated terminal text as evidence. Distinguish MCP protocol verification from actual Claude/Codex invocation. Preserve presentation, screenshots and narrated browser video. Publish package release assets only with explicit owner authorization; never npm publish automatically.",
+    "acceptance": [
+      "All capture selectors exist",
+      "No invented URLs, metrics, safety guarantees or earned score",
+      "Attribution and actual scope are clear",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  },
+  {
+    "id": "T09",
+    "title": "Check final controller handoff",
+    "role": "integrator",
+    "depends_on": [
+      "T08"
+    ],
+    "priority": "core",
+    "estimate_minutes": 10,
+    "owned_paths": [
+      "**"
+    ],
+    "description": "Verify package scripts, independent evaluator, IMPLEMENTED-SCOPE.json, stable demo selectors and truthful docs. Run build/check/test; record unresolved external blockers. Allow controller to do final publishing, evaluation and capture; do not submit Devpost or require future release.json now. PUBLIC BETA: Confirm public-beta API/test selector contract and copied reference tests, operating configuration, real custom-data path, and public QA report. Controller now invokes a mandatory independent public browser gate after deployment and records public_ready in release.json. Do not remove or bypass this hook. A deadline fallback may yield a prototype but must stay public_ready=false. Existing final video/slides/docs remain required. AGENT INTERFACE: Ensure packages/ripple-mcp and public/downloads/ripple-agent-kit.zip are in the release source, archive checksums match, /integrations links work. Controller invokes the independent deployed MCP gate and records mcp_ready separately. Missing/failed gate blocks the combined completion claim; native client status remains explicit.",
+    "acceptance": [
+      "Reproducible local gates",
+      "Correct finalization contract",
+      "Real limitations and no unsupported completion claims",
+      "Public-beta requirements for this task are implemented and evidenced, or explicitly blocked"
+    ]
+  }
+]

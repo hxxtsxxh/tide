@@ -1,0 +1,99 @@
+{
+  "provenance": "authored_synthetic_fixture",
+  "worlds": [
+    {
+      "id": "r-main",
+      "label": "Authored synthetic workshop planning board",
+      "sources": [
+        {
+          "id": "s-cap",
+          "url": "https://fixtures.example.invalid/capacity",
+          "title": "Synthetic room policy",
+          "text": "The workshop room seats 120 guests. This is an authored test fact."
+        },
+        {
+          "id": "s-time",
+          "url": "https://fixtures.example.invalid/time",
+          "title": "Synthetic schedule",
+          "text": "Doors open at 10:00. The keynote starts at 11:00. This is an authored test fact."
+        },
+        {
+          "id": "s-backup",
+          "url": "https://fixtures.example.invalid/backup",
+          "title": "Synthetic independent capacity confirmation",
+          "text": "The workshop room seats 120 guests. This is independent authored supporting evidence for the fixture."
+        }
+      ],
+      "input": {
+        "action": "simulate",
+        "sources": [
+          {
+            "id": "s-cap",
+            "url": "https://fixtures.example.invalid/capacity",
+            "title": "Synthetic room policy",
+            "text": "The workshop room seats 120 guests. This is an authored test fact."
+          },
+          {
+            "id": "s-time",
+            "url": "https://fixtures.example.invalid/time",
+            "title": "Synthetic schedule",
+            "text": "Doors open at 10:00. The keynote starts at 11:00. This is an authored test fact."
+          },
+          {
+            "id": "s-backup",
+            "url": "https://fixtures.example.invalid/backup",
+            "title": "Synthetic independent capacity confirmation",
+            "text": "The workshop room seats 120 guests. This is independent authored supporting evidence for the fixture."
+          }
+        ],
+        "facts": [
+          {
+            "id": "f-cap",
+            "value": 120,
+            "support_sets": [
+              [
+                "s-cap"
+              ]
+            ]
+          },
+          {
+            "id": "f-time",
+            "value": "10:00",
+            "support_sets": [
+              [
+                "s-time"
+              ]
+            ]
+          }
+        ],
+        "answers": [
+          {
+            "id": "a-workshop",
+            "depends_on": [
+              "f-cap"
+            ]
+          },
+          {
+            "id": "a-keynote",
+            "depends_on": [
+              "f-cap"
+            ]
+          },
+          {
+            "id": "a-doors",
+            "depends_on": [
+              "f-time"
+            ]
+          }
+        ],
+        "event": {
+          "kind": "fact_changed",
+          "fact_id": "f-cap",
+          "new_value": 80
+        },
+        "previous_revision": "r0",
+        "max_answer_recomputes": 6
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "id": "LIVE01",
+      "query": "Build an integration plan using the documented Telem fetch URL limit.",
+      "input": {
+        "action": "build",
+        "source_urls": [
+          "https://docs.telem.ai/resources/fetch-best-practices/"
+        ],
+        "requested_batch_size": 7
+      },
+      "expected_http": 200,
+      "expected": {}
+    },
+    {
+      "id": "LIVE02",
+      "query": "Recheck the plan for a batch of three URLs.",
+      "input": {
+        "action": "build",
+        "source_urls": [
+          "https://docs.telem.ai/resources/fetch-best-practices/"
+        ],
+        "requested_batch_size": 3
+      },
+      "expected_http": 200,
+      "expected": {}
+    },
+    {
+      "id": "LIVE03",
+      "query": "Which documented Telem routing modes can this plan request?",
+      "input": {
+        "action": "build",
+        "source_urls": [
+          "https://docs.telem.ai/resources/search-parameters/"
+        ],
+        "requested_routing": "accuracy"
+      },
+      "expected_http": 200,
+      "expected": {}
+    }
+  ]
+}

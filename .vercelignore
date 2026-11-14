@@ -1,0 +1,6 @@
+.git
+.searchhack
+.env*
+artifacts
+node_modules
+*.log

@@ -1,0 +1,314 @@
+{
+  "type": "object",
+  "properties": {
+    "project": {
+      "const": "ripple"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "input_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "mode": {
+      "enum": [
+        "live",
+        "fixture"
+      ]
+    },
+    "strategy": {
+      "enum": [
+        "baseline",
+        "treatment"
+      ]
+    },
+    "status": {
+      "enum": [
+        "complete",
+        "partial",
+        "blocked"
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "affected_answer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recomputed_answer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "reused_answer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "unknown_answer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "fresh",
+                  "stale",
+                  "unknown",
+                  "unchanged"
+                ]
+              },
+              "value": {
+                "type": "string"
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "state",
+              "value",
+              "evidence_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "history_preserved": {
+          "type": "boolean"
+        },
+        "cycle_rejected": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "affected_answer_ids",
+        "recomputed_answer_ids",
+        "reused_answer_ids",
+        "unknown_answer_ids",
+        "decisions",
+        "history_preserved",
+        "cycle_rejected"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "passage": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "origin": {
+            "enum": [
+              "telem_live",
+              "fixture"
+            ]
+          },
+          "retrieved_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "content_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "url",
+          "title",
+          "passage",
+          "origin",
+          "retrieved_at",
+          "content_sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "trace": {
+      "type": "object",
+      "properties": {
+        "queries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              },
+              "providers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "request_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "query",
+              "providers",
+              "status",
+              "request_id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "fetches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "origin": {
+                "enum": [
+                  "telem_live",
+                  "fixture"
+                ]
+              },
+              "request_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "source_id",
+              "url",
+              "status",
+              "origin",
+              "request_id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "model_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "elapsed_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_mode": {
+          "enum": [
+            "cold",
+            "warm",
+            "fixture"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "queries",
+        "fetches",
+        "model_calls",
+        "elapsed_ms",
+        "cache_mode",
+        "notes"
+      ],
+      "additionalProperties": false
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "project",
+    "request_id",
+    "input_sha256",
+    "mode",
+    "strategy",
+    "status",
+    "result",
+    "evidence",
+    "trace",
+    "unknowns",
+    "limitations"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "rippleResponse"
+}

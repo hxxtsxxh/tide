@@ -1,0 +1,14 @@
+{
+  "request_id": "example-only",
+  "mode": "fixture",
+  "strategy": "treatment",
+  "query": "Recheck the workshop plan after capacity changes.",
+  "input": {},
+  "fixture_id": "r-main",
+  "limits": {
+    "max_queries": 3,
+    "max_pages": 5,
+    "max_model_calls": 3,
+    "timeout_ms": 20000
+  }
+}

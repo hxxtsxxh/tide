@@ -1,0 +1,42 @@
+{
+  "id": "ripple",
+  "name": "Ripple",
+  "port": 4317,
+  "pitch": "Track which answers become stale when evidence changes; refresh only the affected branch.",
+  "build_command": "npm run build",
+  "test_command": "npm test",
+  "dev_command": "npm run dev -- --port 4317",
+  "health_path": "/api/health",
+  "main_endpoint": "/api/refresh",
+  "spec": "SPEC.md",
+  "tasks": "TASKS.json",
+  "evaluation_fixture": "fixtures/worlds.json",
+  "demo_shotlist": "demo/shotlist.json",
+  "deadline": "2026-11-14T16:15:00-08:00",
+  "timezone": "America/Los_Angeles",
+  "prepared_on": "2026-11-14",
+  "prepared_application_status": "not_built",
+  "required_environment": [
+    "TELEM_API_KEY",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "RIPPLE_STATE_SECRET"
+  ],
+  "one_of_environment": [
+    [
+      "ANTHROPIC_API_KEY",
+      "OPENAI_API_KEY"
+    ]
+  ],
+  "optional_environment": [],
+  "primary_environment": "claude",
+  "fallback_environment": "codex",
+  "runtime_separate_from_coding_agents": true,
+  "evaluation_command": "python3 evaluation/run.py --base-url {base_url} --mode {mode} --output {output}",
+  "public_beta_contract": "PUBLIC-BETA.md",
+  "public_ready_gate": "public-beta/evaluation/browser-gate.mjs",
+  "public_beta_scope": "technical-public-docs-v1",
+  "agent_interface_contract": "AGENT-INTEGRATION.md",
+  "mcp_ready_gate": "agents/evaluation/mcp-gate.mjs",
+  "agent_transport": "stdio-to-existing-https-api"
+}

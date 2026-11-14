@@ -1,0 +1,1 @@
+Event date: November 14, 2026. Build start 11:00 AM Pacific. Formal submission cutoff 4:15 PM PST. Preserve the existing shared clock and organizer rules. Installation prepares only. The 95+ evidence target is not an official score or a promised outcome.

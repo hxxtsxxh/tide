@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+.vercel/
+.env
+.env.*
+!.env.example
+.searchhack/runtime/
+.searchhack/results/
+.searchhack/native/
+.searchhack/local-models.json
+artifacts/
+*.log
+.DS_Store
+.claude/settings.local.json
+.agents/mcp_config.json
+.codex/config.toml

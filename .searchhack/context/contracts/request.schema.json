@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "mode": {
+      "enum": [
+        "live",
+        "fixture"
+      ]
+    },
+    "strategy": {
+      "enum": [
+        "baseline",
+        "treatment"
+      ]
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "input": {
+      "type": "object",
+      "maxProperties": 30
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_queries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "max_pages": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "max_model_calls": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 45000
+        }
+      },
+      "required": [
+        "max_queries",
+        "max_pages",
+        "max_model_calls",
+        "timeout_ms"
+      ],
+      "additionalProperties": false
+    },
+    "fixture_id": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "request_id",
+    "mode",
+    "strategy",
+    "query",
+    "input",
+    "limits"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "rippleRequest",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "fixture"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "fixture_id"
+        ]
+      }
+    }
+  ]
+}

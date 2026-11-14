@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "project": {
+      "const": "ripple"
+    },
+    "scope": {
+      "enum": [
+        "full",
+        "compact",
+        "minimum",
+        "rescue"
+      ]
+    },
+    "implemented": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "evaluation_case_ids": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "LIVE01",
+          "LIVE02",
+          "LIVE03"
+        ]
+      },
+      "maxItems": 6,
+      "uniqueItems": true
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "project",
+    "scope",
+    "implemented",
+    "evaluation_case_ids",
+    "limitations"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "enum": [
+              "compact",
+              "minimum",
+              "rescue"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evaluation_case_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

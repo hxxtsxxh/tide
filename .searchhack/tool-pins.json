@@ -1,0 +1,13 @@
+{
+  "verified_at": "2026-11-14",
+  "node_preferred_major": 24,
+  "claude_native": "2.1.311",
+  "codex": "0.169.0",
+  "npm": {
+    "@playwright/mcp": "0.0.85",
+    "playwright": "1.65.1",
+    "vercel": "65.16.0"
+  },
+  "application": {"next": "16.4.6", "react": "19.3.1", "react-dom": "19.3.1"},
+  "optional_uiux": {"package": "ui-ux-pro-max-cli", "version": "2.15.0", "license_note": "Mixed or inconsistent upstream notices; optional, not redistributed."}
+}

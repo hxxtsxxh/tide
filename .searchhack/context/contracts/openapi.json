@@ -1,0 +1,55 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ripple prepared API contract",
+    "version": "0.1.0-prepared",
+    "description": "Contract only. Application is not yet implemented."
+  },
+  "paths": {
+    "/api/refresh": {
+      "post": {
+        "summary": "Run bounded live or explicitly labeled fixture workflow",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./request.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Complete, partial or blocked structured outcome",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./response.schema.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "429": {
+            "description": "Application limit exceeded"
+          },
+          "502": {
+            "description": "Upstream failure"
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Configuration and identity only; no external calls"
+          }
+        }
+      }
+    }
+  }
+}

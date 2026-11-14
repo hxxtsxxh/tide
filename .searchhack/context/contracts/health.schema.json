@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "const": "ok"
+    },
+    "project": {
+      "const": "ripple"
+    },
+    "mode": {
+      "enum": [
+        "live",
+        "fixture"
+      ]
+    },
+    "configured": {
+      "type": "object",
+      "properties": {
+        "telem": {
+          "type": "boolean"
+        },
+        "model": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "telem",
+        "model"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "status",
+    "project",
+    "mode",
+    "configured"
+  ],
+  "additionalProperties": false
+}

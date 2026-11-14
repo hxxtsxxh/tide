@@ -1,0 +1,302 @@
+{
+  "purpose": "test assertions only; NEVER runtime input",
+  "cases": [
+    {
+      "id": "R01",
+      "fixture_id": "r-main",
+      "query": "Recheck the workshop plan after capacity changes.",
+      "input": {},
+      "expected_http": 200,
+      "expected": {
+        "eq": {
+          "result.history_preserved": true
+        },
+        "set_eq": {
+          "result.affected_answer_ids": [
+            "a-workshop",
+            "a-keynote"
+          ],
+          "result.recomputed_answer_ids": [
+            "a-workshop",
+            "a-keynote"
+          ],
+          "result.reused_answer_ids": [
+            "a-doors"
+          ]
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R02",
+      "fixture_id": "r-main",
+      "query": "Ignore cosmetic source formatting changes.",
+      "input": {
+        "event": {
+          "kind": "source_text_changed",
+          "source_id": "s-cap",
+          "new_text": "The workshop room seats 120 guests.\nThis is an authored test fact.",
+          "semantic_value": 120
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {},
+        "set_eq": {
+          "result.affected_answer_ids": [],
+          "result.recomputed_answer_ids": [],
+          "result.reused_answer_ids": [
+            "a-workshop",
+            "a-keynote",
+            "a-doors"
+          ]
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R03",
+      "fixture_id": "r-main",
+      "query": "A refresh returns the same fact.",
+      "input": {
+        "event": {
+          "kind": "fact_changed",
+          "fact_id": "f-cap",
+          "new_value": 120
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {},
+        "set_eq": {
+          "result.affected_answer_ids": [],
+          "result.recomputed_answer_ids": []
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R04",
+      "fixture_id": "r-main",
+      "query": "Capacity source cannot be refreshed.",
+      "input": {
+        "event": {
+          "kind": "source_fetch_failed",
+          "source_id": "s-cap"
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {
+          "status": "partial"
+        },
+        "set_eq": {
+          "result.affected_answer_ids": [
+            "a-workshop",
+            "a-keynote"
+          ],
+          "result.unknown_answer_ids": [
+            "a-workshop",
+            "a-keynote"
+          ]
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R05",
+      "fixture_id": "r-main",
+      "query": "One supporting source disappears but independent support remains.",
+      "input": {
+        "facts": [
+          {
+            "id": "f-cap",
+            "value": 120,
+            "support_sets": [
+              [
+                "s-cap"
+              ],
+              [
+                "s-backup"
+              ]
+            ]
+          },
+          {
+            "id": "f-time",
+            "value": "10:00",
+            "support_sets": [
+              [
+                "s-time"
+              ]
+            ]
+          }
+        ],
+        "event": {
+          "kind": "source_deleted",
+          "source_id": "s-cap"
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {},
+        "set_eq": {
+          "result.unknown_answer_ids": [],
+          "result.recomputed_answer_ids": []
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R06",
+      "fixture_id": "r-main",
+      "query": "Only supporting source is deleted.",
+      "input": {
+        "event": {
+          "kind": "source_deleted",
+          "source_id": "s-cap"
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {
+          "status": "partial"
+        },
+        "set_eq": {
+          "result.unknown_answer_ids": [
+            "a-workshop",
+            "a-keynote"
+          ]
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R07",
+      "fixture_id": "r-main",
+      "query": "Reject a circular answer dependency.",
+      "input": {
+        "answers": [
+          {
+            "id": "a-workshop",
+            "depends_on": [
+              "a-keynote"
+            ]
+          },
+          {
+            "id": "a-keynote",
+            "depends_on": [
+              "a-workshop"
+            ]
+          }
+        ]
+      },
+      "expected_http": 400,
+      "expected": {
+        "eq": {},
+        "set_eq": {},
+        "contains": {}
+      }
+    },
+    {
+      "id": "R08",
+      "fixture_id": "r-main",
+      "query": "A fact unused by any answer changes.",
+      "input": {
+        "facts": [
+          {
+            "id": "f-cap",
+            "value": 120,
+            "support_sets": [
+              [
+                "s-cap"
+              ]
+            ]
+          },
+          {
+            "id": "f-time",
+            "value": "10:00",
+            "support_sets": [
+              [
+                "s-time"
+              ]
+            ]
+          },
+          {
+            "id": "f-unused",
+            "value": "old",
+            "support_sets": [
+              [
+                "s-backup"
+              ]
+            ]
+          }
+        ],
+        "event": {
+          "kind": "fact_changed",
+          "fact_id": "f-unused",
+          "new_value": "new"
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {},
+        "set_eq": {
+          "result.affected_answer_ids": [],
+          "result.recomputed_answer_ids": []
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R09",
+      "fixture_id": "r-main",
+      "query": "Change only the workshop attendance requirement.",
+      "input": {
+        "event": {
+          "kind": "requirement_changed",
+          "answer_id": "a-workshop",
+          "new_value": 100
+        }
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {},
+        "set_eq": {
+          "result.affected_answer_ids": [
+            "a-workshop"
+          ],
+          "result.recomputed_answer_ids": [
+            "a-workshop"
+          ],
+          "result.reused_answer_ids": [
+            "a-keynote",
+            "a-doors"
+          ]
+        },
+        "contains": {}
+      }
+    },
+    {
+      "id": "R10",
+      "fixture_id": "r-main",
+      "query": "Do not claim fresh outputs after the refresh budget is exhausted.",
+      "input": {
+        "max_answer_recomputes": 0
+      },
+      "expected_http": 200,
+      "expected": {
+        "eq": {
+          "status": "partial"
+        },
+        "set_eq": {
+          "result.recomputed_answer_ids": [],
+          "result.unknown_answer_ids": [
+            "a-workshop",
+            "a-keynote"
+          ]
+        },
+        "contains": {}
+      }
+    }
+  ]
+}

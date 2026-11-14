@@ -1,0 +1,621 @@
+{
+  "schema_version": 1,
+  "document_type": "research_metadata_not_native_provider_config",
+  "researched_at_utc": "2026-11-14",
+  "timezone_note": "California preparation evening is 2026-11-13; event is 2026-11-14 America/Los_Angeles.",
+  "verification": {
+    "host_os": "Linux, not user Mac",
+    "installed_clis_observed": {
+      "codex": "0.167.0-alpha.4"
+    },
+    "help_commands_executed": [
+      [
+        "codex",
+        "--help"
+      ],
+      [
+        "codex",
+        "exec",
+        "--help"
+      ],
+      [
+        "codex",
+        "exec",
+        "resume",
+        "--help"
+      ],
+      [
+        "codex",
+        "login",
+        "--help"
+      ]
+    ],
+    "claude_execution_tested": false,
+    "antigravity_execution_tested": false,
+    "account_authentication_inspected": false,
+    "paid_api_smoke_executed": false,
+    "external_installs_executed": false,
+    "package_metadata_checked_with": "npm view (read only)",
+    "repository_metadata_checked_with": "GitHub API (read only)"
+  },
+  "version_policy": {
+    "mode": "use_installed_if_required_flags_pass_then_record_version",
+    "on_missing_flag": "Stop that provider adapter with precise diagnostic; use already validated alternate provider.",
+    "on_version_change": "Run preflight again.",
+    "automatic_mid_build_updates": false,
+    "node_preferred_majors": [
+      24,
+      26
+    ],
+    "node_lts_majors_verified": [
+      26,
+      24,
+      22
+    ],
+    "node_source": "https://nodejs.org/en/about/previous-releases"
+  },
+  "providers": {
+    "claude": {
+      "binary": "claude",
+      "role": "primary implementer",
+      "version_command": [
+        "claude",
+        "--version"
+      ],
+      "install_macos_linux": "curl -fsSL https://claude.ai/install.sh | bash -s stable",
+      "optional_pinned_native_install": "curl -fsSL https://claude.ai/install.sh | bash -s 2.1.311",
+      "registry_version_observation": {
+        "stable": "2.1.311",
+        "latest": "2.1.325"
+      },
+      "auth_check": [
+        "claude",
+        "auth",
+        "status"
+      ],
+      "auth_check_output": "JSON; exit 0 authenticated, exit 1 unauthenticated",
+      "login": [
+        "claude",
+        "auth",
+        "login"
+      ],
+      "manual_setup": "Finish native provider browser OAuth and any workspace trust prompt in foreground.",
+      "required_help_flags": [
+        "--print",
+        "--dangerously-skip-permissions",
+        "--output-format",
+        "--verbose",
+        "--model",
+        "--max-turns",
+        "--settings",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "--session-id",
+        "--resume"
+      ],
+      "optional_help_flags": [
+        "--effort",
+        "--fallback-model"
+      ],
+      "new_task_argv": [
+        "claude",
+        "-p",
+        "--dangerously-skip-permissions",
+        "--output-format",
+        "stream-json",
+        "--verbose",
+        "--model",
+        "{model_alias}",
+        "--effort",
+        "{effort}",
+        "--max-turns",
+        "{turn_budget}",
+        "--settings",
+        "{absolute_settings_file}",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{absolute_mcp_file}",
+        "--session-id",
+        "{uuid}"
+      ],
+      "resume_argv": [
+        "claude",
+        "-p",
+        "--dangerously-skip-permissions",
+        "--output-format",
+        "stream-json",
+        "--verbose",
+        "--model",
+        "{model_alias}",
+        "--effort",
+        "{effort}",
+        "--max-turns",
+        "{turn_budget}",
+        "--settings",
+        "{absolute_settings_file}",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{absolute_mcp_file}",
+        "--resume",
+        "{session_id}"
+      ],
+      "prompt_transport": "stdin text",
+      "verified_model_aliases": [
+        "default",
+        "best",
+        "sonnet",
+        "opus",
+        "haiku",
+        "fable",
+        "opusplan"
+      ],
+      "recommended_routing": {
+        "implementation": {
+          "model": "sonnet",
+          "effort": "high"
+        },
+        "hard_debug": {
+          "model": "opus",
+          "effort": "high"
+        },
+        "mechanical_analysis": {
+          "model": "haiku",
+          "effort": "low"
+        },
+        "exceptional_reasoning": {
+          "model": "fable",
+          "effort": "high",
+          "enabled_by_default": false
+        }
+      },
+      "full_access_settings": {
+        "permissions": {
+          "defaultMode": "bypassPermissions"
+        },
+        "sandbox": {
+          "enabled": false
+        }
+      },
+      "settings_override_arg": "--settings",
+      "settings_scope_paths": {
+        "user": "~/.claude/settings.json",
+        "project": ".claude/settings.json",
+        "local": ".claude/settings.local.json"
+      },
+      "skill_path": ".claude/skills/{name}/SKILL.md",
+      "hooks_container": "hooks key in settings JSON",
+      "mcp_shape": {
+        "mcpServers": {
+          "playwright": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "@playwright/mcp@0.0.85",
+              "--headless",
+              "--isolated"
+            ]
+          }
+        }
+      },
+      "avoid": [
+        "--no-session-persistence for resumable tasks",
+        "--continue for cross-project selection",
+        "changing CLAUDE_CONFIG_DIR to isolate projects",
+        "--console login when subscription auth is intended"
+      ],
+      "sources": [
+        "https://code.claude.com/docs/en/setup",
+        "https://code.claude.com/docs/en/cli-reference",
+        "https://code.claude.com/docs/en/model-config",
+        "https://code.claude.com/docs/en/settings",
+        "https://code.claude.com/docs/en/settings-reference",
+        "https://code.claude.com/docs/en/hooks",
+        "https://code.claude.com/docs/en/skills"
+      ]
+    },
+    "codex": {
+      "binary": "codex",
+      "role": "reviewer and fallback implementer",
+      "version_command": [
+        "codex",
+        "--version"
+      ],
+      "install_macos_linux": "curl -fsSL https://chatgpt.com/codex/install.sh | sh",
+      "auth_check": [
+        "codex",
+        "login",
+        "status"
+      ],
+      "login": [
+        "codex",
+        "login"
+      ],
+      "alternative_login": [
+        "codex",
+        "login",
+        "--device-auth"
+      ],
+      "required_exec_help_flags": [
+        "--dangerously-bypass-approvals-and-sandbox",
+        "--json",
+        "--output-last-message"
+      ],
+      "new_task_argv": [
+        "codex",
+        "exec",
+        "--dangerously-bypass-approvals-and-sandbox",
+        "--json",
+        "--output-last-message",
+        "{absolute_result_file}",
+        "-"
+      ],
+      "resume_argv": [
+        "codex",
+        "exec",
+        "resume",
+        "--dangerously-bypass-approvals-and-sandbox",
+        "--json",
+        "--output-last-message",
+        "{absolute_result_file}",
+        "{thread_id}",
+        "-"
+      ],
+      "prompt_transport": "stdin text",
+      "model_policy": "Preserve configured account model; add --model only after account validation. API model inventory is not CLI subscription inventory.",
+      "documented_current_model_example": "gpt-6.1-sol",
+      "full_access_config": {
+        "approval_policy": "never",
+        "sandbox_mode": "danger-full-access"
+      },
+      "optional_effort_override": {
+        "model_reasoning_effort": "high"
+      },
+      "config_override_argv_prefix": [
+        "-c"
+      ],
+      "strict_config_flag": "--strict-config",
+      "native_project_config": ".codex/config.toml",
+      "native_project_hooks": ".codex/hooks.json",
+      "skill_path": ".agents/skills/{name}/SKILL.md",
+      "current_named_profile_path": "$CODEX_HOME/{profile}.config.toml",
+      "hook_trust_note": "Native non-managed hooks require trust independently of tool approval. The bypass-hook-trust flag is only for already vetted loaded hooks.",
+      "mcp_config": {
+        "mcp_servers": {
+          "playwright": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "@playwright/mcp@0.0.85",
+              "--headless",
+              "--isolated"
+            ],
+            "startup_timeout_sec": 30,
+            "tool_timeout_sec": 60,
+            "required": false
+          }
+        }
+      },
+      "avoid": [
+        "obsolete --full-auto",
+        "--ephemeral for durable resume",
+        "--last or --all across projects",
+        "setting CODEX_HOME to lose auth",
+        "assuming --ask-for-approval is an exec-local flag"
+      ],
+      "sources": [
+        "https://learn.chatgpt.com/docs/cli",
+        "https://learn.chatgpt.com/docs/cli/reference",
+        "https://learn.chatgpt.com/docs/non-interactive-mode",
+        "https://learn.chatgpt.com/docs/auth",
+        "https://learn.chatgpt.com/docs/config-file/config-reference",
+        "https://learn.chatgpt.com/docs/hooks",
+        "https://learn.chatgpt.com/docs/build-skills",
+        "https://learn.chatgpt.com/docs/extend/mcp"
+      ],
+      "optional_help_flags": [
+        "--ignore-user-config"
+      ],
+      "ignore_user_config_policy": "Use when the installed exec and exec resume help expose it; preserve CODEX_HOME for native auth and pass the project MCP/effort settings explicitly."
+    },
+    "antigravity": {
+      "binary": "agy",
+      "role": "optional tertiary worker",
+      "enabled_by_default": false,
+      "version_command": [
+        "agy",
+        "--version"
+      ],
+      "install_macos_linux": "curl -fsSL https://antigravity.google/cli/install.sh | bash",
+      "default_binary_path": "~/.local/bin/agy",
+      "login": [
+        "agy"
+      ],
+      "auth_check": null,
+      "auth_note": "Native keyring reuse or browser OAuth on first foreground launch. No scripted auth-status command verified.",
+      "models_command": [
+        "agy",
+        "models"
+      ],
+      "required_help_flags": [
+        "--print",
+        "--dangerously-skip-permissions",
+        "--output-format",
+        "--conversation",
+        "--model"
+      ],
+      "optional_help_flags": [
+        "--effort",
+        "--print-timeout"
+      ],
+      "new_task_argv": [
+        "agy",
+        "-p",
+        "{task_text}",
+        "--dangerously-skip-permissions",
+        "--output-format",
+        "stream-json",
+        "--model",
+        "{verified_model_slug}",
+        "--print-timeout",
+        "15m"
+      ],
+      "resume_extra_argv": [
+        "--conversation",
+        "{conversation_id}"
+      ],
+      "prompt_transport": "single argv element; do not shell-interpolate",
+      "stream_input_user_envelope": {
+        "event": "user",
+        "message": {
+          "content": "{task_text}"
+        }
+      },
+      "stream_result_event": "result",
+      "stream_result_text_path": "result.response",
+      "session_id_field": "conversation_id",
+      "global_cli_settings": "~/.gemini/antigravity-cli/settings.json",
+      "native_project_mcp": ".agents/mcp_config.json",
+      "native_project_hooks": ".agents/hooks.json",
+      "skill_path": ".agents/skills/{name}/SKILL.md",
+      "instruction_paths": [
+        "AGENTS.md",
+        "GEMINI.md"
+      ],
+      "session_settings_override_verified": false,
+      "success_caveat": "Headless may soft-deny tools and exit 0. Require controller acceptance checks.",
+      "sources": [
+        "https://antigravity.google/docs/getting-started/",
+        "https://antigravity.google/docs/install/",
+        "https://antigravity.google/docs/cli/reference/",
+        "https://antigravity.google/docs/cli/headless/",
+        "https://antigravity.google/docs/customization-discovery/"
+      ]
+    }
+  },
+  "application_api": {
+    "anthropic": {
+      "base_url": "https://api.anthropic.com/v1",
+      "auth_header": "Authorization: Bearer {API_KEY}",
+      "version_header": "anthropic-version: 2026-10-21",
+      "inventory_method": "GET",
+      "inventory_path": "/models",
+      "inventory_pagination": "has_more + last_id passed as after_id",
+      "discovery_policy": "Filter lifecycle active, requested line and required capabilities; retain actual id. Do not infer line from model id when line is null.",
+      "documented_model_candidates": [
+        "claude-sonnet-5-5",
+        "claude-opus-5-5",
+        "claude-haiku-5-5",
+        "claude-fable-5-2"
+      ],
+      "generation_path": "/messages",
+      "generation_method": "POST",
+      "minimal_smoke_body": {
+        "model": "{verified_model_id}",
+        "max_tokens": 1024,
+        "messages": [
+          {
+            "role": "user",
+            "content": "Reply with exactly READY."
+          }
+        ]
+      },
+      "credit_claim": {
+        "eligible_plan_relevant_to_user": "Ultra",
+        "monthly_usd": 200,
+        "minimum_plan_age_days": 7,
+        "manual_path": "claude.ai Settings > Billing > API credits; link intended Console organization",
+        "account_balance_verified": false,
+        "no_rollover": true,
+        "covers_claude_code": false
+      },
+      "sources": [
+        "https://platform.claude.com/docs/en/models/overview",
+        "https://platform.claude.com/docs/en/api/models/list",
+        "https://platform.claude.com/docs/en/api/messages/create",
+        "https://platform.claude.com/docs/en/about-claude/api-credits-for-subscribers"
+      ]
+    },
+    "openai": {
+      "base_url": "https://api.openai.com/v1",
+      "auth_header": "Authorization: Bearer {API_KEY}",
+      "inventory_method": "GET",
+      "inventory_path": "/models",
+      "discovery_policy": "Intersect returned ids with explicit supported model candidates; catalog does not prove endpoint/capability/billing success.",
+      "documented_model_candidates": [
+        "gpt-6.1-sol",
+        "gpt-6.1-terra",
+        "gpt-6-astra",
+        "gpt-6-luna"
+      ],
+      "generation_path": "/responses",
+      "generation_method": "POST",
+      "minimal_smoke_body": {
+        "model": "{verified_model_id}",
+        "input": "Reply with exactly READY.",
+        "max_output_tokens": 1024
+      },
+      "credit_claim": {
+        "eligible_plan_relevant_to_user": "paid ChatGPT Pro $100 tier",
+        "monthly_usd": 100,
+        "minimum_plan_age_days": 7,
+        "first_grant_prorated": true,
+        "manual_path": "ChatGPT Settings > Billing or API Platform Billing; link an API organization you own using matching account email",
+        "account_balance_verified": false,
+        "no_rollover": true
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/models",
+        "https://developers.openai.com/api/reference/resources/models/methods/list",
+        "https://developers.openai.com/api/docs/guides/text",
+        "https://developers.openai.com/api/docs/guides/chatgpt-api-credits"
+      ]
+    },
+    "credentials_policy": "App keys stay server-side in local secrets; never inject app keys into coding-worker auth inadvertently; use official native OAuth for subscriptions.",
+    "smoke_logging_allowlist": [
+      "http_status",
+      "model",
+      "latency",
+      "usage",
+      "sanitized_error_category"
+    ]
+  },
+  "integrations": [
+    {
+      "name": "Playwright MCP",
+      "decision": "selected for browser tasks",
+      "package": "@playwright/mcp",
+      "version": "0.0.85",
+      "license": "Apache-2.0",
+      "source": "https://github.com/microsoft/playwright-mcp",
+      "commit": "78eca85361efb545a4c0f59b6140aef0721c5412",
+      "integrity": "sha512-bSfECMbLXhJdWkGhLzNMxTZuazG+9IDJ679gflji3yyD94e7ARnGdqmJmG6lTPB+gYX+OiFLmX5myBl62+wZEw=="
+    },
+    {
+      "name": "Playwright",
+      "decision": "selected for deterministic smoke",
+      "package": "playwright",
+      "version": "1.65.1",
+      "license": "Apache-2.0",
+      "source": "https://github.com/microsoft/playwright",
+      "integrity": "sha512-vJ1FuoOrNwOKHUIVEvSt3jT1L+wjjDpwhwIstKtfvTh8XIG4FG4bIFuvNdMxi81LGfAhUgUZleVFaOLY4RIUUw=="
+    },
+    {
+      "name": "UI/UX Pro Max",
+      "decision": "recommended optional project skill",
+      "package": "ui-ux-pro-max-cli",
+      "version": "2.15.0",
+      "license": "Repository/npm metadata MIT; README CC-BY-NC-4.0; bundled ui-styling Apache-2.0. Retain notices; avoid uniform-license redistribution claim.",
+      "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "commit": "6ae86f61f520d6ca229d2f40e070410638c908c5",
+      "head_date": "2026-11-10T13:03:57Z",
+      "archived": false,
+      "integrity": "sha512-D0J/C40xrzzi5si6ZLtRGbEE5v3QjL7d4wJNnasmP3yfDSrGiuqVCdwQiqCNnIkbqOuVoA/uonR2o1WKXh3urw==",
+      "project_install_argv": [
+        "npx",
+        "-y",
+        "ui-ux-pro-max-cli@2.15.0",
+        "init",
+        "--ai",
+        "claude"
+      ],
+      "universal_install_argv": [
+        "npx",
+        "-y",
+        "ui-ux-pro-max-cli@2.15.0",
+        "init",
+        "--ai",
+        "universal"
+      ],
+      "stale_package_to_avoid": "uipro-cli",
+      "published_option_parser_checked": true,
+      "published_dry_run_supported": false
+    },
+    {
+      "name": "Ponytail",
+      "decision": "optional instruction only; defer lifecycle analytics",
+      "package": "@dietrichgebert/ponytail",
+      "version": "5.3.3",
+      "license": "MIT",
+      "source": "https://github.com/DietrichGebert/ponytail",
+      "commit": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+      "head_date": "2026-10-29T11:59:31Z",
+      "archived": false,
+      "skill_relative_path": "skills/ponytail/SKILL.md",
+      "integrity": "sha512-Gq0ESMi1ZkcY+dvH1dyhOzR3+pYQ/LGW39E4dExcCzhaLe1AMPE43sPrW/JbEiaC986dUWeSzs97WfTABLkdDg=="
+    },
+    {
+      "name": "Everything Claude Code",
+      "decision": "reference selective practices; defer full runtime",
+      "license": "MIT",
+      "source": "https://github.com/affaan-m/ECC",
+      "former_source": "https://github.com/affaan-m/everything-claude-code",
+      "commit": "d2ef2680594f9a17526a6e1a2e18b3d242c5d17b",
+      "head_date": "2026-11-06T21:21:50Z",
+      "archived": false,
+      "upstream_guided_setup": [
+        "npx",
+        "ecc-universal@2.2.3",
+        "setup"
+      ],
+      "guided_setup_is_headless": false
+    },
+    {
+      "name": "Expo skills",
+      "decision": "deferred until native Expo scope",
+      "license": "MIT",
+      "source": "https://github.com/expo/skills",
+      "commit": "7582922d039d5a96dc574757d399d22d56370f2b",
+      "head_date": "2026-11-13T23:37:15Z",
+      "archived": false
+    },
+    {
+      "name": "Apple design",
+      "decision": "official documentation only; no unique installable skill verified",
+      "license": "Apple documentation terms; not assumed redistributable",
+      "source": "https://developer.apple.com/design/human-interface-guidelines.md"
+    },
+    {
+      "name": "Supabase MCP",
+      "decision": "deferred until intended development project exists",
+      "source": "https://supabase.com/docs/guides/ai-tools/mcp",
+      "url_template": "https://mcp.supabase.com/mcp?project_ref={project_ref}&features=database,docs,development",
+      "auth": "browser OAuth; optional scoped PAT for CI",
+      "license": "hosted service terms, not inferred from unrelated repository"
+    },
+    {
+      "name": "Figma MCP",
+      "decision": "deferred until source design file supplied",
+      "source": "https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/",
+      "url": "https://mcp.figma.com/mcp",
+      "auth": "browser OAuth; file/seat entitlements apply",
+      "license": "hosted service terms"
+    }
+  ],
+  "controller_requirements": [
+    "One scheduler owns queue, deadlines, active project and process groups.",
+    "One task per assigned session; persist exact task-to-session mapping.",
+    "Separate worktrees or explicit nonoverlapping file ownership for concurrent writers.",
+    "Validate acceptance independently of provider exit code or final prose.",
+    "Checkpoint before and after task; preserve uncommitted state on stop.",
+    "Bound retries and per-task wall time; rate-limit and auth errors surface explicitly.",
+    "Switching stops prior project processes before launching selected project.",
+    "No ordinary output contains credentials or token-bearing environment dumps.",
+    "Provider adapters must pass real preflight on user machine."
+  ],
+  "additional_registry_pins": {
+    "vercel": "65.16.0",
+    "@openai/codex": "0.169.0",
+    "next": "16.4.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "node_24": "24.22.3"
+  },
+  "node_24_distribution": {
+    "version": "24.22.3",
+    "checksum_source": "https://nodejs.org/dist/latest-v24.x/SHASUMS256.txt",
+    "artifacts": {
+      "node-v24.22.3-darwin-arm64.tar.gz": "ff6e17d4874b76d272212b908cc020d6e815fba5a6c7eaaa06add725840307fd",
+      "node-v24.22.3-darwin-x64.tar.gz": "977614af0504c81045e7fd85596dbca0e5f951b96681516dadafedcca8c447f7"
+    }
+  }
+}
