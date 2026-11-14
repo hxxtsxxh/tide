@@ -1,11 +1,15 @@
 Research answers can outlive the facts they depend on. Ripple keeps the connection between a source, a factual observation and a decision.
 
-Here I create a page-ingestion board with my own question and two public Telem documentation URLs. The server reads the pages through real Telem and checks the model's proposed facts against literal source passages. In our local run, this produced eight quoted facts and four fresh answers. Dependencies remain proposals for review, not proof that every relationship has been discovered.
+Here I create a page-ingestion board with my own question and two public Telem documentation URLs. Telem discovers and qualifies the pages; direct Tavily Extract supplies their actual page text. The server checks the model's proposed facts against literal source passages. The earlier L01 local run produced eight quoted facts and four fresh answers; those numbers predate direct Tavily and are not predictions for this recording. Dependencies remain proposals for review, not proof that every relationship has been discovered.
 
 I change the requirement from three source URLs to eight. Ripple reads no sources, recomputes one answer and reuses three. This is a user requirement change, not a website change. Reloading restores the saved board from this browser.
 
-Now I refresh actual evidence. In this local run both pages were unchanged: two source reads, no model call and all four answers reused. Unchanged evidence is a valid result. A failed or partial read would leave dependent freshness unknown.
+Now I refresh actual evidence. In this local run both pages were unchanged: two sources checked, no model call and all four answers reused. This check now includes both a Telem read and a direct Tavily batch; source count is not total HTTP work. Unchanged evidence is a valid result. A failed or partial read would leave dependent freshness unknown.
 
 The optional Simulation Lab is labeled synthetic and runs only in the browser. It explains a changed fact without pretending a live website changed.
 
 The ten authored fixture cases passed treatment assertions. Refresh-all did more answer work on sparse fixture changes over the same source checks. Live initial-build comparisons do not establish monetary savings. The downloadable local agent kit uses the same service and quotas, with a separate local vault. Deployment readiness and native client compatibility require separate verification.
+
+In TV01, a separate actual local MDN and Python API flow created nine supported quoted facts and five answers. A requirement edit read no sources, recomputed three and reused two. Refresh used Telem and direct Tavily again, made no model call and reused all five. The evidence view names the extractor, actual provider request ID and usage once per batch. Tavily reported zero credits in each batch, not a guarantee of free future usage. Provider cache age remains unknown. Two services reading one page are one source. Failed direct extraction is explicit and any Telem fallback is degraded. The deployed sponsor/browser/MCP gates and final recording remain controller-owned.
+
+The final API rerun produced seven facts and four answers; all four were recomputed for the changed requirement, and an unchanged source refresh reused all four with no model call. That create reported one Tavily credit, and refresh reported zero. Model output and reported usage can vary; the current trace, rather than a previous demo number, is authoritative.

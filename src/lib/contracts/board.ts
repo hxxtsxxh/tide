@@ -101,6 +101,13 @@ export const SourceRecord = z.object({
   contentHash: z.string(),
   excerpt: z.string(),
   cache_state: z.string().optional(),
+  /** Additive (ripple-tavily-v1): which service produced the evidence text. 'telem' only on a labeled degraded fallback. */
+  extractor: z.enum(['tavily', 'telem']).optional(),
+  /** Observed Tavily request_id; null when the provider returned none (never a local ID). */
+  provider_request_id: z.string().nullable().optional(),
+  /** 'succeeded' | 'partial' | 'failed' for direct Tavily; 'degraded_fallback' when Telem text was used instead; 'historical_unrevalidated' when changed text could not be re-analyzed. */
+  extraction_status: z.string().optional(),
+  extraction_error: z.string().nullable().optional(),
 });
 export type SourceRecord = z.infer<typeof SourceRecord>;
 
@@ -164,8 +171,20 @@ export const RetrievalTrace = z.object({
   mode: z.literal('live'),
   status: z.string(),
   url: z.string().optional(),
-  requestId: z.string().optional(),
+  requestId: z.string().nullable().optional(),
   cached: z.boolean().optional(),
+  // Additive: distinguishes direct Tavily ('tavily'/'direct') from a provider chosen inside Telem ('telem'/'telem').
+  service: z.enum(['telem', 'tavily']).optional(),
+  transport: z.enum(['telem', 'direct']).optional(),
+  endpoint: z.string().optional(),
+  callId: z.string().optional(),
+  usage: z.object({ credits: z.number() }).nullable().optional(),
+  cache_state: z.string().optional(),
+  elapsed_ms: z.number().optional(),
+  /** Batch HTTP attempts, recorded once (on the first Telem source row) to avoid double counting. */
+  http_attempts: z.int().min(0).optional(),
+  urls: z.array(z.string()).optional(),
+  error: z.string().nullable().optional(),
 });
 export type RetrievalTrace = z.infer<typeof RetrievalTrace>;
 

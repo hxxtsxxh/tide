@@ -101,7 +101,7 @@ Vault files are private (directory 0700, files 0600), **not encrypted**. The def
 `~/.local/share/ripple-agent/` and is separated by endpoint. The helper adds a project-specific root.
 All sessions using the same configured root/origin can read those boards. It is not multi-user auth.
 Keep sensitive data out of the public-beta workflow. Questions and selected public-source excerpts
-reach Ripple/Telem/the model provider; sending an Origin header does not turn it into authentication.
+reach Ripple/Telem/the model provider; selected URLs also reach direct Tavily Extract (the question and requirements are not sent to Tavily); sending an Origin header does not turn it into authentication.
 
 No background refresh, automatic web monitoring, cross-device sync or cloud account library is
 included. No remote OAuth/Streamable HTTP server is included. Native clients' normal permissions
@@ -127,3 +127,7 @@ delete boards or the chosen vault. Backups remain at the path printed by the hel
 not the compact end-user ZIP). The independent release gate tests actual stdio messages and the
 actual deployed API. Native-client connection/invocation and skill behavior are separate checks.
 No protocol conformance certification, universal compatibility or security audit is claimed.
+
+## Evidence providers
+
+The same public API uses Telem for real discovery and selected-page qualification, and direct Tavily basic extraction for the quoted evidence text. Consumer setup needs no Telem/Tavily/model/Redis keys. Source records add extractor, extraction status and observed provider request ID; traces distinguish direct Tavily from Tavily routed within Telem. Missing metadata remains unknown. Two reads of one URL are one source. Failed direct extraction may yield a labeled degraded Telem fallback, never successful Tavily evidence. Cache age and complete provider-side redirects cannot be independently established. The API still verifies origins/snapshots and reserves shared quotas before provider calls; there is no connector exemption.

@@ -36,7 +36,7 @@
   {
     "action": "screenshot",
     "selector": "body",
-    "caption": "A custom board built from real source pages"
+    "caption": "A custom board: Telem source qualification + direct Tavily evidence text"
   },
   {
     "action": "click",
@@ -45,7 +45,7 @@
   {
     "action": "screenshot",
     "selector": "body",
-    "caption": "Inspect actual passages and dependency uncertainty"
+    "caption": "Inspect literal passages, actual extractor/request IDs, batch usage and unknown freshness"
   },
   {
     "action": "fill",

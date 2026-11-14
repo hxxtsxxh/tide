@@ -27,6 +27,7 @@ export function serverConfig(env: Env = process.env) {
   const stateSecret = env.RIPPLE_STATE_SECRET ?? '';
   const configured = {
     telem: Boolean(env.TELEM_API_KEY),
+    tavily: Boolean(env.TAVILY_API_KEY),
     model: Boolean(modelKey && env.APP_MODEL),
     quota: quotaUrlOk && Boolean(env.UPSTASH_REDIS_REST_TOKEN),
     signing: stateSecret.length >= 32,
@@ -56,6 +57,7 @@ export function secrets(env: Env = process.env) {
     upstashUrl: env.UPSTASH_REDIS_REST_URL ?? '',
     upstashToken: env.UPSTASH_REDIS_REST_TOKEN ?? '',
     telemApiKey: env.TELEM_API_KEY ?? '',
+    tavilyApiKey: env.TAVILY_API_KEY ?? '',
     modelProvider: env.APP_MODEL_PROVIDER === 'openai' ? ('openai' as const) : ('anthropic' as const),
     model: env.APP_MODEL ?? '',
     modelApiKey: (env.APP_MODEL_PROVIDER === 'openai' ? env.OPENAI_API_KEY : env.ANTHROPIC_API_KEY) ?? '',

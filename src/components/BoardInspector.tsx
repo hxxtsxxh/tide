@@ -23,6 +23,25 @@ function SourceLink({ source }: { source: SourceRecord }) {
     <span>Unsafe archived URL — link disabled</span>
   );
 }
+/** Which service produced this source's evidence text. Two reads of one URL are never independent sources. */
+function Extraction({ source }: { source: SourceRecord }) {
+  if (!source.extractor) return null;
+  return (
+    <p className="small muted" data-extractor={source.extractor}>
+      {source.status === "failed" || source.extraction_status === "historical_unrevalidated" ? "Retained historical text from" : "Evidence text from"}{" "}
+      <strong>
+        {source.extractor === "tavily"
+          ? "Tavily Extract (direct)"
+          : "Telem fetch (degraded fallback, not a Tavily extraction)"}
+      </strong>{" "}
+      · status {source.extraction_status ?? "unknown"} · provider request ID{" "}
+      <code>{source.provider_request_id ?? "not returned"}</code>
+      {source.extraction_error && <> · error <code>{source.extraction_error}</code></>}
+      . Telem also checked this URL; both reads are of the same page, not independent sources.
+    </p>
+  );
+}
+
 function valueText(value: unknown) {
   return typeof value === "string" ? value : JSON.stringify(value);
 }
@@ -325,6 +344,18 @@ export default function BoardInspector({
             Inspect a literal passage and its observation time. Failed reads
             leave freshness unknown.
           </p>
+          {trace?.retrieval.filter((r) => r.service === "tavily").map((r, i) => (
+            <p className="small muted" key={`extract-${i}`}>
+              Direct Tavily /extract: <strong>{r.status}</strong> · {r.urls?.length ?? 0} URL(s)
+              {" "}· {r.usage ? `${r.usage.credits} credit(s) reported for this batch` : "usage not reported"}
+              {" "}· provider request ID <code>{r.requestId ?? "not returned"}</code>
+              {r.error && <> · error <code>{r.error}</code></>}
+              . Usage is counted once per batch; upstream cache freshness is unknown.
+            </p>
+          ))}
+          {trace?.limitations.filter((l) => /Tavily|truncat|degraded fallback|independent sources/.test(l)).map((l, i) => (
+            <p className="small muted" key={`extract-limit-${i}`}>{l}</p>
+          ))}
           {board.facts.map(showFact)}
           {!board.facts.length && (
             <p className="empty">There are no extracted facts to inspect.</p>
@@ -342,6 +373,7 @@ export default function BoardInspector({
                 {s.cache_state ?? "not provided"} · content hash{" "}
                 <code>{s.contentHash || "not provided"}</code>
               </p>
+              <Extraction source={s} />
             </div>
           ))}
         </section>
@@ -437,8 +469,28 @@ export default function BoardInspector({
                           <span>{r.url ?? "Discovery query"}</span>
                           {r.requestId && <code>{r.requestId}</code>}
                         </td>
-                        <td>{r.provider ?? "Not returned"}</td>
-                        <td>{r.status}</td>
+                        <td>
+                          {r.provider ?? "Not returned"}
+                          {r.service && (
+                            <span>
+                              {r.transport === "direct"
+                                ? `direct ${r.service} /${r.endpoint ?? "extract"}`
+                                : `via ${r.service}${r.endpoint ? ` /${r.endpoint}` : ""}`}
+                            </span>
+                          )}
+                        </td>
+                        <td>
+                          {r.status}
+                          {r.http_attempts !== undefined && <span>{r.http_attempts} HTTP attempt(s), batch total</span>}
+                          {r.error && <span>{r.error}</span>}
+                          {r.usage !== undefined && (
+                            <span>
+                              {r.usage
+                                ? `${r.usage.credits} credit(s) reported`
+                                : "usage not reported"}
+                            </span>
+                          )}
+                        </td>
                         <td>
                           {r.cached === undefined
                             ? "Unknown"
@@ -508,6 +560,7 @@ export default function BoardInspector({
               <p className="small muted">
                 Content hash <code>{source.contentHash || "not provided"}</code>
               </p>
+              <Extraction source={source} />
               <h4>Facts using this source</h4>
               {board.facts
                 .filter(

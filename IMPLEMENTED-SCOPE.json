@@ -14,15 +14,21 @@
     "Legacy /api/refresh evaluation adapter with paired baseline (refresh-all) and treatment (affected closure) strategies; fixture mode localhost-only behind ALLOW_FIXTURE_MODE",
     "Client-only Simulation Lab labeled SYNTHETIC FIXTURE / mode=fixture",
     "/privacy and /integrations pages; /api/health readiness",
-    "Local Node stdio MCP kit with nine tools, two portable skills, project-scoped setup helper, private per-origin vault and real downloadable source archive/checksum; same public API and quota boundary"
+    "Local Node stdio MCP kit with nine tools, two portable skills, project-scoped setup helper, private per-origin vault and real downloadable source archive/checksum; same public API and quota boundary",
+    "Direct Tavily basic extraction supplies evidence text and refresh observations in create/refresh/legacy routes; additive extractor/request/status and per-batch usage/attempt trace with labeled degraded Telem fallback"
   ],
-  "evaluation_case_ids": ["LIVE01", "LIVE02", "LIVE03"],
+  "evaluation_case_ids": [
+    "LIVE01",
+    "LIVE02",
+    "LIVE03"
+  ],
   "limitations": [
     "Dependencies are model-proposed; there is no endpoint to edit dependency edges, so corrections are local notes plus a requirements rebuild",
     "Pages are cut to 12,000 characters and truncated reads are reported partial, which keeps their dependents unknown",
     "Custom-board refresh-all counts in revision summaries are planned counts; measured paired baseline exists only through the legacy evaluation adapter",
     "No background monitoring or scheduling; refresh is user-triggered",
     "Native Claude Code/Codex invocation and deployed MCP/API gate are not verified by local protocol tests",
-    "public_ready=false until the independent browser gate passes on the HTTPS deployment"
+    "public_ready=false until the independent browser gate passes on the HTTPS deployment",
+    "Tavily cache freshness and upstream redirect chains not independently established; no post-integration deployed sponsor gate or total-work savings measurement by TV01"
   ]
 }

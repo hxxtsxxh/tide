@@ -27,14 +27,15 @@ function quota(allowed = true) {
 const run = <T,>(spec: GuardSpec<T>, path: string, body: unknown, w: World, q = quota(), env: Record<string, string | undefined> = ENV, opts = {}) =>
   runGuarded(req(path, body, opts), spec, { env, quota: q.store, fetchImpl: fakeFetch(w) });
 
-test('POST /api/boards: one atomic admission, only Telem+model hosts contacted, schema-valid signed board, cookie persists', async () => {
+test('POST /api/boards: one atomic admission, only Telem+Tavily+model hosts contacted, schema-valid signed board, cookie persists', async () => {
   const w = newWorld();
   const q = quota();
   const r = await run(createBoardSpec, '/api/boards', create, w, q);
   assert.equal(r.status, 201);
   const env = BoardEnvelope.parse(await r.json());
   assert.equal(q.calls.length, 1);
-  assert.deepEqual([...new Set(w.calls.map((c) => c.host))].sort(), ['api.anthropic.com', 'hack.telem.ai']);
+  assert.deepEqual([...new Set(w.calls.map((c) => c.host))].sort(), ['api.anthropic.com', 'api.tavily.com', 'hack.telem.ai']);
+  assert.ok(!JSON.stringify(env).includes('tavily-test-key'));
   assert.equal(env.board.title, 'Unique board');
   assert.ok(env.board.facts.some((f) => f.status === 'supported'));
   assert.ok(env.trace.retrieval.every((t) => t.mode === 'live'));

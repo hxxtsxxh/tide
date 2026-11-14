@@ -162,8 +162,9 @@ test('create: only quote-verified facts support answers; hallucinated quote -> u
   assert.deepEqual(st, { a1: 'fresh', a2: 'fresh', a3: 'unknown', a4: 'fresh' });
   assert.ok(board.answers.every((a) => a.dependency_review === 'proposed'));
   assert.equal(env.trace.model_calls, 1);
-  assert.equal(env.trace.retrieval.length, 3);
+  assert.equal(env.trace.retrieval.length, 4, 'three Telem fetch traces + one batched direct Tavily trace');
   assert.equal(env.trace.retrieval[2]!.status, 'failed:HTTPStatusError');
+  assert.deepEqual(env.trace.retrieval.map((r) => `${r.service}/${r.transport}`), ['telem/telem', 'telem/telem', 'telem/telem', 'tavily/direct']);
   assert.deepEqual(env.update.unknown, ['a3']);
   const snap = verifySnapshot(env.snapshot, SECRET) as { board: { id: string } };
   assert.equal(snap.board.id, board.id);
@@ -330,7 +331,7 @@ test('adapter never reads evaluation oracle data and never fetches user URLs nat
   // Outbound network clients are confined to the three adapters + quota (fixed hosts only);
   // client/api.ts is the browser's same-origin call into our own /api routes.
   const withFetch = files.filter((f) => /\bfetch\(|fetchImpl/.test(readFileSync(f, 'utf8'))).map((f) => f.replace(/^src\/lib\//, ''));
-  assert.deepEqual(withFetch.sort(), ['client/api.ts', 'model/client.ts', 'search/telem.ts', 'server/guarded.ts', 'server/guards-core.mjs', 'server/operations.ts', 'server/quota.ts', 'server/research.ts']);
+  assert.deepEqual(withFetch.sort(), ['client/api.ts', 'model/client.ts', 'search/acquire.ts', 'search/tavily-extract.mjs', 'search/telem.ts', 'server/guarded.ts', 'server/guards-core.mjs', 'server/operations.ts', 'server/quota.ts', 'server/research.ts']);
 });
 
 void ENV;

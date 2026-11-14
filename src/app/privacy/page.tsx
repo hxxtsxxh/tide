@@ -36,9 +36,11 @@ export default function Privacy() {
           <h2>Sent for research</h2>
           <p>
             Your question, requirements, selected public URLs and necessary page
-            excerpts go to this site&apos;s server. Telem searches and fetches
-            the public pages. The configured model provider extracts facts and
-            drafts decisions. Not all data stays on-device.
+            excerpts go to this site&apos;s server. Telem searches, routes and
+            qualifies the public pages. The selected public URLs (never your
+            question or requirements) are also sent to Tavily Extract, whose
+            page text is the quoted evidence. The configured model provider
+            extracts facts and drafts decisions. Not all data stays on-device.
           </p>
         </section>
       </div>
@@ -80,6 +82,16 @@ export default function Privacy() {
         rebuild. A changed requirement is your input, not evidence of a remote
         page change.
       </p>
+      <p>
+        Direct Tavily extraction uses basic depth, one attempt and at most five
+        selected URLs. The evidence view shows returned provider request IDs,
+        batch credits when reported, partial content and errors. A reported zero
+        is an observation, not a promise of free usage. If Tavily fails, any
+        Telem text used instead is labeled degraded. Both services reading one
+        URL still represent one source. Observation time does not establish
+        page publication or provider cache age; upstream cache freshness and
+        complete provider-side redirect chains cannot be independently checked.
+      </p>
       <h2>Supported public sources</h2>
       <p>
         Only HTTPS public text pages on these exact operator-approved hosts are
@@ -113,7 +125,7 @@ export default function Privacy() {
         per signed anonymous visitor per day, {config.quota.visitorMinute} per
         minute, and {config.quota.globalDaily} per day globally. These are
         operation limits, not a dollar billing guarantee. A quota response shows
-        Retry-After when provided. Requests are never automatically retried.
+        Retry-After when provided. Browser requests are never automatically retried. The Telem adapter may retry a transient failure once within the same operation deadline; direct Tavily extraction is attempted once.
       </p>
       <p>
         A signed anonymous HttpOnly, SameSite cookie identifies the visitor
