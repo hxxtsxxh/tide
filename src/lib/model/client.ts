@@ -1,7 +1,7 @@
 import 'server-only';
 
 const RETRY_MIN_REMAINING_MS = 6_000;
-export const MAX_OUTPUT_TOKENS = 2048;
+export const MAX_OUTPUT_TOKENS = 6144; // 5 sources x stance-tagged quotes + answers overflowed 2048 and truncated the JSON
 
 export type ModelFailureKind = 'auth' | 'transient' | 'timeout' | 'bad_output' | 'budget';
 export class ModelFailure extends Error {

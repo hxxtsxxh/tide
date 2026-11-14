@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { BoardEnvelope, DiscoverResponse } from '../src/lib/contracts/board.ts';
-import { completeStructured, ModelFailure } from '../src/lib/model/client.ts';
+import { completeStructured, ModelFailure, MAX_OUTPUT_TOKENS } from '../src/lib/model/client.ts';
 import { affectedClosure, validateGraph } from '../src/lib/search/dag.ts';
 import { TelemClient, TelemFailure } from '../src/lib/search/telem.ts';
 import { buildExcerpt, locateQuote, normalizeWs } from '../src/lib/search/text.ts';
@@ -111,7 +111,7 @@ test('model: every attempt (including the single retry) is counted; limits are e
   const m = { provider: 'anthropic' as const, model: 'm', apiKey: 'k', budget: d.budget, signal: d.signal, deadline: d.deadlineAt, fetchImpl: d.fetchImpl };
   await assert.rejects(completeStructured(m, 's', 'u', (r) => r), (e: unknown) => e instanceof ModelFailure && e.kind === 'transient');
   assert.equal(d.budget.attempts, 2);
-  assert.equal(w.calls[0]!.body.max_tokens, 2048);
+  assert.equal(w.calls[0]!.body.max_tokens, MAX_OUTPUT_TOKENS);
   assert.equal(w.calls[0]!.headers['x-api-key'], 'k');
 
   const w2 = newWorld({ modelStatus: [401, 200] });
