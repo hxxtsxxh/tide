@@ -122,6 +122,7 @@ export function watchLibrary(onChange: () => void) {
 }
 
 export async function loadLibrary() {
+  await finishPendingDeletes();
   const db = await openDB();
   const tx = db.transaction([STORES.boards, STORES.meta], "readonly");
   const done = complete(tx);
@@ -274,7 +275,49 @@ export async function saveReview(
   return saved;
 }
 
+// Only opaque board ID + expected revision live in this synchronous journal. Research stays in
+// IndexedDB. A navigation can abort an IDB transaction after the confirmation click has returned;
+// the next library load must finish that explicit deletion before showing any saved boards.
+const DELETE_PREFIX = "ripple:delete:v1:";
+function deleteIntentKey(id: string) { return DELETE_PREFIX + id; }
+function recordDeleteIntent(record: Pick<BoardRecord, "id" | "localRevision">) {
+  try {
+    localStorage.setItem(deleteIntentKey(record.id), JSON.stringify({ id: record.id, localRevision: record.localRevision }));
+  } catch {
+    throw new Error("Deletion could not be recorded in browser storage. Your saved board is preserved; export a copy before clearing site data.");
+  }
+}
+async function finishPendingDeletes() {
+  const intents: { key: string; id: string; localRevision: number }[] = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key?.startsWith(DELETE_PREFIX)) continue;
+      const value = JSON.parse(localStorage.getItem(key) ?? "null");
+      if (!value || typeof value.id !== "string" || key !== deleteIntentKey(value.id) || !Number.isSafeInteger(value.localRevision) || value.localRevision < 0) throw new Error();
+      intents.push({ key, id: value.id, localRevision: value.localRevision });
+    }
+  } catch {
+    // Without a readable journal we cannot assert that interrupted deletions were completed.
+    throw new Error("Browser deletion recovery is unavailable. Restore browser storage access before loading saved boards.");
+  }
+  for (const intent of intents) {
+    try {
+      await deleteBoardRecords(intent);
+      localStorage.removeItem(intent.key);
+    } catch (error) {
+      // A newer revision cancels the old intent. Storage outages leave it available for retry.
+      if (error instanceof StorageConflict) localStorage.removeItem(intent.key);
+      throw error;
+    }
+  }
+}
 export async function deleteBoard(record: BoardRecord) {
+  recordDeleteIntent(record); // synchronous, before the first await / possible navigation
+  try { await deleteBoardRecords(record); }
+  finally { localStorage.removeItem(deleteIntentKey(record.id)); }
+}
+async function deleteBoardRecords(record: Pick<BoardRecord, "id" | "localRevision">) {
   const db = await openDB();
   const tx = db.transaction(
     [STORES.boards, STORES.revisions, STORES.meta],
@@ -286,7 +329,7 @@ export async function deleteBoard(record: BoardRecord) {
   });
   const read = tx.objectStore(STORES.boards).get(record.id);
   read.onsuccess = () => {
-    if (read.result?.localRevision !== record.localRevision) {
+    if (read.result && read.result.localRevision !== record.localRevision) {
       conflict = true;
       tx.abort();
       return;

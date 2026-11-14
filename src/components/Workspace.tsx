@@ -173,14 +173,21 @@ export default function Workspace({
     expected: number | null,
     archives: BoardArchive["revisions"] = [],
   ) {
-    setRecord(next);
+    pendingHistory.current = archives;
+    // Show the board only after the write settles, so a visible board is never an uncommitted one.
+    let saved: BoardRecord | null = null;
+    try {
+      saved = await storage.saveBoard(next, expected, archives);
+    } catch (e) {
+      setUnsaved(true);
+      setStorageError(storage.storageMessage(e));
+    }
+    setRecord(saved ?? next);
     setRequirements(next.board.requirements);
     setView("board");
     setReviews({});
-    pendingHistory.current = archives;
+    if (!saved) return;
     try {
-      const saved = await storage.saveBoard(next, expected, archives);
-      setRecord(saved);
       setUnsaved(false);
       setStorageError("");
       pendingHistory.current = [];

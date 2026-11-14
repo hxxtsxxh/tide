@@ -16,3 +16,5 @@ artifacts/
 .agents/mcp_config.json
 .codex/config.toml
 *.tsbuildinfo
+
+.playwright-mcp/

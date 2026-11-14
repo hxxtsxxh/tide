@@ -22,7 +22,7 @@ const fetchTrace = (p: FetchedPage): RetrievalTrace => ({ kind: 'fetch', provide
 
 const baseLimitations = (board: Board): string[] => {
   const l = ['Facts are model-extracted and checked only for a literal quote in the fetched page; a quote shows presence, not truth.', 'Dependencies between facts and answers are model-proposed hypotheses until reviewed.', 'Freshness covers only the sources checked here, not the rest of the web.'];
-  if (board.sources.some((s) => s.status === 'partial')) l.push('Some pages were truncated to fit limits; unseen text was not considered.');
+  if (board.sources.some((s) => s.status === 'partial')) l.push('Some pages were truncated or could not be fully analyzed; their dependent answers have unknown freshness.');
   if (board.sources.some((s) => s.status === 'failed')) l.push('Some pages could not be read; their facts have unknown freshness (not false).');
   return l;
 };
@@ -35,7 +35,7 @@ const stateOf = (board: Board, domain: DomainState, meta: LegacyMeta): State => 
 });
 
 function envelope(d: RunDeps, t0: number, board: Board, domain: DomainState, meta: LegacyMeta, update: BoardEnvelope['update'], retrieval: RetrievalTrace[], limitations: string[]): BoardEnvelope {
-  return { schemaVersion: 1, project: 'ripple', mode: 'live', request_id: d.requestId, board, snapshot: signState(stateOf(board, domain, meta), d.secrets.stateSecret, nowMs(d)), update, trace: { retrieval, model_calls: d.budget.attempts, elapsed_ms: nowMs(d) - t0, limitations } };
+  return { schemaVersion: 1, project: 'ripple', mode: 'live', request_id: d.requestId, board, snapshot: signState(stateOf(board, domain, meta), d.secrets.stateSecret, nowMs(d)), update, trace: { retrieval, model_calls: d.budget.attempts, elapsed_ms: nowMs(d) - t0, limitations: retrieval.some((r) => r.status === 'succeeded:truncated') ? [...limitations, 'Some pages were truncated at 12,000 characters; quotations from the read part are retained, unseen text was not considered, and partial-source freshness remains unknown.'] : limitations } };
 }
 
 /** Create: real acquisition + literal-quote verification (research.ts), then typed domain construction with stable IDs and DNF facts. */

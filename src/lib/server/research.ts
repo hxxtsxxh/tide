@@ -227,7 +227,8 @@ export async function buildBoard(input: { title: string; question: string; requi
     if (!deps.length) continue; // no source-backed dependency -> not a supportable answer
     const id = `a${answers.length + 1}`;
     answers.push({ id, text: a.text, depends_on: deps, status: 'unknown', dependency_review: 'proposed', observedAt: now });
-    usesReq[id] = a.uses_requirements === true;
+    // An omitted mapping is unknown, not an assertion of independence from user requirements.
+    if (typeof a.uses_requirements === 'boolean') usesReq[id] = a.uses_requirements;
     aRef.set(a.ref, id);
   }
   validateGraph(facts.map((f) => f.id), answers, PUBLIC_LIMITS.nodes);
@@ -402,7 +403,7 @@ export async function refreshBoard(req: RefreshBoardRequest, state: State, d: Ru
 
   // ---- dependency-directed recomputation ----
   const seeds = new Set<string>(valueChanged);
-  if (reqChanged) for (const a of board.answers) if (meta.usesReq[a.id]) seeds.add(a.id);
+  if (reqChanged) for (const a of board.answers) if (meta.usesReq[a.id] !== false) seeds.add(a.id);
   const affected = affectedClosure(board.answers, seeds);
   for (const a of board.answers) if (prevStatus.get(a.id) === 'stale') for (const x of affectedClosure(board.answers, [a.id])) affected.add(x);
   const unknownNow = unknownAnswers(board);
