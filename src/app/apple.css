@@ -291,3 +291,34 @@ textarea:focus {
   .tab-list button[aria-pressed="true"]:after, .workspace-mode:before { animation: none !important; }
   button, .node { transition: none; }
 }
+
+/* Loading banner stays visible while work runs (create, requirement edit, refresh). */
+.loading-banner {
+  position: sticky;
+  top: 88px;
+  z-index: 15;
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(0, 113, 227, 0.18);
+  border-radius: 16px;
+  box-shadow: var(--shadow-2);
+  animation: rise 0.4s var(--ease) both, banner-glow 2.4s var(--ease) 0.4s infinite;
+}
+@keyframes banner-glow { 0%, 100% { box-shadow: var(--shadow-2), 0 0 0 0 rgba(0, 113, 227, 0.18); } 50% { box-shadow: var(--shadow-2), 0 0 0 8px rgba(0, 113, 227, 0); } }
+
+/* Hero: second line in an animated Apple-blue gradient shimmer (each word, after its blur-in). */
+.hero-accent > span:not(:first-child) {
+  background: linear-gradient(100deg, #0071e3 0%, #2997ff 30%, #5ac8fa 50%, #2997ff 70%, #0071e3 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hero-shine 6s linear 1.2s infinite;
+  padding-bottom: 0.08em;
+}
+@keyframes hero-shine { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+.page-heading h1.hero-title { letter-spacing: -0.04em; }
+@media (prefers-reduced-motion: reduce) {
+  .loading-banner, .hero-accent > span:not(:first-child) { animation: none !important; }
+}

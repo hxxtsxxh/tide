@@ -70,6 +70,7 @@ export default function Workspace({
     [query, setQuery] = useState(""),
     [discovery, setDiscovery] = useState<DiscoverResponse | null>(null);
   const operation = useRef(false);
+  const statusRef = useRef<HTMLDivElement>(null);
   const pendingHistory = useRef<BoardArchive["revisions"]>([]);
   const busy = Boolean(pending);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -154,6 +155,12 @@ export default function Workspace({
           ),
     );
   }
+  // Long operations start far below the banner (form / requirements panel); bring it into view.
+  useEffect(() => {
+    if (!busy) return;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    statusRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  }, [busy]);
   async function run(label: string, work: () => Promise<void>) {
     if (operation.current) return;
     operation.current = true;
@@ -600,7 +607,7 @@ export default function Workspace({
             </p>
           )}
           {busy && (
-            <div className="loading-banner" role="status" aria-live="polite">
+            <div ref={statusRef} className="loading-banner" role="status" aria-live="polite">
               <span className="spinner" />
               <div>
                 <strong>{pending}…</strong>
@@ -622,7 +629,7 @@ export default function Workspace({
                 </span>
                 <h1 className="hero-title">
                   <BlurText text="Know what your decision rests on —" delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
-                  <BlurText text="and how well it holds up." delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
+                  <BlurText text="and how well it holds up." delay={90} stepDuration={0.45} distance={18} blur={14} className="hero-line hero-accent" />
                 </h1>
                 <p>
                   Connect public sources to quote-verified facts and answers.
