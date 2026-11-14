@@ -87,3 +87,13 @@ test('verdict, ranking change and sensitivity under different lenses', () => {
   assert.equal(verdictOf(rank(scoreBoard(board([fact('f1', 's1')], { s1: 'https://x.org' })), DEFAULT_WEIGHTS)).verdict, 'Insufficient evidence');
   assert.equal(sensitivity(scoreBoard(board([], {})), DEFAULT_WEIGHTS).stable, true);
 });
+
+test('curated general-source authority tiers and labels', async () => {
+  const { authorityOf: a } = await import('../src/lib/perspective/index.ts');
+  const fed = a('https://www.federalreserve.gov/x'), nber = a('https://www.nber.org/papers/w1'), wiki = a('https://en.wikipedia.org/wiki/X');
+  const pew = a('https://www.pewresearch.org/x'), ap = a('https://apnews.com/x'), gold = a('https://www.gold.org/x');
+  assert.ok(fed.score > nber.score && nber.score > wiki.score && wiki.score > pew.score && pew.score > ap.score && ap.score > gold.score);
+  assert.match(gold.tier, /industry body/i);
+  assert.match(fed.tier, /central bank/i);
+  assert.equal(a('https://www.nih.gov/x').score, 95);
+});

@@ -173,7 +173,7 @@ const sourceExcerpt = (text: string, quotes: string[]): { excerpt: string; kept:
 
 export type Core = { board: Board; meta: BoardMeta; pages: AcquiredPage[]; texts: Map<string, string>; retrieval: RetrievalTrace[]; limitations: string[]; acquisitionLimitations: string[]; unverified: number };
 
-export async function buildBoard(input: { title: string; question: string; requirements: string; urls: string[] }, d: RunDeps, telem: TelemClient = telemClient(d)): Promise<Core> {
+export async function buildBoard(input: { title: string; question: string; requirements: string; urls: string[]; mode?: Board['mode'] }, d: RunDeps, telem: TelemClient = telemClient(d)): Promise<Core> {
   const now = nowIso(d);
   let acq: Awaited<ReturnType<typeof acquirePages>>;
   try {
@@ -230,7 +230,7 @@ export async function buildBoard(input: { title: string; question: string; requi
     aRef.set(a.ref, id);
   }
   validateGraph(facts.map((f) => f.id), answers, PUBLIC_LIMITS.nodes);
-  const board: Board = { id: `b_${randomBytes(9).toString('base64url')}`, title: input.title, question: input.question, requirements: input.requirements, sources, facts, answers, revisions: [] };
+  const board: Board = { id: `b_${randomBytes(9).toString('base64url')}`, title: input.title, question: input.question, requirements: input.requirements, ...(input.mode ? { mode: input.mode } : {}), sources, facts, answers, revisions: [] };
   setStatuses(board, new Set());
 
   const limitations = [...baseLimitations(board), ...acq.limitations];

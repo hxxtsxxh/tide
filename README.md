@@ -14,6 +14,32 @@ Tide is Ripple (Next.js 16 / React 19, same Apple-style UI) with a **Perspective
 3. **Perspectives tab** in the board inspector (`src/components/Perspectives.tsx`) has three accessible range sliders, a verdict pill with a one-line explanation, a sensitivity summary, and a ranked evidence list showing quote, source, publisher tier, stance chip and A/P/T bars. Everything recomputes instantly on the client and honors `prefers-reduced-motion`. Fact cards in the Dependency map show a stance chip.
 4. Ripple's selective-recompute semantics are unchanged. Stance never enters the dependency graph or the freshness state.
 
+## Research modes
+
+Modes live in one data registry, `src/lib/modes.ts`. Each mode has an id, label, helper copy, requirements-field label, exact-host list and example questions, so adding a mode is a data change. The home page defaults to **General**. Boards store their `mode`; a board with no mode or an unknown one is treated as **Technical**, which is Ripple's original behavior, so older boards, archives and snapshots stay valid.
+
+| Mode | Sources (exact hosts) | Examples |
+|---|---|---|
+| General | Every non-technical curated host below combined. The technical docs hosts are deliberately excluded, so docs questions use Technical. `TIDE_GENERAL_HOSTS` overrides this list. | yield curve, gold, remote work |
+| Technical | `RIPPLE_SOURCE_HOSTS` (or the 14-host docs default) | Telem page fetching |
+| Finance & Economics | federalreserve, newyorkfed, fred/stlouisfed, bls, bea, census, nber, imf, worldbank, oecd, bis, ecb, gold.org, wikipedia, britannica, apnews/bbc/npr | yield curve, gold |
+| Health & Science | who, cdc, nih, pubmed, pmc, nature, arxiv, ourworldindata, wikipedia, britannica, news | coffee and type 2 diabetes |
+| Work & Society | pewresearch, gallup, brookings, news.stanford.edu, nber, bls, oecd, ourworldindata, wikipedia, britannica, news | remote work |
+
+- **How the source policy is applied.** Create, discovery and refresh use the host list of the board's own mode. Discovery's `include_domains` is that same list. Signed snapshots are rechecked against their own mode's list. The SSRF, redirect and private-IP guards are unchanged.
+- **Investopedia is excluded.** Tavily Extract rejected its URLs ("Invalid URL format").
+- **Authority tiers for curated hosts.** These live in the same registry (`HOST_TIERS`), and the Perspectives cards show each tier's label:
+  1. Official statistics, central banks and intergovernmental bodies: 95
+  2. Peer-reviewed or academic: 88
+  3. Reference or data: 78
+  4. Survey or think tank: 70
+  5. News: 60
+  6. Industry body, an interested party such as gold.org: 45
+- **Long pages.** Non-technical modes keep up to 300,000 characters of fetched text per page (`long_page_chars`), so long Wikipedia or Fed pages are no longer routinely truncated and marked partial.
+  - The model sees at most 12,000 characters per page: the most question-relevant literal passages, chosen deterministically (`selectPassages`). The total model input stays bounded at 5 × 12,000 = 60,000 source characters per call, the same bound as before.
+  - Quotes are still verified literally against the full fetched text, and truncated pages are still labelled partial.
+  - Limit: facts that sit only in passages the model never saw are not extracted.
+
 Quota keys moved from `ripple:v1:*` to `tide:v1:*`, so Tide and Ripple don't share counters.
 
 ## Run (local)

@@ -30,7 +30,8 @@ export function locateQuote(normalizedText: string, quote: string): string | nul
  * Evidence excerpt: literal windows of the page around the verified quotes (never the whole page).
  * Every quote in `kept` is a literal substring of the returned excerpt.
  */
-export function buildExcerpt(normalizedText: string, quotes: string[], maxChars = 3000, margin = 120): { excerpt: string; kept: Set<string> } {
+// Long pages (Tide non-technical modes) get a larger excerpt so every verified quote can be kept; short pages are unchanged.
+export function buildExcerpt(normalizedText: string, quotes: string[], maxChars = normalizedText.length > 12_000 ? 8000 : 3000, margin = 120): { excerpt: string; kept: Set<string> } {
   const spans: { s: number; e: number; q: string }[] = [];
   for (const q of quotes) {
     const i = normalizedText.indexOf(q);
@@ -59,3 +60,38 @@ export function buildExcerpt(normalizedText: string, quotes: string[], maxChars 
 }
 
 export const slug = (s: string): string => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'fact';
+
+const STOP = new Set('a an and are as at be by can do does for from has have how i in is it its of on or should that the this to was what when which why will with within you your'.split(' '));
+const terms = (s: string): string[] => (s.toLowerCase().match(/[a-z0-9]+/g) ?? []).filter((t) => t.length > 2 && !STOP.has(t)).map((t) => t.replace(/(ies|es|s)$/, ''));
+
+/**
+ * Long-page passage selection for the model prompt. Returns the text unchanged when it fits; otherwise the
+ * most question-relevant ~700-char windows (literal substrings, kept in page order) up to `maxChars`.
+ * Quotes are still verified against the FULL fetched text, never against this selection.
+ */
+export function selectPassages(text: string, question: string, maxChars = 12_000, windowChars = 700): string {
+  if (text.length <= maxChars) return text;
+  const q = new Set(terms(question));
+  const windows: { start: number; end: number; score: number }[] = [];
+  for (let start = 0; start < text.length; ) {
+    let end = Math.min(text.length, start + windowChars);
+    const stop = text.lastIndexOf('. ', end);
+    if (end < text.length && stop > start + windowChars / 2) end = stop + 1; // end on a sentence boundary
+    const words = terms(text.slice(start, end));
+    const hits = words.filter((w) => q.has(w));
+    const score = hits.length + 2 * new Set(hits).size; // distinct question terms matter most
+    windows.push({ start, end, score });
+    start = end;
+  }
+  const chosen: typeof windows = [];
+  let used = 0;
+  for (const w of [...windows].sort((a, b) => b.score - a.score || a.start - b.start)) {
+    if (used + (w.end - w.start) + 3 > maxChars) continue;
+    chosen.push(w);
+    used += w.end - w.start + 3;
+  }
+  return chosen
+    .sort((a, b) => a.start - b.start)
+    .map((w) => text.slice(w.start, w.end).trim())
+    .join(' … ');
+}

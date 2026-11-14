@@ -1,6 +1,7 @@
 // Perspective layer: pure TS port of PerspectiveSearch ps/scoring.py + ps/ranking.py over a Tide board.
 // Scores are transparent heuristics, not probabilities of truth. No network, no model calls.
 import type { Board, FactRecord } from '../contracts/board.ts';
+import { HOST_TIERS, TIER_INFO } from '../modes.ts';
 
 export type Stance = 'supports' | 'opposes' | 'neutral';
 export type Weights = { authority: number; popularity: number; time: number };
@@ -29,6 +30,8 @@ export function authorityOf(url: string): { score: number; tier: string } {
   } catch {
     return { score: 50, tier: 'Unknown host' };
   }
+  const curated = HOST_TIERS[host]; // mode registry hint wins over generic host patterns
+  if (curated) return { score: TIER_INFO[curated].score, tier: TIER_INFO[curated].label };
   for (const [re, score, tier] of TIERS) if (re.test(host)) return { score, tier };
   return { score: 60, tier: 'Vendor / general web' };
 }

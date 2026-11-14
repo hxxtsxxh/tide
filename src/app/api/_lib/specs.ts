@@ -2,6 +2,7 @@ import 'server-only';
 import { BODY_LIMITS, CreateBoardRequest, RefreshBoardRequest } from '../../../lib/contracts/board.ts';
 import { ApiError, normalizeUrlsOrThrow, type GuardSpec } from '../../../lib/server/guarded.ts';
 import { runDeps } from '../../../lib/server/operations.ts';
+import { snapshotHosts, withMode } from '../../../lib/server/config.ts';
 import { openState } from '../../../lib/server/snapshots.ts';
 import { createBoardDomain, refreshBoardDomain } from '../../../lib/search/planner.ts';
 
@@ -9,8 +10,8 @@ import { createBoardDomain, refreshBoardDomain } from '../../../lib/search/plann
 export const createBoardSpec: GuardSpec<CreateBoardRequest> = {
   schema: CreateBoardRequest,
   maxBytes: BODY_LIMITS.create,
-  prepare: (body, { config }) => ({ ...body, urls: normalizeUrlsOrThrow(body.urls, config.sourceHosts) }),
-  execute: async (body, ctx) => ({ status: 201, body: await createBoardDomain(body, runDeps(ctx)) }),
+  prepare: (body, { config }) => ({ ...body, urls: normalizeUrlsOrThrow(body.urls, withMode(config, body.mode).sourceHosts) }),
+  execute: async (body, ctx) => ({ status: 201, body: await createBoardDomain(body, runDeps({ ...ctx, config: withMode(ctx.config, body.mode) })) }),
 };
 
 export const refreshBoardSpec: GuardSpec<RefreshBoardRequest> = {
@@ -19,10 +20,13 @@ export const refreshBoardSpec: GuardSpec<RefreshBoardRequest> = {
   prepare: (body, { config, secrets }) => {
     // Tampered/expired/foreign snapshots are rejected here, before any quota or paid call.
     if (config.configured.signing) {
-      const state = openState(body.snapshot, secrets.stateSecret, config.sourceHosts);
+      const state = openState(body.snapshot, secrets.stateSecret, snapshotHosts(config));
       if (!body.force && (body.requirements === undefined || body.requirements === state.board.requirements)) throw new ApiError('INVALID_INPUT', 'Nothing to do: set force=true to re-check sources or change the requirements.');
     }
     return body;
   },
-  execute: async (body, ctx) => ({ status: 200, body: await refreshBoardDomain(body, openState(body.snapshot, ctx.secrets.stateSecret, ctx.config.sourceHosts), runDeps(ctx)) }),
+  execute: async (body, ctx) => {
+    const state = openState(body.snapshot, ctx.secrets.stateSecret, snapshotHosts(ctx.config));
+    return { status: 200, body: await refreshBoardDomain(body, state, runDeps({ ...ctx, config: withMode(ctx.config, state.board.mode) })) };
+  },
 };

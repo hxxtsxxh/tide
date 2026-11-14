@@ -5,7 +5,7 @@
  */
 import {createHash,randomUUID} from 'node:crypto';
 const ENDPOINT='https://api.tavily.com/extract';
-const MAX_BYTES=1_500_000, MAX_CONTENT=30_000;
+const MAX_BYTES=1_500_000, DEFAULT_MAX_CONTENT=30_000;
 export function allowedSource(input,hosts){
  if(typeof input!=='string'||input.length>2048)throw new Error('SOURCE_NOT_ALLOWED');
  let u;try{u=new URL(input)}catch{throw new Error('SOURCE_NOT_ALLOWED')}
@@ -34,6 +34,7 @@ export async function extractTavily(urls,options={}){
  const hosts=options.allowedHosts;
  if(!Array.isArray(hosts)||!hosts.length||hosts.some(h=>typeof h!=='string'||!h||h.includes('*')))throw new Error('SOURCE_POLICY_REQUIRED');
  const requested=[...new Set(urls.map(u=>allowedSource(u,hosts)))];
+ const MAX_CONTENT=Number.isInteger(options.maxContent)&&options.maxContent>0?Math.min(options.maxContent,300_000):DEFAULT_MAX_CONTENT;
  const observedAt=new Date().toISOString(),started=performance.now(),callId=randomUUID();
  const trace={kind:'fetch',provider:'tavily',service:'tavily',transport:'direct',endpoint:'extract',mode:'live',status:'failed',callId,requestId:null,usage:null,cache_state:'unknown',elapsed_ms:0,http_attempts:0,urls:requested};
  const makeFailure=(code,retryAfterSeconds=null)=>({sources:requested.map(u=>failed(u,observedAt,code)),trace:{...trace,elapsed_ms:Math.round(performance.now()-started)},error:{code,retryAfterSeconds},limitations:['A failed extraction does not prove a source fact is false.']});

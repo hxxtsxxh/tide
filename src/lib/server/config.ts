@@ -1,5 +1,6 @@
 import 'server-only';
 import { DEFAULT_SOURCE_HOSTS, PUBLIC_LIMITS } from '../contracts/board.ts';
+import { hostsForMode, MODES, modeOf, type ModeId } from '../modes.ts';
 
 export { DEFAULT_SOURCE_HOSTS };
 
@@ -17,6 +18,7 @@ export function serverConfig(env: Env = process.env) {
     .split(',')
     .map((h) => h.trim().toLowerCase())
     .filter((h) => /^[a-z0-9.-]+$/.test(h) && h.includes('.'));
+  const generalHosts = (env.TIDE_GENERAL_HOSTS ?? '').split(',').map((h) => h.trim().toLowerCase()).filter((h) => /^[a-z0-9.-]+$/.test(h) && h.includes('.'));
   const provider = env.APP_MODEL_PROVIDER === 'openai' ? 'openai' : 'anthropic';
   const modelKey = provider === 'openai' ? env.OPENAI_API_KEY : env.ANTHROPIC_API_KEY;
   let quotaUrlOk = false;
@@ -35,6 +37,10 @@ export function serverConfig(env: Env = process.env) {
   const enabled = env.RIPPLE_PUBLIC_BETA !== 'false';
   return {
     sourceHosts: hosts.length ? hosts : [...DEFAULT_SOURCE_HOSTS],
+    /** Tide: TIDE_GENERAL_HOSTS overrides the General mode list. */
+    modeHostOverrides: (generalHosts.length ? { general: generalHosts } : {}) as Partial<Record<ModeId, string[]>>,
+    /** Per-page fetched-text cap; widened per mode by withMode(). */
+    pageChars: PUBLIC_LIMITS.source_chars_per_page as number,
     configured,
     publicBetaEnabled: enabled,
     publicBetaReady: enabled && configured.telem && configured.model && configured.quota && configured.signing,
@@ -49,6 +55,15 @@ export function serverConfig(env: Env = process.env) {
   };
 }
 export type ServerConfig = ReturnType<typeof serverConfig>;
+
+/** Request-scoped config for one research mode: that mode's exact-host list and per-page text cap. */
+export function withMode<C extends ServerConfig>(config: C, mode: string | undefined): C {
+  const m = modeOf(mode);
+  return { ...config, sourceHosts: hostsForMode(m.id, config.sourceHosts, config.modeHostOverrides), pageChars: m.hosts ? PUBLIC_LIMITS.long_page_chars : PUBLIC_LIMITS.source_chars_per_page };
+}
+/** Every host any mode allows (used only to open already-signed snapshots before their mode is known). */
+export const snapshotHosts = (config: ServerConfig): ((mode: string | undefined) => string[]) => (mode) => hostsForMode(mode, config.sourceHosts, config.modeHostOverrides);
+export const modeHostLists = (config: ServerConfig): Record<string, string[]> => Object.fromEntries(MODES.map((m) => [m.id, hostsForMode(m.id, config.sourceHosts, config.modeHostOverrides)]));
 
 /** Secrets are only reachable through these accessors, never serialized into responses. */
 export function secrets(env: Env = process.env) {

@@ -32,7 +32,8 @@ const invalid = (why: string): never => {
  * Verify HMAC/expiry, schema, graph and domain consistency and the CURRENT source policy. Network-free; run before quota is spent.
  * Snapshots written before domain state existed are adopted (IDs preserved), never trusted for fields they never signed.
  */
-export function openState(token: string, secret: string, hosts: readonly string[], now?: number): State {
+/** `hosts` may resolve per board mode (Tide); a plain list keeps the legacy single policy. */
+export function openState(token: string, secret: string, hostPolicy: readonly string[] | ((mode: string | undefined) => readonly string[]), now?: number): State {
   let data: unknown;
   try {
     data = verifySnapshot(token, secret, now);
@@ -54,6 +55,7 @@ export function openState(token: string, secret: string, hosts: readonly string[
   } catch {
     return invalid('has an invalid dependency graph or inconsistent evidence state');
   }
+  const hosts = typeof hostPolicy === 'function' ? hostPolicy(board.mode) : hostPolicy;
   for (const s of board.sources) {
     try {
       normalizeSourceUrl(s.url, hosts);

@@ -21,12 +21,12 @@ export const telemFetchTrace = (p: FetchedPage): RetrievalTrace => ({ kind: 'fet
 const disqualified = (p: FetchedPage): boolean => p.status === 'failed' && /^(destination_out_of_policy|http_\d+)$/.test(p.error ?? '');
 
 export async function acquirePages(telem: TelemClient, urls: string[], d: RunDeps, opts: { noCache?: boolean } = {}): Promise<Acquisition> {
-  const perPage = PUBLIC_LIMITS.source_chars_per_page;
+  const perPage = d.config.pageChars ?? PUBLIC_LIMITS.source_chars_per_page;
   const key = d.secrets.tavilyApiKey;
   const telemHttpBefore = telem.http;
   const [tel, tav] = await Promise.all([
     telem.fetchPages(urls, d.config.sourceHosts, { noCache: opts.noCache, perPageChars: perPage }).then((pages) => ({ pages }), (error: unknown) => ({ error })),
-    key ? extractTavily(urls, { apiKey: key, allowedHosts: d.config.sourceHosts, fetchImpl: d.fetchImpl, signal: d.signal }).catch((e: unknown) => ({ error: e instanceof Error ? e.message : 'TAVILY_UNAVAILABLE' })) : null,
+    key ? extractTavily(urls, { apiKey: key, allowedHosts: d.config.sourceHosts, maxContent: perPage, fetchImpl: d.fetchImpl, signal: d.signal }).catch((e: unknown) => ({ error: e instanceof Error ? e.message : 'TAVILY_UNAVAILABLE' })) : null,
   ]);
   if ('error' in tel) {
     // Telem stays mandatory; keep the parallel Tavily work visible instead of implying zero cost.

@@ -2,6 +2,7 @@ import 'server-only';
 import { BODY_LIMITS, CreateBoardRequest, DiscoverRequest, RefreshBoardRequest } from '../contracts/board.ts';
 import { LegacyRequest } from '../contracts/legacy.ts';
 import { ApiError, normalizeUrlsOrThrow, type GuardContext, type GuardSpec } from './guarded.ts';
+import { withMode } from './config.ts';
 import { runLegacyFixture, runLegacyLive } from './legacy.ts';
 import { createBoard, discover, openSnapshot, refreshBoard, type RunDeps } from './research.ts';
 
@@ -21,8 +22,8 @@ export const runDeps = (ctx: GuardContext): RunDeps => ({
 export const createBoardSpec: GuardSpec<CreateBoardRequest> = {
   schema: CreateBoardRequest,
   maxBytes: BODY_LIMITS.create,
-  prepare: (body, { config }) => ({ ...body, urls: normalizeUrlsOrThrow(body.urls, config.sourceHosts) }),
-  execute: async (body, ctx) => ({ status: 201, body: await createBoard(body, runDeps(ctx)) }),
+  prepare: (body, { config }) => ({ ...body, urls: normalizeUrlsOrThrow(body.urls, withMode(config, body.mode).sourceHosts) }),
+  execute: async (body, ctx) => ({ status: 201, body: await createBoard(body, runDeps({ ...ctx, config: withMode(ctx.config, body.mode) })) }),
 };
 
 export const refreshBoardSpec: GuardSpec<RefreshBoardRequest> = {
@@ -45,7 +46,7 @@ export const refreshBoardSpec: GuardSpec<RefreshBoardRequest> = {
 export const discoverSpec: GuardSpec<DiscoverRequest> = {
   schema: DiscoverRequest,
   maxBytes: BODY_LIMITS.discover,
-  execute: async (body, ctx) => ({ status: 200, body: await discover(body, runDeps(ctx)) }),
+  execute: async (body, ctx) => ({ status: 200, body: await discover(body, runDeps({ ...ctx, config: withMode(ctx.config, body.mode) })) }),
 };
 
 const LOCAL_HOSTS = new Set(['127.0.0.1', 'localhost', '[::1]']);

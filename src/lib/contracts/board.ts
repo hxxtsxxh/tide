@@ -2,6 +2,7 @@
 // Shared by server routes (T02/T04), browser UI and IndexedDB (T03) and the MCP bridge (T05A).
 // Change only through an integrator task; parallel workers depend on these exact shapes.
 import { z } from 'zod';
+import { MODE_IDS } from '../modes.ts';
 
 /** Server-chosen operation maxima (PUBLIC-BETA.md). Clients can never raise these. */
 export const PUBLIC_LIMITS = {
@@ -15,6 +16,8 @@ export const PUBLIC_LIMITS = {
   timeout_ms: 45_000,
   source_chars_total: 60_000,
   source_chars_per_page: 12_000,
+  /** Tide non-technical modes: fetched text kept per page for quote verification; the model still sees <= source_chars_per_page of it. */
+  long_page_chars: 300_000,
   output_tokens_per_call: 2_048,
   discover_results: 8,
 } as const;
@@ -74,6 +77,8 @@ export const CreateBoardRequest = z.strictObject({
   question: z.string().trim().min(1).max(2000),
   requirements: z.string().max(2000),
   urls: z.array(z.string().min(1).max(2048)).min(1).max(PUBLIC_LIMITS.sources),
+  /** Additive (Tide): research mode; omitted = technical. */
+  mode: z.enum(MODE_IDS).optional(),
 });
 export type CreateBoardRequest = z.infer<typeof CreateBoardRequest>;
 
@@ -88,6 +93,7 @@ export type RefreshBoardRequest = z.infer<typeof RefreshBoardRequest>;
 export const DiscoverRequest = z.strictObject({
   request_id: requestId,
   query: z.string().trim().min(1).max(2000),
+  mode: z.enum(MODE_IDS).optional(),
 });
 export type DiscoverRequest = z.infer<typeof DiscoverRequest>;
 
@@ -152,6 +158,8 @@ export const Board = z.object({
   title: z.string(),
   question: z.string(),
   requirements: z.string(),
+  /** Additive (Tide): research mode. Missing or unknown = technical (legacy boards). */
+  mode: z.enum(MODE_IDS).optional().catch(undefined),
   sources: z.array(SourceRecord).max(PUBLIC_LIMITS.sources),
   facts: z.array(FactRecord).max(PUBLIC_LIMITS.facts),
   answers: z.array(AnswerRecord).max(PUBLIC_LIMITS.answers),

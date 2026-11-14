@@ -13,6 +13,8 @@ import * as api from "@/lib/client/api";
 import * as storage from "@/lib/client/storage";
 import { safeSourceLink, validateArchive } from "@/lib/client/archive";
 import BoardInspector from "./BoardInspector";
+import ModePicker from "./ModePicker";
+import { DEFAULT_UI_MODE, modeOf, type Example, type ModeId } from "@/lib/modes";
 import SimulationLab from "./SimulationLab";
 import { Icon, Modal, time } from "./ui";
 import RippleGrid from "./bits/RippleGrid";
@@ -25,13 +27,7 @@ type Draft = {
   requirements: string;
 };
 const blank: Draft = { title: "", question: "", urls: "", requirements: "" };
-const sample: Draft = {
-  title: "My page-ingestion research",
-  question:
-    "Can I safely fetch public pages in batches of three and recover from individual page failures?",
-  urls: "https://docs.telem.ai/api/\nhttps://docs.telem.ai/resources/fetch-best-practices/",
-  requirements: "I need to process three source URLs at a time.",
-};
+const toDraft = (ex: Example): Draft => ({ title: ex.title, question: ex.question, urls: ex.urls.join("\n"), requirements: ex.requirements });
 function download(data: unknown, title: string) {
   const url = URL.createObjectURL(
     new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }),
@@ -46,14 +42,17 @@ function download(data: unknown, title: string) {
 }
 
 export default function Workspace({
-  hosts,
+  hostsByMode,
   quota,
 }: {
-  hosts: string[];
+  hostsByMode: Record<string, string[]>;
   quota: { globalDaily: number; visitorDaily: number; visitorMinute: number };
 }) {
   const [view, setView] = useState<"new" | "board" | "lab">("new");
   const [draft, setDraft] = useState<Draft>(blank);
+  const [mode, setMode] = useState<ModeId>(DEFAULT_UI_MODE);
+  const modeSpec = modeOf(mode);
+  const hosts = hostsByMode[mode] ?? [];
   const [library, setLibrary] = useState<BoardRecord[]>([]),
     [record, setRecord] = useState<BoardRecord | null>(null);
   const [requirements, setRequirements] = useState("");
@@ -234,6 +233,7 @@ export default function Workspace({
         question: draft.question,
         requirements: draft.requirements,
         urls: selected,
+        mode,
       });
       await persist(storage.fromEnvelope(envelope), null);
       setNotice(
@@ -301,6 +301,7 @@ export default function Workspace({
           question: prior.board.question,
           requirements,
           urls: prior.board.sources.map((s) => s.url),
+          mode: modeOf(prior.board.mode).id,
         });
         await persist(storage.fromEnvelope(envelope), null);
         setNotice(
@@ -384,6 +385,7 @@ export default function Workspace({
       const result = await api.discoverSources({
         request_id: api.newRequestId(),
         query: query || draft.question,
+        mode,
       });
       setDiscovery(result);
     });
@@ -623,9 +625,9 @@ export default function Workspace({
                   <BlurText text="and how well it holds up." delay={70} stepDuration={0.4} distance={18} blur={12} className="hero-line" />
                 </h1>
                 <p>
-                  Connect public sources to facts and decisions, weigh them by whom you trust.
-                  <br className="desktop-break" /> When something changes, see
-                  what needs another look.
+                  Connect public sources to quote-verified facts and answers.
+                  <br className="desktop-break" /> Weigh the evidence by whom you
+                  trust, and see what needs another look when it changes.
                 </p>
               </div>
               <div className="new-board-layout">
@@ -636,6 +638,27 @@ export default function Workspace({
                       01 — START WITH A QUESTION
                     </span>
                   </div>
+                  <ModePicker value={mode} disabled={busy} onChange={(m) => { setMode(m); setDiscovery(null); }} />
+                  <p className="mode-helper" data-testid="mode-helper">{modeSpec.helper}</p>
+                  {modeSpec.examples.length > 0 && (
+                    <div className="example-chips" role="group" aria-label={`${modeSpec.label} examples`}>
+                      {modeSpec.examples.map((ex) => (
+                        <button
+                          type="button"
+                          key={ex.label}
+                          className="example-chip"
+                          data-testid="example-chip"
+                          disabled={busy}
+                          onClick={() => {
+                            setDraft(toDraft(ex));
+                            setNotice("Example inputs loaded. Creating this board makes a real live request. Edit any field first.");
+                          }}
+                        >
+                          {ex.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <form onSubmit={create}>
                     <label htmlFor="board-title">Board title</label>
                     <input
@@ -662,7 +685,7 @@ export default function Workspace({
                       onChange={(e) =>
                         setDraft({ ...draft, question: e.target.value })
                       }
-                      placeholder="Ask an original question about your integration or launch plan…"
+                      placeholder={mode === "technical" ? "Ask an original question about your integration or launch plan…" : "Ask an open question, e.g. “Does X reliably lead to Y?”"}
                       disabled={busy}
                     />
                     <div className="row spread label-row">
@@ -692,17 +715,17 @@ export default function Workspace({
                         setDraft({ ...draft, urls: e.target.value })
                       }
                       placeholder={
-                        "https://docs…\nOne permitted HTTPS URL per line"
+                        `https://${hosts[0] ?? "…"}/…\nOne permitted HTTPS URL per line`
                       }
                       disabled={busy}
                       aria-describedby="sources-help"
                     />
                     <p id="sources-help" className="field-help">
-                      Choose public text documentation. Discovery offers
-                      candidates for your review.
+                      {mode === "technical" ? "Choose public text documentation." : `Choose public pages on the ${modeSpec.label} source list below.`}{" "}
+                      Discovery offers candidates for your review.
                     </p>
                     <label htmlFor="board-constraints">
-                      Requirements <span className="field-hint">optional</span>
+                      {modeSpec.requirementsLabel.replace(" (optional)", "")} <span className="field-hint">optional</span>
                     </label>
                     <textarea
                       id="board-constraints"
@@ -712,7 +735,7 @@ export default function Workspace({
                       onChange={(e) =>
                         setDraft({ ...draft, requirements: e.target.value })
                       }
-                      placeholder="Your workload, constraints, and what a useful answer must cover…"
+                      placeholder={modeSpec.requirementsPlaceholder}
                       disabled={busy}
                     />
                     <p className="processing-copy">
@@ -740,7 +763,7 @@ export default function Workspace({
                         data-testid={TEST_IDS.sampleButton}
                         disabled={busy}
                         onClick={() => {
-                          setDraft(sample);
+                          if (modeSpec.examples[0]) setDraft(toDraft(modeSpec.examples[0]));
                           setNotice(
                             "Example inputs loaded. Creating this board makes a real live request. Edit any field first.",
                           );
@@ -907,7 +930,7 @@ export default function Workspace({
               )}
               <details className="supported-hosts">
                 <summary>
-                  Supported source hosts <span>{hosts.length} exact hosts</span>
+                  {modeSpec.label} source hosts <span>{hosts.length} exact hosts</span>
                 </summary>
                 <p>
                   HTTPS public text pages only. No private documents, logins,
@@ -934,6 +957,7 @@ export default function Workspace({
                       ? "LIVE OBSERVATION · BROWSER-LOCAL BOARD"
                       : "HISTORICAL ARCHIVE · UNVERIFIED"}
                   </span>
+                  <span className="mode-chip" data-testid="board-mode">{modeOf(record.board.mode).label}</span>
                   <h1 data-testid={TEST_IDS.boardTitleCurrent}>
                     {record.board.title}
                   </h1>
