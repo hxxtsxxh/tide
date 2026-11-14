@@ -20,3 +20,4 @@ artifacts/
 .playwright-mcp/
 .vercel
 .env*
+__pycache__/
