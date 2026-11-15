@@ -1,1 +1,0 @@
-Supplied: script, editable shotlist, narration and slide inputs. Not yet supplied: product screenshots, measured benchmark, hosted app, real recording or finished slide deck. The controller produces these after the app exists.

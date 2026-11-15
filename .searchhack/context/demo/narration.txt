@@ -1,9 +1,0 @@
-Research answers can outlive the facts they depend on. Ripple preserves the connection between a source, a factual observation, and a decision.
-
-Here I create my own board with a question and public source URLs. Telem retrieves the evidence. The board shows source passages and the dependencies we need to inspect; it does not claim that fluent prose proves a fact.
-
-Now I change my requirements. Ripple identifies the affected answers and preserves unrelated observations. A user edit is not the same thing as a website changing.
-
-The board can be saved in this browser, revisited, exported and deleted. Refresh checks the actual pages again. An unchanged page is a valid result, and an unavailable source remains unknown.
-
-Any efficiency claims in this demonstration must come from the recorded comparison. This is a limited public beta with supported documentation sources and usage limits, not an always-on monitor or a universal truth engine.

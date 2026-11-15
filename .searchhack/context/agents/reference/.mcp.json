@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "ripple": {
-      "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/src/server.mjs"],
-      "env": {"RIPPLE_API_BASE_URL": "${RIPPLE_API_BASE_URL}"}
-    }
-  }
-}

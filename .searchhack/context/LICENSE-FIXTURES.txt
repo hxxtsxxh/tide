@@ -1,1 +1,0 @@
-Authored synthetic fixture text, schemas, task specifications and evaluator in this add-on are provided under the MIT License included at the add-on root. External source pages are linked, not redistributed. Original harness and upstream software retain their existing notices. Working product names are not trademark-cleared.

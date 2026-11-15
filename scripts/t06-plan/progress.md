@@ -1,5 +1,0 @@
-# T06 progress
-
-Completed local context/handoff inspection and mandatory Tavily prepare-env. npm ci/build/check passed; final application suite 132/132 and MCP suite 23/23. Ran fixture/live npm wrapper and independent runner with passive accounting. Added four guarded/domain safety regressions plus import-XSS and real-browser refresh/storage-race tests. Supplied Playwright MCP executed all browser regressions. Immutable browser gate 15/15 and MCP gate 12/12 local. Real Redis concurrency 3 of 8 admitted at limit 3. Client-secret scan zero matches. Native invocation used two disposable project configs, preserved failed attempts and removed scratch. Wrote IMPLEMENTED-SCOPE, QA summary/evidence and handoff; no runtime/gate/oracle changes or deployment.
-
-Observer first fixture attempt failed at expected HTTP 400 because an exception closure outlived its Python variable; fixed and reran full fixtures. Claude initial CLI prompt placement failed; fixed argument ordering and observed genuine native success. Codex source approval refusal remains explicit. Fatal retrieval accounting gap remains application follow-up.
