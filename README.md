@@ -23,7 +23,7 @@
 
 ## Why Tide
 
-Every research-backed decision runs into two questions.
+Every research-backed decision runs into simply two questions.
 
 > **Is this still true?** Docs, data and reports change quietly, and your notes never say which conclusion a change just broke.
 >
