@@ -1,78 +1,154 @@
-# Tide
+<p align="center">
+  <img src="docs/images/banner.png" alt="Tide: know what your decision rests on, and how well it holds up" width="100%">
+</p>
 
-**Know what your decision rests on, and how well it holds up.**
+<p align="center">
+  <a href="https://tide-search.vercel.app"><b>Live demo</b></a> ·
+  <a href="https://youtu.be/SI2tCBHnZGA"><b>Video</b></a> ·
+  <a href="#how-it-works"><b>How it works</b></a> ·
+  <a href="#run-it-locally"><b>Run locally</b></a>
+</p>
 
-Tide combines two hackathon projects by the same author into one local app:
+<p align="center">
+  <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white">
+  <img alt="Telem" src="https://img.shields.io/badge/search-Telem-0071E3">
+  <img alt="Tavily" src="https://img.shields.io/badge/extract-Tavily-5AC8FA">
+  <img alt="Upstash Redis" src="https://img.shields.io/badge/quotas-Upstash%20Redis-00E9A3?logo=redis&logoColor=white">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-151%20passing-34C759">
+</p>
 
-- **Ripple** answers *"Is this conclusion still true now?"* A board links public sources to quote-verified facts, and facts to answers, through an explicit dependency graph. When you edit a requirement or refresh a source, only the dependent closure is recomputed. Boards also get signed snapshots, browser-local revisions, export/import, an MCP kit and shared quotas.
-- **PerspectiveSearch** answers *"Is this conclusion robust to which evidence I trust?"* It tags each exact quote with a stance and scores it for Authority, Popularity (cross-source agreement) and Time consistency. Weight sliders rerank the evidence without running any new search.
+---
 
-Tide is Ripple (Next.js 16 / React 19, same Apple-style UI) with a **Perspective layer**:
+## Why Tide
 
-1. **Stance in the same model call.** Each extracted fact can carry `stance: supports | opposes | neutral` relative to the board question (`src/lib/model/extract.ts`, `FactRecord` in `src/lib/contracts/board.ts`). The field is optional and additive. Old boards and archives import unchanged, and a missing stance counts as neutral.
-2. **PerspectiveSearch scoring ported to pure TypeScript** (`src/lib/perspective/index.ts`): weighted rank with renormalization over the available metrics, coverage, all-zero weights restoring the defaults (70/20/60), and per-origin popularity in which an origin that contradicts itself counts once, as mixed. Time consistency uses the coverage-scaled weakest-period formula. The module also computes a verdict (Leans yes / Leans no / Contested / Insufficient evidence) from weighted supporting vs. opposing quotes, and a sensitivity sweep over a {0,50,100}^3 weight grid that reports how many lenses hold the verdict and which single weight flips it.
-3. **Perspectives tab** in the board inspector (`src/components/Perspectives.tsx`) has three accessible range sliders, a verdict pill with a one-line explanation, a sensitivity summary, and a ranked evidence list showing quote, source, publisher tier, stance chip and A/P/T bars. Everything recomputes instantly on the client and honors `prefers-reduced-motion`. Fact cards in the Dependency map show a stance chip.
-4. Ripple's selective-recompute semantics are unchanged. Stance never enters the dependency graph or the freshness state.
+Every research-backed decision runs into two questions.
 
-## Research modes
+> **Is this still true?** Docs, data and reports change quietly, and your notes never say which conclusion a change just broke.
+>
+> **Does it hold up if I trust different evidence?** The same question can lean yes or no depending on whether you weight official sources, agreement, or consistency over time.
 
-Modes live in one data registry, `src/lib/modes.ts`. Each mode has an id, label, helper copy, requirements-field label, exact-host list and example questions, so adding a mode is a data change. The home page defaults to **General**. Boards store their `mode`; a board with no mode or an unknown one is treated as **Technical**, which is Ripple's original behavior, so older boards, archives and snapshots stay valid.
+We started with two separate ideas, one for each question. The first was an answer that remembers exactly which facts and pages it rests on, so a change rechecks only what it touches. The second was a way to see how a conclusion holds up when you change which evidence you trust. They turned out to be two halves of the same problem, so we built **Tide**.
 
-| Mode | Sources (exact hosts) | Examples |
+|  | Before Tide | With Tide |
 |---|---|---|
-| General | Every non-technical curated host below combined. The technical docs hosts are deliberately excluded, so docs questions use Technical. `TIDE_GENERAL_HOSTS` overrides this list. | yield curve, gold, remote work |
-| Technical | `RIPPLE_SOURCE_HOSTS` (or the 14-host docs default) | Telem page fetching |
-| Finance & Economics | federalreserve, newyorkfed, fred/stlouisfed, bls, bea, census, nber, imf, worldbank, oecd, bis, ecb, gold.org, wikipedia, britannica, apnews/bbc/npr | yield curve, gold |
-| Health & Science | who, cdc, nih, pubmed, pmc, nature, arxiv, ourworldindata, wikipedia, britannica, news | coffee and type 2 diabetes |
-| Work & Society | pewresearch, gallup, brookings, news.stanford.edu, nber, bls, oecd, ourworldindata, wikipedia, britannica, news | remote work |
+| **Provenance** | No record of which page or sentence an answer came from | Every answer links to quote-verified facts and the exact pages behind them |
+| **Change** | A source changes, so you redo everything, or nothing | Only the answers a change touches are recomputed; the rest are reused |
+| **Confidence** | One verdict, with no sense of how fragile it is | Drag trust weights and see whether the verdict holds, or what flips it |
+| **Failure** | A missing source leaves an old answer looking current | Failed reads show as **unknown**, never falsely fresh |
 
-- **How the source policy is applied.** Create, discovery and refresh use the host list of the board's own mode. Discovery's `include_domains` is that same list. Signed snapshots are rechecked against their own mode's list. The SSRF, redirect and private-IP guards are unchanged.
-- **Investopedia is excluded.** Tavily Extract rejected its URLs ("Invalid URL format").
-- **Authority tiers for curated hosts.** These live in the same registry (`HOST_TIERS`), and the Perspectives cards show each tier's label:
-  1. Official statistics, central banks and intergovernmental bodies: 95
-  2. Peer-reviewed or academic: 88
-  3. Reference or data: 78
-  4. Survey or think tank: 70
-  5. News: 60
-  6. Industry body, an interested party such as gold.org: 45
-- **Long pages.** Non-technical modes keep up to 300,000 characters of fetched text per page (`long_page_chars`), so long Wikipedia or Fed pages are no longer routinely truncated and marked partial.
-  - The model sees at most 12,000 characters per page: the most question-relevant literal passages, chosen deterministically (`selectPassages`). The total model input stays bounded at 5 × 12,000 = 60,000 source characters per call, the same bound as before.
-  - Quotes are still verified literally against the full fetched text, and truncated pages are still labelled partial.
-  - Limit: facts that sit only in passages the model never saw are not extracted.
+## What it does
 
-### Example boards verified locally (live creates, 2026-11-14)
+<table>
+<tr>
+<td width="50%"><img src="docs/images/home.png" alt="Tide home with mode picker"><br><b>Ask in a mode.</b> General, Technical, Finance &amp; Economics, Health &amp; Science or Work &amp; Society. Each mode reads its own curated sources.</td>
+<td width="50%"><img src="docs/images/dependency-map.png" alt="Dependency map"><br><b>Follow the evidence.</b> Source pages lead to quote-verified facts, each with a stance, which lead to plain-language answers that cite them.</td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/images/perspectives.png" alt="Perspectives tab"><br><b>Weigh whom you trust.</b> Authority, Agreement and Time sliders re-rank the evidence live, with a verdict and a 26-lens sensitivity check.</td>
+<td width="50%"><img src="docs/images/evidence.png" alt="Evidence tab"><br><b>Check every quote.</b> Literal passages, source URLs, observation times and provider request IDs.</td>
+</tr>
+</table>
 
-| Example | Mode | URLs | Result |
-|---|---|---|---|
-| Inverted yield curve → U.S. recession | General | en.wikipedia.org/wiki/Inverted_yield_curve, www.newyorkfed.org/research/capital_markets/ycfaq, en.wikipedia.org/wiki/Yield_curve | 3/3 sources read, 7 facts supported, 4/4 answers fresh; Leans no (60/40) |
-| Gold as a safe haven | Finance & Economics | en.wikipedia.org/wiki/Gold_as_an_investment, www.gold.org/goldhub/research/relevance-of-gold-as-a-strategic-asset | 2/2 sources read, 5 of 7 facts supported, 2 of 4 answers fresh (run before the long-page excerpt fix); Leans no (82%) |
-| Remote work productivity | General / Work & Society | en.wikipedia.org/wiki/Remote_work, www.nber.org/papers/w30866, www.gallup.com/workplace/398135/advantages-challenges-hybrid-work.aspx | 3/3 sources read, 9 facts supported, 4/4 answers fresh; Leans yes (76%) |
-| Coffee and type 2 diabetes | Health & Science | en.wikipedia.org/wiki/Health_effects_of_coffee | 1/1 source read, 5 facts supported, 3/3 answers fresh; Leans yes (2 supporting quotes, 0 opposing) |
+- **Quote-verified facts.** A fact is kept only if its quote appears literally in the fetched page. Disclaimers and boilerplate are filtered out.
+- **Selective recheck.** Edit your context and Tide recomputes only the dependent answers, with zero pages re-read. Refresh and only answers whose facts changed are recomputed.
+- **Verdicts with nuance.** *Leans yes · Leans no · Contested · Insufficient evidence*, each with the weighted support split and which single weight would flip it.
+- **Yours to keep.** Boards live in your browser (IndexedDB) with immutable revisions, plus JSON export and import. No account.
+- **Agent-ready.** A local MCP kit with 9 tools and 2 skills brings the same boards to Claude Code and Codex.
 
-- **What these verdicts reflect.** They come from model-assigned stances on boilerplate as well as findings. For example, gold.org's "Past performance is not necessarily indicative…" was tagged *opposes*. Read the quotes before you trust a verdict.
-- **The NY Fed FAQ page has contributed no facts so far.** Its extracted text starts with long navigation.
+## How it works
 
-Quota keys moved from `ripple:v1:*` to `tide:v1:*`, so Tide and Ripple don't share counters.
-
-## Run (local)
-
-```bash
-npm ci
-cp /path/to/your/.env.local .env.local     # same variables as Ripple; see RIPPLE-README.md
-npm run check && npm test && npm run build # 140 tests (133 inherited + 7 perspective)
-npx next start --hostname 127.0.0.1 --port 4920
+```mermaid
+flowchart LR
+    Q[Your question<br/>+ mode + context] --> T[Telem<br/>discover and qualify pages]
+    T --> X[Tavily Extract<br/>page text]
+    X --> M[Claude<br/>facts · stance · answers]
+    M --> V{Literal quote<br/>check}
+    V -->|verified| G[(Source → Fact → Answer<br/>dependency graph)]
+    V -->|not found| U[Dropped or unknown]
+    G --> P[Perspectives lens<br/>Authority · Agreement · Time]
+    P --> R[Verdict +<br/>sensitivity sweep]
+    G -->|edit or refresh| D[Recompute only<br/>the dependent branch]
 ```
 
-## Honest limits
+<p align="center"><img src="docs/images/execution-trace.png" alt="Execution trace showing real Telem and Tavily calls" width="85%"><br><sub>Every run shows what actually executed: Telem checks, direct Tavily extracts, request IDs and timing.</sub></p>
 
-- **Authority is a publisher-tier heuristic**, not PerspectiveSearch's per-document LLM rubric: .gov/.edu/standards bodies/official docs rank above code hosts, which rank above blogs. Ripple's docs allowlist means most boards have equal authority across sources, so in practice Agreement moves the ranking most.
-- **Popularity** needs two or more source pages taking a stance. It treats each page as one origin, while PerspectiveSearch deduplicates origins by content. Two pages on the same docs site are not truly independent.
-- **Time consistency** uses the board's saved revisions as periods, not publication dates. It shows N/A until there are at least two revisions with three or more stance observations. A freshly created board therefore always shows T = N/A.
-- Stance is a model judgement on a verbatim quote. A quote shows that a page says something, not that it is true. Scores are transparent heuristics, not probabilities.
-- Not ported: PerspectiveSearch's proposition/scope planning, open-web discovery, Claude-written grounded synthesis, and baseline-vs-lens answer diff. Lens changes do not create revisions.
-- Some internal identifiers still say "ripple": package name, `RIPPLE_*` env vars, MCP tool names, IndexedDB name and the health `project` field. These are kept for compatibility with frozen contracts.
-- Verified locally only. Tide has not been deployed.
+## Modes
 
-Screenshots: `demo/desktop-perspectives.png`, `demo/desktop-perspectives-crowd.png`, `demo/desktop-map.png`, `demo/mobile-perspectives.png`, `demo/desktop-home.png`, `demo/mobile-home.png`.
+| Mode | Curated sources | Try asking |
+|---|---|---|
+| **General** | Every curated source below except developer docs | *Does an inverted yield curve reliably predict a U.S. recession within 12 months?* |
+| **Finance & Economics** | Federal Reserve, NY Fed, FRED, BLS, BEA, NBER, IMF, World Bank, OECD, BIS, ECB, Wikipedia, AP/BBC/NPR | *Is gold always a safe haven during financial market crashes?* |
+| **Health & Science** | WHO, CDC, NIH, PubMed, PMC, Nature, arXiv, Our World in Data | *Does moderate coffee consumption lower the risk of type 2 diabetes?* |
+| **Work & Society** | Pew, Gallup, Brookings, Stanford, NBER, BLS, OECD | *Does remote work improve employee productivity?* |
+| **Technical** | MDN, Node.js, Next.js, React, Postgres, Redis, Supabase, Vercel and more | *How should I batch public page fetches?* |
 
-The original Ripple README, with its architecture, env vars and safety notes, is in `RIPPLE-README.md`.
+Authority tiers are shown on every card: official statistics › peer-reviewed › reference › survey › news › industry body. Modes are pure data in [`src/lib/modes.ts`](src/lib/modes.ts), so adding one is a data change.
+
+## Built with
+
+| Layer | Tech |
+|---|---|
+| App | Next.js 16 · React 19 · TypeScript · Zod |
+| Design | Apple HIG-inspired system type and materials · React Bits (RippleGrid, BlurText) · reduced-motion aware |
+| Search and evidence | **Telem** (`hack.telem.ai`) for discovery and routing · **Tavily Extract** for page text · **Claude** for structured extraction |
+| Safety | Server-signed snapshots · per-mode source allowlists · SSRF and redirect guards · atomic **Upstash Redis** quotas |
+| Storage | Browser IndexedDB with immutable revisions · JSON archives |
+| Agents | Local stdio MCP server ([`packages/ripple-mcp`](packages/ripple-mcp)) |
+
+## Run it locally
+
+```bash
+git clone https://github.com/hxxtsxxh/tide.git && cd tide
+npm ci
+# create .env.local with the variables below
+npm run dev   # http://localhost:3000
+```
+
+<details>
+<summary><b>Environment variables</b></summary>
+
+| Variable | Purpose |
+|---|---|
+| `TELEM_API_KEY` | Telem search and qualification (hack.telem.ai) |
+| `TAVILY_API_KEY` | Direct Tavily page extraction |
+| `APP_MODEL_PROVIDER`, `APP_MODEL`, `ANTHROPIC_API_KEY` | Structured extraction model (`OPENAI_API_KEY` if the provider is `openai`) |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Shared, atomic usage quotas |
+| `RIPPLE_STATE_SECRET` | Signs board snapshots (32+ characters) |
+| `RIPPLE_PUBLIC_BETA` | `true` to enable the public beta |
+| `RIPPLE_SOURCE_HOSTS`, `TIDE_GENERAL_HOSTS` | Optional source-list overrides |
+| `RIPPLE_GLOBAL_RUNS_PER_DAY`, `RIPPLE_VISITOR_RUNS_PER_DAY`, `RIPPLE_VISITOR_RUNS_PER_MINUTE` | Optional quota limits |
+
+Some identifiers keep a `RIPPLE_` prefix for compatibility with the original engine's contracts.
+</details>
+
+```bash
+npm run check      # TypeScript
+npm test           # 151 tests
+npm run test:mcp   # 23 MCP agent-kit tests
+npm run build      # production build
+```
+
+## Project structure
+
+```
+src/
+  app/                 Next.js routes, API endpoints, styles (apple.css)
+  components/          Workspace, BoardInspector, Perspectives, ModePicker, React Bits
+  lib/
+    search/            Telem client, Tavily extract, planner, passage selection
+    model/             Structured extraction and answer rewriting
+    perspective/       Authority / Agreement / Time scoring, verdict, sensitivity sweep
+    server/            Guarded endpoints, quotas, signed snapshots, research pipeline
+    modes.ts           Research modes and authority tiers
+packages/ripple-mcp/   Local MCP agent kit
+tests/                 Unit and contract tests
+```
+
+## Good to know
+
+- A verified quote proves a page said something, not that it's true. Stance and dependencies are model-proposed and shown for review.
+- Boards are deliberately small (up to 5 sources, 10 facts and 6 answers), sources come from curated lists, and refresh runs only when you ask.
+
+<p align="center"><sub>Built for <b>SearchHack</b> · powered by <b>Telem</b> and <b>Tavily</b></sub></p>
