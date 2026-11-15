@@ -122,9 +122,8 @@ test("simulation separates semantic change, unknown freshness and harmless body 
 });
 
 test("API boundary rejects fixture/malformed responses and never silently retries", async () => {
-  const { createBoard, RequestError } = await import(
-    "../src/lib/client/api.ts"
-  );
+  const { live, RequestError } = await import("../src/lib/client/api.ts");
+  const { createBoard } = live;
   const original = globalThis.fetch;
   let attempts = 0;
   globalThis.fetch = async () => {
@@ -147,6 +146,43 @@ test("API boundary rejects fixture/malformed responses and never silently retrie
       (e) => e instanceof RequestError && e.code === "INVALID_RESPONSE",
     );
     assert.equal(attempts, 1);
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("showcase mode replays recorded example boards and never calls the research API", async () => {
+  const { createBoard, discoverSources, refreshBoard, RequestError } = await import("../src/lib/client/api.ts");
+  const { readFileSync } = await import("node:fs");
+  const { MODES } = await import("../src/lib/modes.ts");
+  const data = readFileSync(new URL("../public/showcase.json", import.meta.url), "utf8");
+  const original = globalThis.fetch;
+  const paths: string[] = [];
+  globalThis.fetch = (async (path: string) => {
+    paths.push(String(path));
+    return new Response(data, { status: 200, headers: { "Content-Type": "application/json" } });
+  }) as typeof fetch;
+  try {
+    // Every example chip in every mode has a recording.
+    for (const m of MODES)
+      for (const ex of m.examples) {
+        const a = await createBoard({ request_id: "t", title: ex.title, question: ex.question, requirements: ex.requirements, urls: ex.urls, mode: m.id });
+        const b = await createBoard({ request_id: "t", title: ex.title, question: ex.question, requirements: ex.requirements, urls: ex.urls, mode: m.id });
+        assert.equal(a.board.mode, m.id);
+        assert.ok(a.board.answers.length > 0);
+        assert.notEqual(a.board.id, b.board.id); // re-opening an example is a new board, not a storage conflict
+        const d = await discoverSources({ request_id: "t", query: ex.question, mode: m.id });
+        assert.ok(d.results.length > 0);
+      }
+    await assert.rejects(
+      () => createBoard({ request_id: "t", title: "X", question: "Something new?", requirements: "", urls: ["https://en.wikipedia.org/wiki/Gold"], mode: "general" }),
+      (e) => e instanceof RequestError && e.code === "SHOWCASE_MODE",
+    );
+    await assert.rejects(
+      () => refreshBoard({ request_id: "t", snapshot: "x", force: true }),
+      (e) => e instanceof RequestError && e.code === "SHOWCASE_MODE",
+    );
+    assert.ok(paths.every((p) => p === "/showcase.json"));
   } finally {
     globalThis.fetch = original;
   }

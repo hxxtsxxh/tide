@@ -8,7 +8,7 @@ import {
 } from "@/lib/contracts/board";
 import type { BoardRecord, RevisionRecord } from "@/lib/contracts/storage";
 import { TEST_IDS } from "@/lib/contracts/testids";
-import { SIMULATION_LAB_ENABLED } from "@/lib/demo-policy";
+import { SHOWCASE_MODE, SIMULATION_LAB_ENABLED } from "@/lib/demo-policy";
 import * as api from "@/lib/client/api";
 import * as storage from "@/lib/client/storage";
 import { safeSourceLink, validateArchive } from "@/lib/client/archive";
@@ -243,7 +243,9 @@ export default function Workspace({
       });
       await persist(storage.fromEnvelope(envelope), null);
       setNotice(
-        "Live observation received. Review the proposed dependencies before relying on the decisions.",
+        SHOWCASE_MODE
+          ? `Recorded live run from ${time(envelope.board.revisions[0]?.createdAt)}. Live research is switched off in this showcase, so this board was replayed, not fetched again.`
+          : "Live observation received. Review the proposed dependencies before relying on the decisions.",
       );
     });
   }
@@ -534,7 +536,9 @@ export default function Workspace({
                 ? "Synthetic teaching mode"
                 : view === "board" && record?.trust !== "observed"
                   ? "Unverified archive"
-                  : "Live research mode"}
+                  : SHOWCASE_MODE
+                    ? "Showcase mode · recorded live runs"
+                    : "Live research mode"}
             </span>
           </div>
           {storageError && (
@@ -646,6 +650,11 @@ export default function Workspace({
                   </div>
                   <ModePicker value={mode} disabled={busy} onChange={(m) => { setMode(m); setDiscovery(null); }} />
                   <p className="mode-helper" data-testid="mode-helper">{modeSpec.helper}</p>
+                  {SHOWCASE_MODE && (
+                    <p className="alert" role="note">
+                      <strong>Showcase mode.</strong> Live research is switched off. Pick an example question below to open a board recorded from a real live run, then explore its map, Evidence and Perspectives.
+                    </p>
+                  )}
                   {modeSpec.examples.length > 0 && (
                     <div className="example-chips" role="group" aria-label={`${modeSpec.label} examples`}>
                       {modeSpec.examples.map((ex) => (
